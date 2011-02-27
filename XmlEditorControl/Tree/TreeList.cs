@@ -112,7 +112,7 @@ namespace TreeListControl.Tree
         /// and subsequently we traverse the tree backwards starting from the root</remarks>
         /// <param name="node">The XmlNode to show in the tree</param>
         private void Select(XmlNode node) {
-            if (node == null) return;
+            if (node == null || ((TreeNode) SelectedItem).Tag == node) return;
             var stack = new Stack();
             var parent = (node is XmlAttribute) ? ((XmlAttribute) node).OwnerElement : node.ParentNode;
             while (parent != null && !(parent is XmlDocument)) {

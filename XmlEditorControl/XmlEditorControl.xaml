@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Tree="clr-namespace:TreeListControl.Tree"
              xmlns:Resources="clr-namespace:TreeListControl.Resources"
-             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" xmlns:Properties="clr-namespace:TreeListControl.Properties">
+             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+             xmlns:Properties="clr-namespace:TreeListControl.Properties">
     <UserControl.Resources>
         <!--Round tab-->
         <ControlTemplate x:Key="RoundTab"
@@ -622,121 +623,152 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       Margin="0" />
-        
+
         <!--<ContentControl Grid.Row="2" Content="{Binding ElementName=xmlTree, Path=SelectedItem.Tag, Converter={StaticResource convertXmlNodeToEditHelp}}" />-->
 
-        <!--Error messages-->
-        <TabControl x:Name="alternativeViews"
-                    Grid.Row="2"
-                    SelectedItem="{Binding SelectedTab}"
-                    TabStripPlacement="Left">
-            <TabControl.Resources>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="Padding"
-                            Value="5" />
-                    <Setter Property="HeaderTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <ContentPresenter Content="{TemplateBinding Property=ContentControl.Content}">
-                                    <!--<ContentPresenter.LayoutTransform>
+        <DockPanel LastChildFill="True"
+                   Grid.Row="2"
+                   x:Name="alternativeViews">
+            <TabControl DockPanel.Dock="Bottom"
+                        TabStripPlacement="Left">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Padding"
+                                Value="5" />
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{TemplateBinding Property=ContentControl.Content}">
+                                        <!--<ContentPresenter.LayoutTransform>
                                         <RotateTransform Angle="-90" />
                                     </ContentPresenter.LayoutTransform>-->
-                                </ContentPresenter>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TabControl.Resources>
-            <!--Errors-->
-            <TabItem x:Name="errors"
-                     IsSelected="True"
-                     Template="{StaticResource RoundTab}"
-                     ToolTip="Errors">
-                <TabItem.Header>
-                    <Ellipse Width="16"
-                             Height="16">
-                        <Ellipse.Style>
-                            <Style TargetType="Ellipse">
-                                <Setter Property="Fill"
-                                        Value="Red" />
-                                <Setter Property="Stroke"
-                                        Value="Black" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ErrorMessages.Count}"
-                                                 Value="0">
-                                        <Setter Property="Fill"
-                                                Value="LightGreen" />
-                                    </DataTrigger>
-                                </Style.Triggers>
+                                    </ContentPresenter>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <!--Dynamic help-->
+                <TabItem Template="{StaticResource RoundTab}"
+                         ToolTip="Dynamic help">
+                    <TabItem.Header>
+                        <Image Source="Images\QuestionMark.png"
+                               Height="16" />
+                    </TabItem.Header>
+                    <ContentControl Content="{Binding ElementName=xmlTree, Path=SelectedItem.Tag, Converter={StaticResource convertXmlNodeToEditHelp}}" />
+                </TabItem>
+            </TabControl>
+            <TabControl DockPanel.Dock="Top"
+                        SelectedItem="{Binding SelectedTab}"
+                        TabStripPlacement="Left">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Padding"
+                                Value="5" />
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{TemplateBinding Property=ContentControl.Content}">
+                                        <!--<ContentPresenter.LayoutTransform>
+                                        <RotateTransform Angle="-90" />
+                                    </ContentPresenter.LayoutTransform>-->
+                                    </ContentPresenter>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <!--Errors-->
+                <TabItem x:Name="errors"
+                         IsSelected="True"
+                         Template="{StaticResource RoundTab}"
+                         ToolTip="Errors">
+                    <TabItem.Header>
+                        <Ellipse Width="16"
+                                 Height="16">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Setter Property="Fill"
+                                            Value="Red" />
+                                    <Setter Property="Stroke"
+                                            Value="Black" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ErrorMessages.Count}"
+                                                     Value="0">
+                                            <Setter Property="Fill"
+                                                    Value="LightGreen" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                    </TabItem.Header>
+                    <ListView ItemsSource="{Binding ErrorMessages}"
+                              SelectedItem="{Binding SelectedError}"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type ListView}">
+                                <Setter Property="ItemContainerStyle">
+                                    <Setter.Value>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="VerticalContentAlignment"
+                                                    Value="Top" />
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
-                        </Ellipse.Style>
-                    </Ellipse>
-                </TabItem.Header>
-                <ListView ItemsSource="{Binding ErrorMessages}"
-                          SelectedItem="{Binding SelectedError}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                    <ListView.Resources>
-                        <Style TargetType="{x:Type ListView}">
-                            <Setter Property="ItemContainerStyle">
-                                <Setter.Value>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="VerticalContentAlignment"
-                                                Value="Top" />
-                                    </Style>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn Header="Name"
-                                                DisplayMemberBinding="{Binding Name}"
-                                                Width="Auto" />
-                                <GridViewColumn Header="Value"
-                                                DisplayMemberBinding="{Binding Value}"
-                                                Width="100" />
-                                <GridViewColumn Header="Message"
-                                                Width="Auto">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Message}"
-                                                       TextWrapping="Wrap" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <!--Dynamic help-->
-            <TabItem Template="{StaticResource RoundTab}"
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="Name"
+                                                    DisplayMemberBinding="{Binding Name}"
+                                                    Width="Auto" />
+                                    <GridViewColumn Header="Value"
+                                                    DisplayMemberBinding="{Binding Value}"
+                                                    Width="100" />
+                                    <GridViewColumn Header="Message"
+                                                    Width="Auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Message}"
+                                                           TextWrapping="Wrap" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <!--Dynamic help-->
+                <!--<TabItem Template="{StaticResource RoundTab}"
                      ToolTip="Dynamic help">
                 <TabItem.Header>
                     <Image Source="Images\QuestionMark.png"
                            Height="16" />
                 </TabItem.Header>
                 <ContentControl Content="{Binding ElementName=xmlTree, Path=SelectedItem.Tag, Converter={StaticResource convertXmlNodeToEditHelp}}" />
-            </TabItem>
-            <TabItem x:Name="view"
-                     Template="{StaticResource RoundTab}"
-                     ToolTip="View"
-                     Visibility="Collapsed">
-                <TabItem.Header>
-                    <Image Source="Images\Eye.png"
-                           Height="16" />
-                </TabItem.Header>
-            </TabItem>
-            <TabItem x:Name="map"
-                     Template="{StaticResource RoundTab}"
-                     ToolTip="Map"
-                     Visibility="Collapsed">
-                <TabItem.Header>
-                    <Image Source="Images\Map.png"
-                           Height="16" />
-                </TabItem.Header>
-            </TabItem>
-        </TabControl>
+            </TabItem>-->
+                <TabItem x:Name="view"
+                         Template="{StaticResource RoundTab}"
+                         ToolTip="View"
+                         Visibility="Collapsed">
+                    <TabItem.Header>
+                        <Image Source="Images\Eye.png"
+                               Height="16" />
+                    </TabItem.Header>
+                </TabItem>
+                <TabItem x:Name="map"
+                         Template="{StaticResource RoundTab}"
+                         ToolTip="Map"
+                         Visibility="Collapsed">
+                    <TabItem.Header>
+                        <Image Source="Images\Map.png"
+                               Height="16" />
+                    </TabItem.Header>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
     </Grid>
 </UserControl>
