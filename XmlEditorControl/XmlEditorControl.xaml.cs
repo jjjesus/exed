@@ -229,46 +229,6 @@ namespace TreeListControl
 
         #endregion
 
-        #region MapControl
-
-        /// <summary>
-        ///   MapControl Dependency Property
-        /// </summary>
-        public static readonly DependencyProperty MapControlProperty = DependencyProperty.Register("MapControl", typeof (UIElement), typeof (XmlEditorControl),
-                                                                                                   new FrameworkPropertyMetadata(null,
-                                                                                                                                 new PropertyChangedCallback(
-                                                                                                                                     OnMapControlChanged)));
-
-        /// <summary>
-        ///   Gets or sets the MapControl property.  This dependency property 
-        ///   indicates ....
-        /// </summary>
-        public UIElement MapControl { get { return (UIElement) GetValue(MapControlProperty); } set { SetValue(MapControlProperty, value); } }
-
-        /// <summary>
-        ///   Handles changes to the MapControl property.
-        /// </summary>
-        private static void OnMapControlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as XmlEditorControl;
-            if (control == null) return;
-            control.map.Content = e.NewValue;
-            control.map.Visibility = Visibility.Visible;
-            control.map.IsSelected = true;
-            ((XmlEditorControl) d).OnMapControlChanged(e);
-        }
-
-        /// <summary>
-        ///   Provides derived classes an opportunity to handle changes to the MapControl property.
-        /// </summary>
-        protected virtual void OnMapControlChanged(DependencyPropertyChangedEventArgs e) { }
-
-        #endregion
-
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-
-        }
-
         #endregion
     }
 }

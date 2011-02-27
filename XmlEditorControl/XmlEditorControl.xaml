@@ -759,15 +759,6 @@
                                Height="16" />
                     </TabItem.Header>
                 </TabItem>
-                <TabItem x:Name="map"
-                         Template="{StaticResource RoundTab}"
-                         ToolTip="Map"
-                         Visibility="Collapsed">
-                    <TabItem.Header>
-                        <Image Source="Images\Map.png"
-                               Height="16" />
-                    </TabItem.Header>
-                </TabItem>
             </TabControl>
         </DockPanel>
     </Grid>

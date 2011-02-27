@@ -13,20 +13,6 @@ using TreeListControl.Tree;
 
 #endregion
 
-//todo Multi-line textbox 
-//todo Search functionality
-//todo Print (preview) - could use WebBrowser's Print (preview)
-//todo Refactor MVVM setup
-//todo Remove map
-//todo How to add a CDATA section?
-//todo Check undo functionality
-//bug What to do with empty elements (that have a value).
-//bug How can I delete a node that shouldn't be there, i.e. an element that should have no value?
-//todo How can make navigation with the keyboard easier: arrows, enter, insert, delete?
-//For later
-//todo XsltView doesn't scale
-//todo Can I use this editor to create XSDs, just like an XML tree, with types as value, and an optional column for annotations
-//todo Optionally, add dotted lines to connect treelistitems
 namespace TreeListControl
 {
 
