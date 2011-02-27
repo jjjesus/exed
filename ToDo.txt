@@ -1,6 +1,5 @@
 ToDo
 - Multi-line textbox 
-- Persist gridsplitter height
 - Search functionality
 - Print (preview) - could use WebBrowser's Print (preview)
 - Refactor MVVM setup

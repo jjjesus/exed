@@ -32,14 +32,11 @@ namespace TreeListControl
 
         public XmlEditorControl() {
             InitializeComponent();
-
-            //Loaded += XmlEditorControl_Loaded;
         }
 
-        //void XmlEditorControl_Loaded(object sender, RoutedEventArgs e) {
-        //    //InputBindings.Add(new KeyBinding(Presenter.UndoCommand, Key.Z, ModifierKeys.Control));
-        //    //InputBindings.Add(new KeyBinding(Presenter.RedoCommand, Key.Y, ModifierKeys.Control));
-        //}
+        ~XmlEditorControl() {
+            Properties.Settings.Default.Save();
+        }
 
         #endregion Constructors
 
@@ -150,47 +147,6 @@ namespace TreeListControl
         }
 
         #region Depency Properties
-
-        #region GridSplitterHeight
-
-        /// <summary>
-        ///   GridSplitterHeight Dependency Property
-        /// </summary>
-        public static readonly DependencyProperty GridSplitterHeightProperty = DependencyProperty.Register("GridSplitterHeight", typeof (decimal),
-                                                                                                           typeof (XmlEditorControl),
-                                                                                                           new FrameworkPropertyMetadata((decimal) 0,
-                                                                                                                                         new PropertyChangedCallback(
-                                                                                                                                             OnGridSplitterHeightChanged)));
-
-        /// <summary>
-        ///   Gets or sets the GridSplitterHeight property.  This dependency property 
-        ///   indicates ....
-        /// </summary>
-        public decimal GridSplitterHeight { get { return (decimal) GetValue(GridSplitterHeightProperty); } set { SetValue(GridSplitterHeightProperty, value); } }
-
-        /// <summary>
-        ///   Handles changes to the GridSplitterHeight property.
-        /// </summary>
-        private static void OnGridSplitterHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as XmlEditorControl;
-            if (control == null) return;
-            var view = control.FindName("altViewHeight") as RowDefinition;
-            if (view == null) return;
-            try {
-                view.Height = new GridLength(Convert.ToDouble(e.NewValue));
-            }
-            catch (Exception ex) {
-                view.Height = new GridLength(200);
-            }
-            ((XmlEditorControl) d).OnGridSplitterHeightChanged(e);
-        }
-
-        /// <summary>
-        ///   Provides derived classes an opportunity to handle changes to the GridSplitterHeight property.
-        /// </summary>
-        protected virtual void OnGridSplitterHeightChanged(DependencyPropertyChangedEventArgs e) { }
-
-        #endregion
 
         #region XsltView
 

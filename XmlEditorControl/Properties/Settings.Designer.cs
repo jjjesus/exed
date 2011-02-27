@@ -25,13 +25,13 @@ namespace TreeListControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
-        public global::System.Windows.GridLength ErrorColumnNameWidth {
+        [global::System.Configuration.DefaultSettingValueAttribute("Auto")]
+        public global::System.Windows.GridLength ErrorMessagesTabHeight {
             get {
-                return ((global::System.Windows.GridLength)(this["ErrorColumnNameWidth"]));
+                return ((global::System.Windows.GridLength)(this["ErrorMessagesTabHeight"]));
             }
             set {
-                this["ErrorColumnNameWidth"] = value;
+                this["ErrorMessagesTabHeight"] = value;
             }
         }
     }

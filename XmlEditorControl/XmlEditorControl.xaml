@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Tree="clr-namespace:TreeListControl.Tree"
              xmlns:Resources="clr-namespace:TreeListControl.Resources"
-             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
-             xmlns:Properties="clr-namespace:TreeListControl.Properties">
+             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" xmlns:Properties="clr-namespace:TreeListControl.Properties">
     <UserControl.Resources>
         <!--Round tab-->
         <ControlTemplate x:Key="RoundTab"
@@ -493,7 +492,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"
+            <RowDefinition Height="{Binding ErrorMessagesTabHeight, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}"
                            x:Name="altViewHeight" />
         </Grid.RowDefinitions>
         <!-- PresentationTraceSources.TraceLevel=High -->

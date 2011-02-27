@@ -2,8 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TreeListControl.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ErrorColumnNameWidth" Type="System.Windows.GridLength" Scope="User">
-      <Value Profile="(Default)">300</Value>
+    <Setting Name="ErrorMessagesTabHeight" Type="System.Windows.GridLength" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
     </Setting>
   </Settings>
 </SettingsFile>

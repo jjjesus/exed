@@ -62,6 +62,7 @@ namespace XmlEditor.Presentation
 
         protected override void OnExit(ExitEventArgs e) {
             controller.Shutdown();
+            //Presentation.Properties.Settings.Default.Save();
             base.OnExit(e);
         }
 
