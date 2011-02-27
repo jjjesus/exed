@@ -1,7 +1,62 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{E4E455D8-0A42-4563-B98E-7D70E8A2AEDB}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\WpfApplicationFramework.dll = Dependencies\WpfApplicationFramework.dll
+		Dependencies\WpfApplicationFramework.pdb = Dependencies\WpfApplicationFramework.pdb
+		Dependencies\WpfApplicationFramework.xml = Dependencies\WpfApplicationFramework.xml
+		Dependencies\WPFToolkit.dll = Dependencies\WPFToolkit.dll
+		Dependencies\WPFToolkit.pdb = Dependencies\WPFToolkit.pdb
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlEditor.Applications", "XmlEditor.Applications\XmlEditor.Applications.csproj", "{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlEditor.Presentation", "XmlEditor.Presentation\XmlEditor.Presentation.csproj", "{664C724F-6FE6-473F-8771-4DE45940E631}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlEditorControl", "XmlEditorControl\XmlEditorControl.csproj", "{D17CD489-1B14-47EB-8C22-C189D078AEC9}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D6A1CE30-71A8-4777-AF99-6C70BDB0C618}.Release|x86.ActiveCfg = Release|Any CPU
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Debug|x86.ActiveCfg = Debug|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Debug|x86.Build.0 = Debug|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Release|Any CPU.ActiveCfg = Release|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Release|Mixed Platforms.Build.0 = Release|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Release|x86.ActiveCfg = Release|x86
+		{664C724F-6FE6-473F-8771-4DE45940E631}.Release|x86.Build.0 = Release|x86
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D17CD489-1B14-47EB-8C22-C189D078AEC9}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

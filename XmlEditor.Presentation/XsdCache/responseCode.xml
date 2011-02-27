@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="responsecode.xsl"?>
+<root xmlns="http://foo.bar/responsecode.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://foo.bar/responsecode.xsd responsecode.xsd">
+    <responses>
+        <response code="firstCode">
+                <description>Explanation of first code</description>
+        </response>
+        <response code="secondCode">
+                <description>Explanation of second code</description>
+        </response>
+        <response code="thirdCode">
+                <description>Explanation of third code.</description>
+        </response>
+    </responses>
+</root>

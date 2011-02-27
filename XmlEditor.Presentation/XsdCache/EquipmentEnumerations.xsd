@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?purpose description="This schema defines the Enumeration of the Units in the Military Scenario" ?>
+<?version number="0.1" block="D" date="March 30, 2005"?>
+<?copyright statement="This work was generated under U.S. Government contract and the government has unlimited data rights therein." classification="Unclassified" projectName="OneSAF Objective System Military Scenario Definition Language" contractNumber="#N61339-02-6-0047" taskOrder="MSDE" copyrights="Copyrights 2001-2004. Acusoft Inc. All rights reserved." distribution statement="APPROVED FOR PUBLIC RELEASE; DISTRIBUTION IS UNLIMITED"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+		<xs:simpleType name="EquipmentEnumeration">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="1.X.3.2">
+					<xs:annotation>
+						<xs:documentation>MS2525B hierarchial representation of equipment</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1">
+					<xs:annotation>
+						<xs:documentation>Weapon category of MS 2525B equipment</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1">
+					<xs:annotation>
+						<xs:documentation>Missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.1">
+					<xs:annotation>
+						<xs:documentation> Air defense (AD) missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.1.1">
+					<xs:annotation>
+						<xs:documentation>Short range air defense missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.1.2">
+					<xs:annotation>
+						<xs:documentation>Intermediate range air defense missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.1.3">
+					<xs:annotation>
+						<xs:documentation>Long range air defense missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.1.4">
+					<xs:annotation>
+						<xs:documentation>Theater air defense missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.2">
+					<xs:annotation>
+						<xs:documentation>Surface to surface  missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.2.1">
+					<xs:annotation>
+						<xs:documentation>Short range surface to surface  missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.2.2">
+					<xs:annotation>
+						<xs:documentation>Intermediate range surface to surface missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.2.3">
+					<xs:annotation>
+						<xs:documentation>Long range surface to surface missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.3">
+					<xs:annotation>
+						<xs:documentation>Antitank missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.3.1">
+					<xs:annotation>
+						<xs:documentation>Light antitank missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.3.2">
+					<xs:annotation>
+						<xs:documentation>Medium antitank missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.1.3.3">
+					<xs:annotation>
+						<xs:documentation>Heavy antitank missile launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.2">
+					<xs:annotation>
+						<xs:documentation>Single rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.2.1">
+					<xs:annotation>
+						<xs:documentation>Light single rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.2.2">
+					<xs:annotation>
+						<xs:documentation>Medium single rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.2.3">
+					<xs:annotation>
+						<xs:documentation>Heavy single rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.3">
+					<xs:annotation>
+						<xs:documentation>Multiple rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.3.1">
+					<xs:annotation>
+						<xs:documentation>Light multiple rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.3.2">
+					<xs:annotation>
+						<xs:documentation>Medium multiple rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.3.3">
+					<xs:annotation>
+						<xs:documentation>Heavy multiple rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.4">
+					<xs:annotation>
+						<xs:documentation>Antitank rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.4.1">
+					<xs:annotation>
+						<xs:documentation>Light antitank rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.4.2">
+					<xs:annotation>
+						<xs:documentation>Medium antitank rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.4.3">
+					<xs:annotation>
+						<xs:documentation>Heavy antitank rocket launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.5">
+					<xs:annotation>
+						<xs:documentation>Rifle/automatic weapon</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.5.1">
+					<xs:annotation>
+						<xs:documentation>Rifle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.5.2">
+					<xs:annotation>
+						<xs:documentation>Light machine gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.5.3">
+					<xs:annotation>
+						<xs:documentation>Heavy machine gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.6">
+					<xs:annotation>
+						<xs:documentation>Grenade Launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.6.1">
+					<xs:annotation>
+						<xs:documentation>Light grenade launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.6.2">
+					<xs:annotation>
+						<xs:documentation>Medium grenade launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.6.3">
+					<xs:annotation>
+						<xs:documentation>Heavy grenade launcher</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.7">
+					<xs:annotation>
+						<xs:documentation>Mortar</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.7.1">
+					<xs:annotation>
+						<xs:documentation>Light mortar</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.7.2">
+					<xs:annotation>
+						<xs:documentation>Medium mortar</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.7.3">
+					<xs:annotation>
+						<xs:documentation>Heavy mortar</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8">
+					<xs:annotation>
+						<xs:documentation>Howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8.1">
+					<xs:annotation>
+						<xs:documentation>Light howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8.1.1">
+					<xs:annotation>
+						<xs:documentation>Light self-propelled howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8.2">
+					<xs:annotation>
+						<xs:documentation>Medium howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8.2.1">
+					<xs:annotation>
+						<xs:documentation>Medium self-propelled howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8.3">
+					<xs:annotation>
+						<xs:documentation>Heavy howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.8.3.1">
+					<xs:annotation>
+						<xs:documentation>Heavy self-propelled howitzer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.9">
+					<xs:annotation>
+						<xs:documentation>Antitank gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.9.1">
+					<xs:annotation>
+						<xs:documentation>Light antitank gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.9.2">
+					<xs:annotation>
+						<xs:documentation>Medium antitank gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.9.3">
+					<xs:annotation>
+						<xs:documentation>Heavy antitank gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.9.4">
+					<xs:annotation>
+						<xs:documentation>Recoilless antitank gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10">
+					<xs:annotation>
+						<xs:documentation>Direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10.1">
+					<xs:annotation>
+						<xs:documentation>Light direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10.1.1">
+					<xs:annotation>
+						<xs:documentation>Light self-propelled direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10.2">
+					<xs:annotation>
+						<xs:documentation>Medium direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10.2.1">
+					<xs:annotation>
+						<xs:documentation>Medium self-propelled direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10.3">
+					<xs:annotation>
+						<xs:documentation>Heavy direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.10.3.1">
+					<xs:annotation>
+						<xs:documentation>Heavy self-propelled direct fire gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.11">
+					<xs:annotation>
+						<xs:documentation>Air defense gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.11.1">
+					<xs:annotation>
+						<xs:documentation>Light air defense gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.11.2">
+					<xs:annotation>
+						<xs:documentation>Medium air defense gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.1.11.3">
+					<xs:annotation>
+						<xs:documentation>Heavy air defense gun</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2">
+					<xs:annotation>
+						<xs:documentation>Ground vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1">
+					<xs:annotation>
+						<xs:documentation>Armored</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1">
+					<xs:annotation>
+						<xs:documentation>Tank</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1.1">
+					<xs:annotation>
+						<xs:documentation>Light tank</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1.1.1">
+				<xs:annotation>
+				<xs:documentation>Recovery light tank</xs:documentation>
+				</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1.2">
+					<xs:annotation>
+						<xs:documentation>Medium tank</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1.2.1">
+				<xs:annotation>
+				<xs:documentation>Recovery medium tank</xs:documentation>
+				</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1.3">
+					<xs:annotation>
+						<xs:documentation>Heavy tank</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.1.3.1">
+					<xs:annotation>
+						<xs:documentation>Recovery heavy tank</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.2">
+					<xs:annotation>
+						<xs:documentation>Armored personnel carrier</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.2.1">
+					<xs:annotation>
+						<xs:documentation>Recovery armored personnel carrier</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.3">
+					<xs:annotation>
+						<xs:documentation>Armored infantry</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.4">
+					<xs:annotation>
+						<xs:documentation>C2V/ACV</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.5">
+					<xs:annotation>
+						<xs:documentation>Combat service support vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.1.6">
+					<xs:annotation>
+						<xs:documentation>Light armored vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.2">
+					<xs:annotation>
+						<xs:documentation>Utility vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.2.1">
+					<xs:annotation>
+						<xs:documentation>Bus</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.2.2">
+					<xs:annotation>
+						<xs:documentation>Semi</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.2.3">
+					<xs:annotation>
+						<xs:documentation>Limited cross-country truck</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.2.4">
+					<xs:annotation>
+						<xs:documentation>Cross-country truck</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.2.5">
+					<xs:annotation>
+						<xs:documentation>Water craft</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3">
+					<xs:annotation>
+						<xs:documentation>Engineer vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.1">
+					<xs:annotation>
+						<xs:documentation>Bridge</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.2">
+					<xs:annotation>
+						<xs:documentation>Earthmover</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.3">
+					<xs:annotation>
+						<xs:documentation>Construction vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.4">
+					<xs:annotation>
+						<xs:documentation>Mine laying vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.4.1">
+					<xs:annotation>
+						<xs:documentation>Armored carrier with volcano</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.4.2">
+					<xs:annotation>
+						<xs:documentation>Truck mounted with volcano</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.5">
+					<xs:annotation>
+						<xs:documentation>Mine clearing vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.5.1">
+					<xs:annotation>
+						<xs:documentation>Armored vehicle mounted mine clearing vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.5.2">
+					<xs:annotation>
+						<xs:documentation> Trailer mounted mine clearing vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.3.6">
+					<xs:annotation>
+						<xs:documentation>Dozer</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.4">
+					<xs:annotation>
+						<xs:documentation>Train locomotive</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.2.5">
+					<xs:annotation>
+						<xs:documentation>Civilian vehicle</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.3">
+					<xs:annotation>
+						<xs:documentation>Sensor</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.3.1">
+					<xs:annotation>
+						<xs:documentation>Radar</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.3.2">
+					<xs:annotation>
+						<xs:documentation>Emplaced</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4">
+					<xs:annotation>
+						<xs:documentation>Special</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4.1">
+					<xs:annotation>
+						<xs:documentation>Laser</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4.2">
+					<xs:annotation>
+						<xs:documentation>NBC Equipment</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4.3">
+					<xs:annotation>
+						<xs:documentation>Flame thrower</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4.4">
+					<xs:annotation>
+						<xs:documentation>Land mines</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4.4.1">
+					<xs:annotation>
+						<xs:documentation>Claymore land mines</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="1.X.3.2.4.4.2">
+					<xs:annotation>
+						<xs:documentation>Less than lethal land mines</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,4516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?purpose description="This schema defines the Military Scenario" ?>
+<?version number="4.1.0" block="D" build="24" date="March 15, 2005"?>
+<?dataSource source="N/A" version="N/A" description="N/A"?>
+<?copyright statement="This work was generated under U.S. Government contract and the government has unlimited data rights therein." classification="Unclassified" projectName="OneSAF Objective System Military Scenario Definition Language" contractNumber="#N61339-02-6-0047" taskOrder="MSDE" copyrights="Copyrights 2001-2004. Acusoft Inc. All rights reserved." distribution statement="APPROVED FOR PUBLIC RELEASE; DISTRIBUTION IS UNLIMITED"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="4.1.0" id="MSDL">
+	<xs:include schemaLocation="UnitEnumerations.xsd"/>
+	<xs:include schemaLocation="EquipmentEnumerations.xsd"/>
+	<xs:include schemaLocation="TaskEnumerations.xsd"/>
+	<xs:element name="TaskOrganizations">
+		<xs:annotation>
+			<xs:documentation>TheTask Organizations and Equipment of the Military Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Units"/>
+				<xs:element ref="Equipment" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OrganicSuperiorHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>Reference to the unit Organic Unit information.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ForceRelation">
+		<xs:annotation>
+			<xs:documentation>The command relationship between this unit/equipment and its commanding unit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="CommandRelation"/>
+				<xs:element ref="ForceSideHandle"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommandRelation">
+		<xs:annotation>
+			<xs:documentation>The command relationship between this unit/equipment and its commanding unit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="CommandingSuperiorHandle"/>
+				<xs:element ref="CommandRelationshipType"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommandingSuperiorHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>Unique identifier of the unit to which this unit is under the command of.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CommandedUnitHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>Unique identifier of the unit to whose command superior is to change.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CommandRelationshipType">
+		<xs:annotation>
+			<xs:documentation>Type of command under which the unit has been task organized as taken from FM 100-7 'The Army In Theater Operations'</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ORGANIC"/>
+				<xs:enumeration value="ATTACHED"/>
+				<xs:enumeration value="OPCON"/>
+				<xs:enumeration value="TACON"/>
+				<xs:enumeration value="ADCON"/>
+				<xs:enumeration value="NONE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CommandRelationChanges">
+		<xs:annotation>
+			<xs:documentation>The command  relationship changes for the COA, Phase of COA, or subordinate tasking.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="CommandRelationChange" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommandRelationChange">
+		<xs:annotation>
+			<xs:documentation>The command  relationship changes for the COA, Phase of COA, or subordinate tasking.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="CommandingSuperiorHandle"/>
+				<xs:element ref="CommandedUnitHandle"/>
+				<xs:element ref="CommandRelationshipType"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PriorityToSupport">
+		<xs:annotation>
+			<xs:documentation> The Supporting Unit's priority to Support another unit from 1 to N where 1 is the top priority. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:integer"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SupportRelationChanges">
+		<xs:annotation>
+			<xs:documentation>The identification of the Units in support of the Command Unit for a Course of Action.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="SupportRelationChange"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SupportRelationChange">
+		<xs:annotation>
+			<xs:documentation>The support relationship of the Supported unit with respect to the Supporting unit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="SupportingUnitHandle"/>
+				<xs:element ref="SupportedUnitHandle"/>
+				<xs:element ref="PriorityToSupport" minOccurs="0"/>
+				<xs:element ref="SupportType"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SupportedUnitHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>Unique identifier of the unit to which this unit provides support.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SupportRelations">
+		<xs:annotation>
+			<xs:documentation>The identification of the Units that are being supported and the priority of that support.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="SupportRelation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SupportRelation">
+		<xs:annotation>
+			<xs:documentation>The support relationship of this unit with respect to the unit being supported.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="SupportedUnitHandle" minOccurs="0"/>
+				<xs:element ref="PriorityToSupport" minOccurs="0"/>
+				<xs:element ref="SupportType" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SupportingUnitHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>Unique identifier of the unit in support of this unit.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SupportType">
+		<xs:annotation>
+			<xs:documentation>Type of support this unit provides the supported unit.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="GS"/>
+				<xs:enumeration value="DS"/>
+				<xs:enumeration value="RS"/>
+				<xs:enumeration value="GS-R"/>
+				<xs:enumeration value="NONE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ForceSideHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A UUID reference to the Force or Side information.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SideHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A UUID reference to a Side of the military scenario.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ObjectHandle" type="UUID">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of an object</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Echelon" type="Echelon">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifier that identifies Command level.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:simpleType name="ParagraphText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CommunicationNetType">
+		<xs:annotation>
+			<xs:documentation>The typical list of Communications Net Types for Army Units.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OTHER"/>
+			<xs:enumeration value="COMMAND_NET"/>
+			<xs:enumeration value="OPERATIONS_INTELLIGENCE_NET"/>
+			<xs:enumeration value="ADMIN_LOGISTICS_NET"/>
+			<xs:enumeration value="FIRE_SUPPORT_NET"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Echelon">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifier that identifies Command level.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value="TEAM"/>
+			<xs:enumeration value="CREW"/>
+			<xs:enumeration value="SQUAD"/>
+			<xs:enumeration value="SECTION"/>
+			<xs:enumeration value="PLATOON"/>
+			<xs:enumeration value="DETACHMENT"/>
+			<xs:enumeration value="COMPANY"/>
+			<xs:enumeration value="BATTERY"/>
+			<xs:enumeration value="TROOP"/>
+			<xs:enumeration value="BATTALION"/>
+			<xs:enumeration value="SQUADRON"/>
+			<xs:enumeration value="REGIMENT"/>
+			<xs:enumeration value="GROUP"/>
+			<xs:enumeration value="BRIGADE"/>
+			<xs:enumeration value="DIVISION"/>
+			<xs:enumeration value="CORPS"/>
+			<xs:enumeration value="ARMY"/>
+			<xs:enumeration value="ARMYGROUP"/>
+			<xs:enumeration value="FRONT"/>
+			<xs:enumeration value="REGION"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:annotation>
+			<xs:documentation>Country code as defined in FIPS PUB 10-4</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z*]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SymbolID">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B 15 character Symbol identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="15"/>
+			<xs:pattern value="[SGWIMO]{1}[PUAFNSHJKO\-*]{1}[PAGMOSTUFVX\-]{1}[AP\-*]{1}[A-Z\-]{6}[A-Z\-\*]{1}[A-Z\-\*]{1}[A-Z\-\*]{2}[AECGNSX\-\*]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of an object as defined ISO/IEC 11578:1996 Information technology - Open Systems Interconnection - Remote Procedure Call RPC.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9a-z]{8}\-[0-9a-z]{4}\-[0-9a-z]{4}\-[0-9a-z]{4}\-[0-9a-z]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UUID">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of an object as defined ISO/IEC 11578:1996 Information technology - Open Systems Interconnection - Remote Procedure Call RPC.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9a-z]{8}\-[0-9a-z]{4}\-[0-9a-z]{4}\-[0-9a-z]{4}\-[0-9a-z]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DTG">
+		<xs:annotation>
+			<xs:documentation>The DateTime Group format DDHHMMSSZMONYY.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[A-Z]{1}[A-Z]{3}[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DTGRelative">
+		<xs:annotation>
+			<xs:documentation>The DateTime Group format DDHHMMSS relative to ScenarioTime.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Time24Hour">
+		<xs:annotation>
+			<xs:documentation>The relative DateTime Group format HHMMSS.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{2}[0-9]{2}[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Coordinates">
+		<xs:annotation>
+			<xs:documentation>A data structure containg the coordinates </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="MGRS"/>
+			<xs:element ref="UTM"/>
+			<xs:element ref="GDC"/>
+			<xs:element ref="GCC"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="Location" type="Coordinates">
+		<xs:annotation>
+			<xs:documentation>The coordinates of an object</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GDC">
+		<xs:annotation>
+			<xs:documentation>Geodetic coordinates in fractional degress of latitude and longitude</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Latitude"/>
+				<xs:element ref="Longitude"/>
+				<xs:element ref="ElevationAGL"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DirectionOfMovement">
+		<xs:annotation>
+			<xs:documentation>The Direction of Movement, in compass degrees, of a scenario element.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="360.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ElevationAGL">
+		<xs:annotation>
+			<xs:documentation>The Altitude, in meters, of a position above ground level.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="-1000.0"/>
+				<xs:maxInclusive value="100000.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MGRSPrecision">
+		<xs:annotation>
+			<xs:documentation>The precision, 2 (km) to 5 (meters), used for each MGRS coordinate</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="2"/>
+				<xs:maxInclusive value="5"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MGRS">
+		<xs:annotation>
+			<xs:documentation>MGRS coordinate</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="MGRSGridZone"/>
+				<xs:element ref="MGRSGridSquare"/>
+				<xs:element ref="MGRSPrecision"/>
+				<xs:element ref="MGRSEasting"/>
+				<xs:element ref="MGRSNorthing"/>
+				<xs:element ref="ElevationAGL" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UTM">
+		<xs:annotation>
+			<xs:documentation>Universal Transverse Mercator Coordinate</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="UTMGridZone"/>
+				<xs:element ref="UTMEasting"/>
+				<xs:element ref="UTMNorthing"/>
+				<xs:element ref="ElevationAGL" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GCC">
+		<xs:annotation>
+			<xs:documentation>Geocentric Coordinate</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="X"/>
+				<xs:element ref="Y"/>
+				<xs:element ref="Z"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MGRSGridZone">
+		<xs:annotation>
+			<xs:documentation>The MGRS Grid Zone designator, to include the number and letter as defined by NIMA TM 8358.1</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="3"/>
+				<xs:pattern value="[0-9]{2}[ABCDEFGHJKLMNPQRSTUVWXYZ]{1}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UTMGridZone">
+		<xs:annotation>
+			<xs:documentation>The UTM Grid Zone designator, to include the number and letter as defined by NIMA TM 8358.1</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="3"/>
+				<xs:pattern value="[0-9]{2}[NS]{1}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MGRSGridSquare">
+		<xs:annotation>
+			<xs:documentation>The MGRS one hundred thousand meter grid square designator, as defined by NIMA TM 8358.1</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="2"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MGRSEasting">
+		<xs:annotation>
+			<xs:documentation>The easting component of the MGRS coordindate to the precsion value of the MGRS precision element.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:long">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="99999"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MGRSNorthing">
+		<xs:annotation>
+			<xs:documentation>The northing component of the MGRS coordindate to the precsion value of the MGRS precision element.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:long">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="99999"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UTMEasting">
+		<xs:annotation>
+			<xs:documentation>The easting component of the UTM coordindate to the precsion value of the MGRS precision element.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UTMNorthing">
+		<xs:annotation>
+			<xs:documentation>The northing component of the UTM coordindate to the precsion value of the MGRS precision element.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Longitude">
+		<xs:annotation>
+			<xs:documentation>Fractional degrees of longitude.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:maxInclusive value="180."/>
+				<xs:minExclusive value="-180."/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Latitude">
+		<xs:annotation>
+			<xs:documentation>Fractional degress of latitude.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:maxInclusive value="180.0"/>
+				<xs:minExclusive value="-180.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="X" type="xs:double">
+		<xs:annotation>
+			<xs:documentation>The double precision X component of the Geocetric coordindate.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Y" type="xs:double">
+		<xs:annotation>
+			<xs:documentation>The double precision Y component of the Geocetric coordindate.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Z" type="xs:double">
+		<xs:annotation>
+			<xs:documentation>The double precision Z component of the Geocetric coordindate.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Name">
+		<xs:annotation>
+			<xs:documentation> Unabbreviated  designation. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CommunicationNetInstances">
+		<xs:annotation>
+			<xs:documentation>The communication nets that the unit or defines for communicate with other units during a mission </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="CommunicationNetInstance"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommunicationNetReferences">
+		<xs:annotation>
+			<xs:documentation>The communication nets that equipment uses/subscribes to in order to communicate with other items of equipment.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="CommunicationNetReference"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommunicationNetInstance">
+		<xs:annotation>
+			<xs:documentation>An instance of a Communication net defined for a unit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="CommunicationNetType" minOccurs="0"/>
+				<xs:element ref="CommunicationNetId"/>
+				<xs:element ref="CommunicationService"/>
+			</xs:all>
+		</xs:complexType>
+		<xs:unique name="CommunicationNet">
+			<xs:selector xpath="parent.parent"/>
+			<xs:field xpath="ObjectHandle"/>
+			<xs:field xpath="CommunicationNetInstances/CommunicationNetInstance/CommunicationNetID"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="CommunicationNetType" type="CommunicationNetType" default="COMMAND_NET">
+		<xs:annotation>
+			<xs:documentation>The tactical use/purporse of communication network</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CommunicationService" default="VOCSVC">
+		<xs:simpleType>
+			<xs:annotation>
+				<xs:documentation>The typical list of Communications Net Types for Army Units.</xs:documentation>
+			</xs:annotation>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="DATTRF">
+					<xs:annotation>
+						<xs:documentation>Data Transfer.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="FAX">
+					<xs:annotation>
+						<xs:documentation>Facsimile.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="IIF">
+					<xs:annotation>
+						<xs:documentation>Identify Friend or Foe.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="IMAGE">
+					<xs:annotation>
+						<xs:documentation>Image.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="MCI">
+					<xs:annotation>
+						<xs:documentation>MCI.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="MHS">
+					<xs:annotation>
+						<xs:documentation>Message Handling Service.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="TDL">
+					<xs:annotation>
+						<xs:documentation>Tactical Data Link.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="VIDSVC">
+					<xs:annotation>
+						<xs:documentation>Video Service.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="VOCSVC">
+					<xs:annotation>
+						<xs:documentation>Voice Service.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="NOS">
+					<xs:annotation>
+						<xs:documentation>Not Otherwise Specified</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CommunicationNetReference">
+		<xs:annotation>
+			<xs:documentation>The reference to a CommunicationNetInstance that equipment monitors or uses to communicate with a mission.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CommunicationNetId"/>
+				<xs:element ref="UnitOwnerHandle"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommunicationNetId">
+		<xs:annotation>
+			<xs:documentation>The Name or ID of the Communication net</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="URN">
+		<xs:annotation>
+			<xs:documentation>The Unit Reference Number of the Digital communications device</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="12"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UnitOwnerHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A UUID reference to the Unit that owns a particular item of data as part of that unit's Plan.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UnitHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A UUID reference to the Unit being referenced.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Enumeration">
+		<xs:annotation>
+			<xs:documentation>The enumeration of the object that is of the EnumerationStandard named in the Options.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Orientation">
+		<xs:annotation>
+			<xs:documentation>Orientation in compass degrees for units, and equipment.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="360.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Description">
+		<xs:annotation>
+			<xs:documentation>The Objective Description or Statement.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="1024"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CoursesOfAction">
+		<xs:annotation>
+			<xs:documentation>The identification of Planned COAs to be executed as part of the Military Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="COA"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PriorityOfEffort">
+		<xs:annotation>
+			<xs:documentation> The priority to support by BOS, that identifies the support priority to be given to units by battlefield operating system. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="COA">
+		<xs:annotation>
+			<xs:documentation>A Plan or COA to be executed as part of the Military Scenario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="UnitOwnerHandle"/>
+				<xs:element ref="WhyEnumeration"/>
+				<xs:element ref="ActivityType"/>
+				<xs:element ref="COAPurpose" minOccurs="0"/>
+				<xs:element ref="COAStatus"/>
+				<xs:element ref="COAType"/>
+				<xs:element ref="DecisionSupportMatrix" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Decision Support Matrix used to identify or execute events across a single (this) Phase of a COA.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="PriorityOfEfforts" minOccurs="0"/>
+				<xs:element ref="COAPhases" minOccurs="0"/>
+				<xs:element ref="SupportRelationChanges" minOccurs="0"/>
+				<xs:element ref="CommandRelationChanges" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DecisionSupportMatrix" type="DecisionSupportMatrix">
+		<xs:annotation>
+			<xs:documentation>The Decision Support Matrix used to control execution across the phases of a COA.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="COAPurpose">
+		<xs:annotation>
+			<xs:documentation> The purpose of the course of action</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="DEFENSIVE"/>
+				<xs:enumeration value="OFFENSIVE"/>
+				<xs:enumeration value="HOLDING"/>
+				<xs:enumeration value="SUPPORT"/>
+				<xs:enumeration value="MOVEMENT"/>
+				<xs:enumeration value="MULTIPLE"/>
+				<xs:enumeration value="NOT_SPECIFIED"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="COAStatus">
+		<xs:annotation>
+			<xs:documentation> The status of the course of action.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="AUTHORIZED"/>
+				<xs:enumeration value="PLANNED"/>
+				<xs:enumeration value="POSTPONED"/>
+				<xs:enumeration value="PROPOSED"/>
+				<xs:enumeration value="REQUESTED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="COAType">
+		<xs:annotation>
+			<xs:documentation> The type of course of action or plan.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ADMIN_LOG_ORDER"/>
+				<xs:enumeration value="AIR_MEDEVAC_MISSION"/>
+				<xs:enumeration value="AIR_MISSION_NOT_FURTHER_SPECIFIED"/>
+				<xs:enumeration value="AIR_TASKING_ORDER"/>
+				<xs:enumeration value="BATTLE_COMMAND_ORDER"/>
+				<xs:enumeration value="CAMPAIGN_PLAN"/>
+				<xs:enumeration value="CONVENTIONAL_FIRE_MISSION"/>
+				<xs:enumeration value="COURSE_OF_ACTION"/>
+				<xs:enumeration value="EX-ORD"/>
+				<xs:enumeration value="EX-PLAN"/>
+				<xs:enumeration value="FIRE_PLAN"/>
+				<xs:enumeration value="FIRE_SUPPORT_ORDER"/>
+				<xs:enumeration value="FIRE_SUPPORT_PLAN"/>
+				<xs:enumeration value="FRAGO"/>
+				<xs:enumeration value="GROUND_MEDEVAC_MISSION"/>
+				<xs:enumeration value="OPLAN"/>
+				<xs:enumeration value="OPORD"/>
+				<xs:enumeration value="SECURITY_KEY_MANAGEMENT_PLAN"/>
+				<xs:enumeration value="SIGNAL_ORDER"/>
+				<xs:enumeration value="WARNING_ORDER"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:complexType name="DecisionSupportMatrix">
+		<xs:annotation>
+			<xs:documentation>The Decision Support Matrix used to trigger COAs, Phases, and Events</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element ref="DecisionPoints"/>
+			<xs:element ref="Triggers" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="COAPhases">
+		<xs:annotation>
+			<xs:documentation>The identification of a Course of Action.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="COAPhase"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PhaseSequence" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>The sequence of a phase within a COA</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="COAPhase">
+		<xs:annotation>
+			<xs:documentation>A Phase of a course of action.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="PhaseSequence"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="DecisionPointHandle" minOccurs="0"/>
+				<xs:element ref="PhaseEvents"/>
+				<xs:element ref="DecisionSupportMatrix" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Decision Support Matrix used to identify or execute events across a single (this) Phase of a COA.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SupportRelationChanges" minOccurs="0"/>
+				<xs:element ref="CommandRelationChanges" minOccurs="0"/>
+				<xs:element name="PriorityOfFiresUnitHandle" type="UUIDRef" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A reference to the unit to receive top priority of fires.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PriorityOfMunitionsUnitHandle" type="UUIDRef" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A reference to the unit to receive top priority of munitions resupply.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PriorityOfSupportUnitHandle" type="UUIDRef" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A reference to the unit to receive top priority of support.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="PriorityOfEfforts" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PriorityOfEfforts">
+		<xs:annotation>
+			<xs:documentation>The specification of the priority of efforts by BOS category of Chemical, Engineer, Fires, and Intelligence.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ChemicalPriorities"/>
+				<xs:element ref="EngineerPriorities"/>
+				<xs:element ref="FiresPriorities"/>
+				<xs:element ref="IntelligencePriorities"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ChemicalPriorities">
+		<xs:annotation>
+			<xs:documentation>The specification of priorities for Chemical efforts.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="ReconnaissancePriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DecomtaminationPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SmokePriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IntelligencePriorities">
+		<xs:annotation>
+			<xs:documentation>The specification of priorities for Intelligence efforts.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="SituationDevelopmentPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TargetingPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BattleDamageAssessmentPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FiresPriorities">
+		<xs:annotation>
+			<xs:documentation>The specification of priorities for Fires efforts.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="InterdictionPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CloseSupportPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DeepPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterFirePriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterBatteryPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterMortarPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterSmokePriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterIlluminationPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterMinesPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EngineerPriorities">
+		<xs:annotation>
+			<xs:documentation>The specification of priorities for Engineer efforts.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="MobilityPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CounterMobilityPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SurvivabilityPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SustainmentPriority" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="PriorityCode">
+		<xs:annotation>
+			<xs:documentation>1= top priority, 2=urgent, 3=normal, 4=routine, 5=unknown</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PhaseEvents">
+		<xs:annotation>
+			<xs:documentation>The identification of the anticipated and/or planned Events of a COA Phase.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Event"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UnitActivities">
+		<xs:annotation>
+			<xs:documentation>The identification of Actions or Activities to be executed at an Event by units of a task organization.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Activity"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Event">
+		<xs:annotation>
+			<xs:documentation>An Event in a COA Phase which represents a column of an execution matrix.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="EventSequence"/>
+				<xs:element ref="DecisionPointHandle"/>
+				<xs:element ref="EventStatus"/>
+				<xs:element ref="EventEffect"/>
+				<xs:element ref="EventThreatActivities" minOccurs="0"/>
+				<xs:element ref="Triggers" minOccurs="0"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="UnitActivities"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EventSequence" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>The sequence of an event within a phase.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="EventThreatActivities">
+		<xs:annotation>
+			<xs:documentation>The identification of the estimate Actions or Activities to be executed by Threats during a specific event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="EventThreatActivity"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EventThreatActivity">
+		<xs:annotation>
+			<xs:documentation>The identification of the Threat Activities that may impact on the situation, thereby affecting the Event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ThreatHandle" minOccurs="0"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="MostDangerousActivityHandle" minOccurs="0"/>
+				<xs:element ref="MostProbableActivityHandle"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ThreatHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A reference to a Threat that may impact on the situation in context to an Event.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MostDangerousActivityHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A reference to a Threat's most dangerous activity in context to the Event</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MostProbableActivityHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A reference to a Threat's most likely activity in context to the Event</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Activity">
+		<xs:annotation>
+			<xs:documentation>The activity to be executed by a unit for an Phase's Event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="UnitOwnerHandle"/>
+				<xs:element ref="TriggerHandle"/>
+				<xs:element ref="ActivityData"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="UnitActivityType" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UnitActivityType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="TASK"/>
+				<xs:enumeration value="COA"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ActivityType">
+		<xs:annotation>
+			<xs:documentation>The C2IEDM action type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ENEMY_MOST_PROBABLE_COA"/>
+				<xs:enumeration value="ENEMY_MOST_DANGEROUS_COA"/>
+				<xs:enumeration value="MISSION_TWO_LEVELS_UP"/>
+				<xs:enumeration value="MISSION_ONE_LEVEL_UP"/>
+				<xs:enumeration value="MISSION_LEFT_FLANK_UNIT"/>
+				<xs:enumeration value="MISSION_RIGHT_FLANK_UNIT"/>
+				<xs:enumeration value="MISSION_FORWARD_UNIT"/>
+				<xs:enumeration value="MISSION_REAR_UNIT"/>
+				<xs:enumeration value="MISSION_DEEP_UNIT"/>
+				<xs:enumeration value="MISSION_RESERVE_UNIT"/>
+				<xs:enumeration value="UNIT_MISSION"/>
+				<xs:enumeration value="OPERATION_MAIN_EFFORT"/>
+				<xs:enumeration value="OPERATION_SUPPORTING_EFFORT"/>
+				<xs:enumeration value="OPERATION_DEEP_BATTLE"/>
+				<xs:enumeration value="OPERATION_REAR_BATTLE"/>
+				<xs:enumeration value="OPERATION_SECURITY"/>
+				<xs:enumeration value="OPERATION_RESERVE"/>
+				<xs:enumeration value="TASKS_TO_MANEUVER_UNITS"/>
+				<xs:enumeration value="TASKS_TO_COMBAT_SUPPORT_UNITS"/>
+				<xs:enumeration value="FRIENDLY_EVENT"/>
+				<xs:enumeration value="ENEMY_EVENT"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="WhyEnumeration">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="AIR_SUPERIORITY">
+					<xs:annotation>
+						<xs:documentation>That degree of dominance in the air battle of one force over another which permits the conduct of operations by the former and its related land, sea, and air forces at a given time and place without prohibitive interference by the opposing force. (FM 101-</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="AIR_SUPREMACY">
+					<xs:annotation>
+						<xs:documentation>That degree of air superiority wherein the oppossing air force is incapable of effective interference.  (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ALLOW">
+					<xs:annotation>
+						<xs:documentation>To let do or happen. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ATTRITION">
+					<xs:annotation>
+						<xs:documentation>The reduction in the effectiveness of a force caused by loss of personnel and materiel. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="AVOID">
+					<xs:annotation>
+						<xs:documentation>To keep from happening. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BATTLE_DAMAGE_ASSESMENT">
+					<xs:annotation>
+						<xs:documentation>The timely and accurate estimate of damage resulting from the application of military force, either lethal or nonlethal, against a predetermined objective. Battle damage assessment can be applied to the employment of all types of weapon systems (air, grou</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BLOCK">
+					<xs:annotation>
+						<xs:documentation>A tactical task assigned to a unit that requires it to deny the enemy access to a given area or to prevent enemy advance in a given direction or an avenue of approach. It may be for a specified time. Units assigned this mission may have to retain terrain</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BREACH">
+					<xs:annotation>
+						<xs:documentation>A tactical task where any means available are employed to break through or secure a passage through an enemy defense, obstacle, minefield, or fortification. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BREAKTHROUGH">
+					<xs:annotation>
+						<xs:documentation>A rupturing of the enemy's forward defenses that occurs as a result of a penetration. A breakthrough permits the passage of an exploitation force. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BREAKUP">
+					<xs:annotation>
+						<xs:documentation>A disruption in continuity or regularity. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BRIDGEHEAD">
+					<xs:annotation>
+						<xs:documentation>An area of ground held or to be gained on the enemy's side of an obstacle.In river crossing operations, an area on the enemy's side of the water obstacle that is large enough to accommodate the majority of the crossing force, has adequate terrain to permi</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BUFFER_ZONE">
+					<xs:annotation>
+						<xs:documentation>A defined area controlled by a peace operations force from which disputing or belligerent forces have been excluded. A buffer zone is formed to create an area of separation between disputing or belligerent forces and reduce the risk of renewed conflict. I</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BURN">
+					<xs:annotation>
+						<xs:documentation>To cause to undergo combustion. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BUTTON-UP">
+					<xs:annotation>
+						<xs:documentation>To cause mounted forces to close their hatches.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="BYPASS">
+					<xs:annotation>
+						<xs:documentation>A tactical task that involves maneuvering around an obstacle, position, or enemy force to maintain the momentum of advance. Bypassed obstacles and enemy forces are reported to higher headquarters.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CANALIZE">
+					<xs:annotation>
+						<xs:documentation>To restrict operations to a narrow zone by use of existing or reinforcing obstacles or by fire or bombing. A tactical task used to restrict operations to a narrow zone by the use of obstacles, fires, or unit maneuvering or positioning.  (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CAPTURE">
+					<xs:annotation>
+						<xs:documentation>The taking into custody of a hostile force, equipment, or personnel as a result of military operations. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CAUSE">
+					<xs:annotation>
+						<xs:documentation>To make happen. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_TO_ACT">
+					<xs:annotation>
+						<xs:documentation>To approve or authorize, or to obtain approval or authorization for: a. a person or persons with regard to their actions, movements, duties, etc; b. an object or group of objects, as equipment or supplies, with regard to quality, quantity, purpose, moveme</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_RADIO_TRAFFIC">
+					<xs:annotation>
+						<xs:documentation>To eliminate transmissions on a tactical radio net in order to allow a higher-precedence transmission to occur. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_OBSTACTLE">
+					<xs:annotation>
+						<xs:documentation>The total elimination or neutralization of an obstacle that is usually performed by follow-on engineers and is not done under fire. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_AIRCRAFT">
+					<xs:annotation>
+						<xs:documentation>To give one or more aircraft a clearance. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="GIVE_CLEARANCE">
+					<xs:annotation>
+						<xs:documentation>To give a person a security clearance.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_AIR_OBSTACLE">
+					<xs:annotation>
+						<xs:documentation>To fly over an obstacle without touching it. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_LOCATION">
+					<xs:annotation>
+						<xs:documentation>To pass a designated point, line, or object. The end of the column must pass the designated feature before the latter is cleared.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_GUN">
+					<xs:annotation>
+						<xs:documentation>a. To operate a gun so as to unload it or make certain no ammunition remains; and b. to free a gun of stoppages.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_ENGINE">
+					<xs:annotation>
+						<xs:documentation>To clear an engine; to open the throttle of an idling engine to free it from carbon.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_AIRSPACE">
+					<xs:annotation>
+						<xs:documentation>To clear the air to gain temporary or permanent air superiority or control in a given sector. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CLEAR_ENEMY_FORCES">
+					<xs:annotation>
+						<xs:documentation>A tactical task to remove all enemy forces and eliminate organized resistance in an assigned zone, area, or location by destroying, capturing, or forcing the withdrawal of enemy forces such that they cannot interfere with the friendly unit's ability to ac</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONCEALMENT">
+					<xs:annotation>
+						<xs:documentation>The protection from observation or surveillance. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONSUME">
+					<xs:annotation>
+						<xs:documentation>To expend. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTACT_POTENTIAL_THREAT">
+					<xs:annotation>
+						<xs:documentation>In an air intercept, a term meaning, "Unit has an unevaluated target." (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTACT_TO_INFECTION">
+					<xs:annotation>
+						<xs:documentation>In health services, an unevaluated individual who is known to have been sufficiently near an infected individual to have been exposed to the transfer of infectuous material.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTACT_FRIENDLY_FORCES">
+					<xs:annotation>
+						<xs:documentation>Friendly, when two or more friendly forces make visual, physical, or communications interaction.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTACT_ENEMY_FORCES">
+					<xs:annotation>
+						<xs:documentation>Enemy, when a friendly force engages an enemy force physically in hand-to-hand fighting or at the maximum range of weapons and visual or electronic devices.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTAIN">
+					<xs:annotation>
+						<xs:documentation>To stop, hold, or surround the forces of the enemy or to cause the enemy to center activity on a given front and to prevent his withdrawing any part of his forces for use elsewhere. To restrict enemy movement.  (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTROL_FRIENDLY_ORGANIZATIONS">
+					<xs:annotation>
+						<xs:documentation>Authority which may be less than full command exercised by a commander over part of the activities of subordinate or other organizations. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTROL_NONMILITARY_ORGANIZATIONS">
+					<xs:annotation>
+						<xs:documentation>Physical or psychological pressures exerted with the intent to ensure that an agent or group will respond as directed.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTROL_DISTRIBUTION_AND_USE">
+					<xs:annotation>
+						<xs:documentation>An indicator governing the distribution and use of documents, information, or material. Such indicators are the subject of intelligence community agreement and are specifically defined in appropriate regulations. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CONTROL_AREA">
+					<xs:annotation>
+						<xs:documentation>To maintain physical influence by occupation or range of weapon systems over activities or access in a defined area.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COORDINATE">
+					<xs:annotation>
+						<xs:documentation>Exchange of information to inform and integrate, synchronize, and deconflict operations. Coordination is not necessarily a process of gaining approval but is most often used for mutual exchange of information. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_AREA">
+					<xs:annotation>
+						<xs:documentation>The action by land, air, or sea forces to protect by offense, defense or threat of either or both. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_AND_PROTECT">
+					<xs:annotation>
+						<xs:documentation>Those measures necessary to give protection to a person, plan, operation, formation, or installation from the enemy intelligence effort and leajkage of information.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_RADIO_NET">
+					<xs:annotation>
+						<xs:documentation>The act of maintaining a continuous receiver watch with transmitter calibrated and available, but not necessarily available for immediate use.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_AND_SHELTER">
+					<xs:annotation>
+						<xs:documentation>Shelter or protection (either natural or artificial).(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_BY_OBSERVATION">
+					<xs:annotation>
+						<xs:documentation>Photographs or other recorded images which show a particular area of ground.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_FROM_OBSERVATION">
+					<xs:annotation>
+						<xs:documentation>Shelter or protection from enemy observation that reduces the effects of enemy direct and indirect fire. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="COVER_BY_SECURITY">
+					<xs:annotation>
+						<xs:documentation>Any body or detachment of troops which provides security for a larger force by observation, reconnaissance, attack, or defense, or by any combination of these methods. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CREATE">
+					<xs:annotation>
+						<xs:documentation>To bring into being. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DAZZLE">
+					<xs:annotation>
+						<xs:documentation>Temporary loss of vision or a temporary reduction in visual acuity.May also be applied to effects on optics. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DECEPTION">
+					<xs:annotation>
+						<xs:documentation>Those measures designed to mislead the enemy by manipulation, distortion, or falsification of evidence to induce him to react in a manner prejudicial to his interests. Thegoal is to make an enemy more vulnerable to the effects of weapons, maneuver, and op</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DEFEAT">
+					<xs:annotation>
+						<xs:documentation>A tactical task to either disrupt or nullify the enemy force commander's plan and subdue his will to fight so that he is unwilling or unable to further pursue his adopted course of action and yields to the will of his opponent. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DELAY">
+					<xs:annotation>
+						<xs:documentation>An operation in which a force under pressure trades space for time by slowing down the enemy's momentum and inflicting maximum damage on the enemy without, in principle, becoming decisively engaged.Usually conducted when the commander needs time to concen</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DEMONSTRATION">
+					<xs:annotation>
+						<xs:documentation>An attack or show of force on a front where a decision is not sought, made with the aim of deceiving the enemy. 1. Type of attack that is a deception similar to a feint, with the exception that no contact with the enemy is sought. 2. In stability and sup</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DENIES">
+					<xs:annotation>
+						<xs:documentation>An operation designed to prevent or hinder enemy occupation of, or benefit from, areas or objects having tactical or strategic value. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DEPRIVE">
+					<xs:annotation>
+						<xs:documentation>To take something away from, to keep from having or enjoying. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DESTROY">
+					<xs:annotation>
+						<xs:documentation>A tactical task to physically render an enemy force combat-ineffective unless it is reconstituted. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DETER">
+					<xs:annotation>
+						<xs:documentation>The prevention from action by fear of the consequences. Deterrence is a state of mind brought about by the existence of a credible threat of unacceptable counteraction. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DEVELOP THE SITUATION">
+					<xs:annotation>
+						<xs:documentation>Actions taken by a unit to gather more information on the enemy, to discover his disposition and intent.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DISRUPTS">
+					<xs:annotation>
+						<xs:documentation>A tactical task or obstacle effect that integrates fire planning and obstacle effort to break apart an enemy's formation and tempo, interrupt the enemy's timetable, or cause premature commitment of enemy forces, or the piecemealing of his attack. (FM 101-</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DIVERT_ATTENTION">
+					<xs:annotation>
+						<xs:documentation>The act of drawing the attention and forces os an enemy from the point of the principal operation; an attack, alarm, or feint that diverts attention.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DIVERT_ROUTE">
+					<xs:annotation>
+						<xs:documentation>A change made in a prescribed route for operational or tactical reasons. A diversion order will not constitute a change of destination.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DIVERT_PASSAGE">
+					<xs:annotation>
+						<xs:documentation>A rerouting of cargo or passengers to a new transhipment point or destination or on a different mode of transportation prior to arrival at ultimate destination. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="DRAW">
+					<xs:annotation>
+						<xs:documentation>To cause to move after or toward one by exerting continuous force. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ENABLE">
+					<xs:annotation>
+						<xs:documentation>To make possible. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ENCIRCLEMENT">
+					<xs:annotation>
+						<xs:documentation>The loss of freedom of maneuver to one force resulting from an enemy force's control of all routes of egress and reinforcement. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ENVELOPMENT">
+					<xs:annotation>
+						<xs:documentation>An offensive maneuver in which the main attacking force passes around or over the enemy's principal defensive positions to secure objectives to the enemy's rear. It is one of the five choices of maneuver. A commander must find or create an assailable flan</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ERODE">
+					<xs:annotation>
+						<xs:documentation>To wear away by or as if by abrasion. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="EVACUATION_WOUNDED">
+					<xs:annotation>
+						<xs:documentation>The process of moving any person who is wounded, injured, or ill to and/or between medical treatment facilities. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="EVACUATION_OF_LOCALITY">
+					<xs:annotation>
+						<xs:documentation>The clearance of personnel, animals, or materiel from a given locality. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="EXPLOIT_SUCCESS">
+					<xs:annotation>
+						<xs:documentation>Taking full advantage of success in battle and following up initial gains. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="EXPLOIT_INFORMATION">
+					<xs:annotation>
+						<xs:documentation>Taking full advantage of any information that has come to hand for tactical, operational, or strategic purposes. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="FACILITATE">
+					<xs:annotation>
+						<xs:documentation>To make easier. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="FIX_LOCATION_OF">
+					<xs:annotation>
+						<xs:documentation>A position determined from terrestial, electronic, or astronomical data. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="FIX_ENEMY_FORCES_BY_FORCE">
+					<xs:annotation>
+						<xs:documentation>A tactical task in which actions are taken to prevent the enemy from moving any part of his forces either from a specific location or for a specific period of time by holding or surrounding them to prevent their withdrawal for use elsewhere. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="FIX_ENEMY_FORCES_BY_OBSTACLE">
+					<xs:annotation>
+						<xs:documentation>A tactical obstacle effect that integrates fire planning and obstacle effort to slow an attacker within a specified area - normally an engagement area. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="FORCE TO FLEE">
+					<xs:annotation>
+						<xs:documentation>To run away from. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="GAIN_INFORMATION">
+					<xs:annotation>
+						<xs:documentation>Purpose of reconnaissance and surveillance activities.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="GAIN_TIME">
+					<xs:annotation>
+						<xs:documentation>Purpose of delaying activities.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="GUARD">
+					<xs:annotation>
+						<xs:documentation>A security element whose primary task is to protect the main force by fighting to gain time, while also observing and reporting information. A form of security operation.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="HARASS">
+					<xs:annotation>
+						<xs:documentation>Fire designed to disturb the rest of the enemy troops, to curtail movement, and, by threat of losses, to lower morale. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="HIDE">
+					<xs:annotation>
+						<xs:documentation>The positioning of a vehicle, individual, or unit so that no part is exposed to observation or direct fire. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="CARGO_HOLD">
+					<xs:annotation>
+						<xs:documentation>A cargo stowage compartment aboard ship. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="HOLD_POSSESSION_BY_FORCE">
+					<xs:annotation>
+						<xs:documentation>To maintain or retain possession of by force, as a position or an area. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="HOLD_ENEMY_MOVEMENT">
+					<xs:annotation>
+						<xs:documentation>In an attack, to exert sufficient pressure to prevent movement or redisposition of enemy forces.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="HOLD_WITHIN_AIRSPACE">
+					<xs:annotation>
+						<xs:documentation>As applied to air traffic, to keep an aircraft within a specified space or location which is identified by visual or other means in accordance with air traffic control instructions.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="IDENTIFY">
+					<xs:annotation>
+						<xs:documentation>To establish the identity of. (Webster) To either identify (i.e. classified as friend/foe/neutral) or recognize (i.e. the unit designation of the ORGANIZATION or object)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ILLUMINATE">
+					<xs:annotation>
+						<xs:documentation>To supply or brighten with light. (Webster) To temporarily supply IR or white-light illumination (usually in coordination with direct or indirect fires)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ILLUMINATES">
+					<xs:annotation>
+						<xs:documentation>To supply or brighten with light. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="INFLICT_FIREPOWER_KILL">
+					<xs:annotation>
+						<xs:documentation>Affect the destruction of a vehicle (or system's) primary weapon system</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="INFLICT_MOBILITY_KILL">
+					<xs:annotation>
+						<xs:documentation>The rendering of a vehicle as being temporarily or permanently incapable of tactical movement</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="INFLICT_NON-BATTLE_CASUALTY">
+					<xs:annotation>
+						<xs:documentation>To render temporary or permanent incapacitation of personnel, not caused by battle action (applies solely to personnel)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="INFLUENCE">
+					<xs:annotation>
+						<xs:documentation>To cause a change in the character, thought, or action of. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="INTERDICT">
+					<xs:annotation>
+						<xs:documentation>To seal off an area by any means; to deny use of a route or approach. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ISOLATE">
+					<xs:annotation>
+						<xs:documentation>A tactical task given to a unit to seal off (both physically and psychologically) an enemy from his sources of support, to deny an enemy freedom of movement, and prevent an enemy unit from having contact with other enemy forces. An enemy must not be allow</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="JAM_COMMUNICATIONS">
+					<xs:annotation>
+						<xs:documentation>The deliberate radiation, reradiation, or reflection of electromagnetic energy to prevent or degrade the receipt of information by a receiver. It includes communications and noncommunications jamming. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="KILL">
+					<xs:annotation>
+						<xs:documentation>To put to death. (Webster) Objective effect is to inflict mortal damage (Applies solely to personnel)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="LIGHTLY_DAMAGE">
+					<xs:annotation>
+						<xs:documentation>A subjective categorization of the physical effect of a TASK on buildings, infrastructure and/or equipment by a tasked ORGANIZATION</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="LIMIT">
+					<xs:annotation>
+						<xs:documentation>To restrict or confine within limits. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="LINKUP">
+					<xs:annotation>
+						<xs:documentation>A meeting of friendly ground forces (such as when an advancing force reaches an objective area previously seized by an airborne or air assault force, when an encircled element breaks out to rejoin friendly forces, or when converging forces meet.) (FM 101-</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="LOCATE">
+					<xs:annotation>
+						<xs:documentation>To determine or specify the position and boundaries of. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="MARK">
+					<xs:annotation>
+						<xs:documentation>To make a visible impression on, as with a spot, line, or dent. (Webster) Mark with smoke.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="MASS">
+					<xs:annotation>
+						<xs:documentation>The concentration of combat power.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="MODERATELY_DAMAGE">
+					<xs:annotation>
+						<xs:documentation>The subjective categorization of the physical effect of a TASK on buildings, infrastructure and/or equipment by a tasked ORGANIZATION</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="NEUTRALIZE_ENEMY_EFFECTIVENESS">
+					<xs:annotation>
+						<xs:documentation>To render enemy personnel or material incapable of interfering with a particular operation. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="NEUTRALIZE_CHEMICAL_AGENT">
+					<xs:annotation>
+						<xs:documentation>To make harmless anything contaminated with a chemical agent.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="NOT KNOWN">
+					<xs:annotation>
+						<xs:documentation>The objectie TASK effect is not available</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="NOT SPECIFIED">
+					<xs:annotation>
+						<xs:documentation>The objective TASK effect has not been stated</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="OBSCURATION">
+					<xs:annotation>
+						<xs:documentation>The effects of weather, battlefield dust, and debris, or the use of smoke munitions to hamper observation and target-acquisition capability or to conceal activities or movement. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="OBSERVE">
+					<xs:annotation>
+						<xs:documentation>To watch attentively. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="OCCUPY_OBJECTIVE">
+					<xs:annotation>
+						<xs:documentation>A tactical task in which a force moves onto an objective, key terrain, or other man-made or natural terrain area without opposition, and controls that entire area. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="OVERWATCH">
+					<xs:annotation>
+						<xs:documentation>A tactical technique in which one element is positioned to support by fire the movement of another element by observing known or suspected enemy locations and engaging the enemy if he is visible or tries to fire on the friendly element. The overwatching e</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PENETRATE">
+					<xs:annotation>
+						<xs:documentation>In land operations, a form of offensive which seeks to break through the enemy's defense and disrupt the defensive system. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PREPOSITION">
+					<xs:annotation>
+						<xs:documentation>To place military units, equipment, or supplies at or near the point of planned use or at a designated location to reduce time, and to ensure timely support of a specific force during initial phases of an operation. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PREVENT">
+					<xs:annotation>
+						<xs:documentation>To keep from happening. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PROTECT">
+					<xs:annotation>
+						<xs:documentation>A tactical task to prevent observation of or engagement or interference with, a force or location. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="PURSUE">
+					<xs:annotation>
+						<xs:documentation>An offensive operation designed to catch or cut off a hostile force attempting to escape, with the aim of destroying it. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="RECONSTITUTION">
+					<xs:annotation>
+						<xs:documentation>Those actions that commanders plan and implement to restore units to a desired level of effectivness commensurate with mission requirements and available resources. Reconstitution operations include regeneration and reorganization. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="REDUCE_ENEMY_EFFECTIVENESS">
+					<xs:annotation>
+						<xs:documentation>A tactical task to gain control over an enemy position or objective. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="REDUCE_OBSTACLE">
+					<xs:annotation>
+						<xs:documentation>A task to create lanes through or over an obstacle sufficient to allow the attacking force to accomplish its mission. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="REGENERATION">
+					<xs:annotation>
+						<xs:documentation>Rebuilding of a unit through large-scale replacement of personnel, equipment, and supplies, including the reestablishment or replacement of essential command and control and the conduct of mission essential training for the newly rebuilt unit. (FM 101-5-1</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="REINFORCE">
+					<xs:annotation>
+						<xs:documentation>A mission in which one unit augments the capability of another similar-type unit. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="RELIEF IN PLACE">
+					<xs:annotation>
+						<xs:documentation>An operation in which, by direction of higher authority, all or part of a unit is replaced in an area by the incoming unit. The responsibilities of the replaced elements for the mission and the assigned zone of operations are transferred to the incoming u</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ARCHIVE">
+					<xs:annotation>
+						<xs:documentation>System automated data processing files in an active library or status. The plan and its associated files will not be maintained unless directed by follow-on guidance. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="RETAIN">
+					<xs:annotation>
+						<xs:documentation>A tactical task to occupy and hold a terrain feature to ensure it is free of enemy occupation or use. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="RUPTURE">
+					<xs:annotation>
+						<xs:documentation>A task to create a gap in enemy defensive positions quickly. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SCREEN_MARINE">
+					<xs:annotation>
+						<xs:documentation>An arrangemnt of ships, aircraft, and/or submarines to protect a main body or convoy. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SCREEN_2">
+					<xs:annotation>
+						<xs:documentation>In cartography, a sheet of transparent film, glass, or plastic carrying a "ruling" or other regularly repeated pattern which may be used in conjunction with a mask, either photographically or photomechanically, to produce areas of the pattern. (FM 101-5-1</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SCREEN_BY_CONCEALMENT">
+					<xs:annotation>
+						<xs:documentation>In surveillance, camouflage, and concealment, any natural or artificial material, opaque to surveillance sensors, interposed between the sensors and the object to be camouflaged or concealed.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SCREEN_BY_SURVEILLANCE">
+					<xs:annotation>
+						<xs:documentation>A security element whose primary task is to observe, identify and report information, and which only fights in self-protection. (Army) — A task to maintain surveillance; provide early warning to the main body; or impede, destroy, and harass enemy reconnai</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SECURE">
+					<xs:annotation>
+						<xs:documentation>In an operational context, to gain possession of a position or terrain feature, with or without force, and to make such disposition as will prevent, as far as possible, its destruction or loss by enemy action.  A tactical task to gain possession of a posi</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SEIZE">
+					<xs:annotation>
+						<xs:documentation>A tactical task to clear a designated area and obtain control of it. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SET_CONDITIONS">
+					<xs:annotation>
+						<xs:documentation>Accomplish all the preliminary tasks required to ensure the success of the mission.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SEVERELY_DAMAGE">
+					<xs:annotation>
+						<xs:documentation>A subjective categorization of the phtsical effect of a TASK on buildings, infrastructure and/or equipment by a tasked ORGANIZATION</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SHOW_RESOLVE">
+					<xs:annotation>
+						<xs:documentation>To show steadfastness of purpose. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SPOILING_ATTACK">
+					<xs:annotation>
+						<xs:documentation>A tactical maneuver employed to seriously impair a hostile attack while the enemy is in the process of forming or assembling for an attack. Usually employed by armored units in defense by an attack on enemy assembly positions in front of a main line of re</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="STOP">
+					<xs:annotation>
+						<xs:documentation>To cause to halt, cease, or desist. (Webster)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SUPPORT_BY_ACTION">
+					<xs:annotation>
+						<xs:documentation>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SUPPORT_BY_UNIT">
+					<xs:annotation>
+						<xs:documentation>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SUPPRESS">
+					<xs:annotation>
+						<xs:documentation>Temporary or transient degradation by an opposing force of the performance of a weapons system below the level needed to fulfill its mission objectives. A tactical task to employ direct or indirect fires, electronic attack, or smoke on enemy personnel, we</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SURPRISE">
+					<xs:annotation>
+						<xs:documentation>One of the nine principles of war. The enemy is attacked at a time or place, or in a manner for which he is unprepared and which he did not expect. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="SUSTAINMENT">
+					<xs:annotation>
+						<xs:documentation>The provision of personnel, logistics, and other support required to maintain and prolong operations or combat until successful accomplishment or revision of the mission or the national objective. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="TRACKING_TARGET">
+					<xs:annotation>
+						<xs:documentation>The precise and continuous position-finding of targets by radar, optical, or other means. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="TRACKING_COURSE">
+					<xs:annotation>
+						<xs:documentation>In an air intercept, a code meaning "By my evaluation, targtet is steering true course indicated." (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="TRIAGE">
+					<xs:annotation>
+						<xs:documentation>The evaluation and classification of casualties for purposes of treatment and evacuation. It consists of the immediate sorting of patients according to type and seriousness of injury, and likelihood of survival, and the establishment of priority for treat</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="TURN">
+					<xs:annotation>
+						<xs:documentation>A tactical obstacle effect that integrates fire planning and obstacle effort to divert an enemy formation off one avenue to an adjacent avenue of approach, or into an engagement area. (FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="WITHDRAW">
+					<xs:annotation>
+						<xs:documentation>A planned operation in which a force in contact disengages from an enemy force. A type of retrograde where a force in contact plans to disengage from the enemy and move in a direction away from the enemy.(FM 101-5-1)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="WOUND">
+					<xs:annotation>
+						<xs:documentation>To inflict a wound on or to inflict a wound or wounds. (Webster) To temporarily or permanently incapacitate personnel (applies solely to personnel)</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ActivityData">
+		<xs:annotation>
+			<xs:documentation>The identification of the specific activity to execute as a task or COA.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="COAHandle"/>
+				<xs:element ref="Task"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="COAHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of a Course of Action</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TerminatingTriggerHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of the terminating Trigger for an Event</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TriggerHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of the initiating Trigger for an Event</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DecisionPointHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of the initiating Decision Point</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Task">
+		<xs:annotation>
+			<xs:documentation>The identification of the task to be executed as part of a unit's activity.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="Enumeration" type="TaskEnumeration" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Enumeration of the task derived from task titles in the AUTL dated December, 17th 2002</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ActivityType"/>
+				<xs:element ref="WhyEnumeration"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DecisionPoints" type="DecisionPoints">
+		<xs:annotation>
+			<xs:documentation>The Decision Points of a DecisionSupportMatrix.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DecisionPoints">
+		<xs:annotation>
+			<xs:documentation>The Complex type defining DecisionPoints.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element ref="DecisionPoint"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DecisionPoint">
+		<xs:annotation>
+			<xs:documentation>A specific decision point, when/where trigger, that initaites an action.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="Name"/>
+				<xs:element name="Description" type="ParagraphText" minOccurs="0"/>
+				<xs:element name="CCIR" type="ParagraphText" minOccurs="0"/>
+				<xs:element ref="TriggerHandle" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TacticalTaskHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of a Tactical Task</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TacticalGraphicHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of a Tactical Task</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WhereTacticalGraphicHandle1" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The Universal Unique Identifier UUID of a Tactical Graphic that is referenced relative (LocationPointOfReference) to the WhereTacticalGraphiHandle or WhereInstallationHandle</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Triggers" type="Triggers">
+		<xs:annotation>
+			<xs:documentation>The identification of COA/Phase/Event triggers of a Military Scenario.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Triggers">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element ref="Trigger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Trigger">
+		<xs:annotation>
+			<xs:documentation>The specification of a trigger for a COA, Phase, or Event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="TriggerType"/>
+				<xs:element ref="RelativeTime"/>
+				<xs:element ref="TimeRelation"/>
+				<xs:element ref="ActionPointOfReference"/>
+				<xs:element ref="UnitOwnerHandle"/>
+				<xs:element ref="TriggeringEvent" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TriggeringEvent">
+		<xs:annotation>
+			<xs:documentation>The definition of a When event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="FriendlyEvent"/>
+				<xs:element ref="ThreatEvent"/>
+				<xs:element ref="EnemyEvent"/>
+				<xs:element ref="MovementEvent"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MovementEvent">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="UnitHandle"/>
+				<xs:element ref="TacticalGraphicHandle"/>
+				<xs:element ref="LocationPointOfReference"/>
+				<xs:element name="RelativeDistance" type="xs:float"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TimeEvent">
+		<xs:annotation>
+			<xs:documentation>The definition of a time event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="RelativeTime">
+					<xs:annotation>
+						<xs:documentation>The fixed time offset from the start/end of the Scenario, COA, or Phase.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TimeRelation">
+					<xs:annotation>
+						<xs:documentation>The identification of the event as before or after the Scenario, COA, or Phase.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ActionPointOfReference">
+					<xs:annotation>
+						<xs:documentation>The identification to offset for start or end of the  COA, or Phase.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EventStatus">
+		<xs:annotation>
+			<xs:documentation>The tactical status of an event.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="PLANNED"/>
+				<xs:enumeration value="ANTICIPATED"/>
+				<xs:enumeration value="CONCLUDED"/>
+				<xs:enumeration value="DECREASING_IN_INTENSITY"/>
+				<xs:enumeration value="INCREASING_IN_INTENSTIY"/>
+				<xs:enumeration value="INITIATED"/>
+				<xs:enumeration value="ON_GOING"/>
+				<xs:enumeration value="UNKNOWN"/>
+				<xs:enumeration value="NOT_SPECIFIED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EventEffect">
+		<xs:annotation>
+			<xs:documentation>The effect an event has on the military situation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BURNING"/>
+				<xs:enumeration value="CAPTURED"/>
+				<xs:enumeration value="CONSUMED"/>
+				<xs:enumeration value="DESTROYED"/>
+				<xs:enumeration value="FIREPOWER_KILL"/>
+				<xs:enumeration value="DESTROY"/>
+				<xs:enumeration value="FORCE_TO_FLEE"/>
+				<xs:enumeration value="IDENTIFIED"/>
+				<xs:enumeration value="ILLUMINATED"/>
+				<xs:enumeration value="KILLED"/>
+				<xs:enumeration value="LIGHT_DAMAGE"/>
+				<xs:enumeration value="LIGHT_RESISTANCE"/>
+				<xs:enumeration value="MOBILITY_KILL"/>
+				<xs:enumeration value="MODERATE_DAMAGE"/>
+				<xs:enumeration value="NEUTRALIZED"/>
+				<xs:enumeration value="NO_RESISTANCE"/>
+				<xs:enumeration value="NON-BATTLE_CASUALTY"/>
+				<xs:enumeration value="SEVERE_DAMAGE"/>
+				<xs:enumeration value="SUPPRESSED"/>
+				<xs:enumeration value="VERBAL_PROTEST"/>
+				<xs:enumeration value="VIOLENT_RESISTANCE"/>
+				<xs:enumeration value="WOUNDED"/>
+				<xs:enumeration value="NOT_KNOWN"/>
+				<xs:enumeration value="NOT_OTHERWISE_SPECIFIED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="LocationPointOfReference" default="APPROACHING">
+		<xs:annotation>
+			<xs:documentation>The type of Where trigger that identifies the relationship of a unit or activity to tactical graphics.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="APPROACHING"/>
+				<xs:enumeration value="CROSSING"/>
+				<xs:enumeration value="LEAVING"/>
+				<xs:enumeration value="ENTERING"/>
+				<xs:enumeration value="EXITING"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ActionPointOfReference">
+		<xs:annotation>
+			<xs:documentation>The event's point of reference to start/end of the triggering event.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="END"/>
+				<xs:enumeration value="START"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RelativeTime" type="DTGRelative">
+		<xs:annotation>
+			<xs:documentation>The event's relative fixed time offset from the referenced activity/time in DDHHMMSS format.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TimeRelation">
+		<xs:annotation>
+			<xs:documentation>Before, During, After the action point of reference.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="AFTER"/>
+				<xs:enumeration value="BEFORE"/>
+				<xs:enumeration value="DURING"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ThreatEvent">
+		<xs:annotation>
+			<xs:documentation>The event's Threat/MOOTW specific data.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="NAIHandle"/>
+				<xs:element name="ThreatHandle" type="UUIDRef">
+					<xs:annotation>
+						<xs:documentation>Reference to the Threat whose activity is to trigger the When condition</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ThreatActivityHandle" type="UUIDRef">
+					<xs:annotation>
+						<xs:documentation>Reference to the Threat Behavior (activity) on which to trigger the When condition</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WhoUnitHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The identification of the Unit related to the timing or location of an event trigger.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WhenTimeDTG" type="DTGRelative">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B Date Time Group which identifies the timeframe for making a decsion. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WhereLocation" type="Coordinates">
+		<xs:annotation>
+			<xs:documentation>The location at which point a decsion should be made. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ActivityHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The activity to which this when trigger is related.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PhaseHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The COA Phase to which this when trigger is related.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="EventHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>The event to which this when trigger is related.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TriggerType" default="FRIENDLY_ACTIVITY">
+		<xs:annotation>
+			<xs:documentation>The type of when event, Threat, Activity, Time, or Order based.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="FRIENDLY_ACTIVITY"/>
+				<xs:enumeration value="ENEMY_ACTIVITY"/>
+				<xs:enumeration value="MOVEMENT_EVENT"/>
+				<xs:enumeration value="THREAT_EVENT"/>
+				<xs:enumeration value="ORDER"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FriendlyEvent">
+		<xs:annotation>
+			<xs:documentation>The friendly event on which to trigger the When condiditon.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ActionType"/>
+				<xs:element name="ActionReference">
+					<xs:annotation>
+						<xs:documentation>UUID Reference to the triggering COA, Phase, Event, or Task.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element ref="COAHandle"/>
+							<xs:element ref="PhaseHandle" minOccurs="0"/>
+							<xs:element ref="EventHandle" minOccurs="0"/>
+							<xs:element ref="ActivityHandle" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ActionType">
+		<xs:annotation>
+			<xs:documentation>The type of action to trigger on.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="COA"/>
+				<xs:enumeration value="PHASE"/>
+				<xs:enumeration value="EVENT"/>
+				<xs:enumeration value="TASK"/>
+				<xs:enumeration value="MOVEMENT"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EnemyEvent">
+		<xs:annotation>
+			<xs:documentation>The characterization of the enemy event by echelon and activity.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="NAIHandle"/>
+				<xs:element name="EnemyEchelon" type="Echelon">
+					<xs:annotation>
+						<xs:documentation>The echelon or size of an enemy unit.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="EnemyActivityType" minOccurs="0"/>
+				<xs:element name="UnitType" type="UnitEnumeration" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>MSDL Unit Type (enumeration) based on the MIL STD 2525B outline for the warfighting track.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EnemyActivityType">
+		<xs:annotation>
+			<xs:documentation>The type of activity the Enemy is engaging in.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="NOT_SPECIFIED"/>
+				<xs:enumeration value="ATTACKING"/>
+				<xs:enumeration value="DEFENDING"/>
+				<xs:enumeration value="ENGAGING"/>
+				<xs:enumeration value="WITHDRAWING"/>
+				<xs:enumeration value="DELAYING"/>
+				<xs:enumeration value="OBSERVING"/>
+				<xs:enumeration value="BYPASSING"/>
+				<xs:enumeration value="FORTIFYING"/>
+				<xs:enumeration value="CROSSING_LINE_OF_DEPARTURE"/>
+				<xs:enumeration value="SCREENING"/>
+				<xs:enumeration value="MOVING"/>
+				<xs:enumeration value="GUARDING"/>
+				<xs:enumeration value="COVERING"/>
+				<xs:enumeration value="RECONNOITERING"/>
+				<xs:enumeration value="REPAIRING"/>
+				<xs:enumeration value="SECURING"/>
+				<xs:enumeration value="ADJUSTING"/>
+				<xs:enumeration value="EVACUATING"/>
+				<xs:enumeration value="INTERROGATING"/>
+				<xs:enumeration value="DISPLACING"/>
+				<xs:enumeration value="STATIONARY"/>
+				<xs:enumeration value="ASSEMBLING"/>
+				<xs:enumeration value="MINE_CLEARING"/>
+				<xs:enumeration value="MINE_LAYING"/>
+				<xs:enumeration value="REFUELING"/>
+				<xs:enumeration value="BOMBING"/>
+				<xs:enumeration value="ELECTRONIC_WARFARE"/>
+				<xs:enumeration value="RIVER_CROSSING"/>
+				<xs:enumeration value="HOVERING"/>
+				<xs:enumeration value="ORBITING"/>
+				<xs:enumeration value="CHAFF_LAYING"/>
+				<xs:enumeration value="TRANSITING"/>
+				<xs:enumeration value="ACQUIRING_TRACKING"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Environment">
+		<xs:annotation>
+			<xs:documentation>The Environment for the Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ScenarioTime" minOccurs="0"/>
+				<xs:element ref="Terrain"/>
+				<xs:element ref="Weather" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ScenarioTime" type="DTG">
+		<xs:annotation>
+			<xs:documentation>The initial scenario DTG time in the MIL STD 2525B format of DDHHMMSSZMONYY.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Terrain">
+		<xs:annotation>
+			<xs:documentation>Scenario terrain information that provides a context for displaying the scenario once it has been loaded.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="TerrainSource"/>
+				<xs:element ref="UpperRight"/>
+				<xs:element ref="LowerLeft"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TerrainSource">
+		<xs:annotation>
+			<xs:documentation>The free text name of the terrain database or area of interest</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="255"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UpperRight" type="Coordinates">
+		<xs:annotation>
+			<xs:documentation> The Upper Right Coordinate of a terrain file</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LowerLeft" type="Coordinates">
+		<xs:annotation>
+			<xs:documentation> The Lower Left Coordinate of a terrain file</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Weather">
+		<xs:annotation>
+			<xs:documentation>The Weather for the Scenario. Found in paragraph 0 of the Oporder</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Temperature" minOccurs="0"/>
+				<xs:element ref="Moon" minOccurs="0"/>
+				<xs:element ref="Sun" minOccurs="0"/>
+				<xs:element ref="Wind" minOccurs="0"/>
+				<xs:element ref="NauticalTwilight" minOccurs="0"/>
+				<xs:element ref="RelativeHumidity" minOccurs="0"/>
+				<xs:element ref="ChanceOfPrecipitation" minOccurs="0"/>
+				<xs:element ref="GeneralVisibility" minOccurs="0"/>
+				<xs:element ref="Clouds" minOccurs="0"/>
+				<xs:element ref="Fog" minOccurs="0"/>
+				<xs:element ref="Haze" minOccurs="0"/>
+				<xs:element ref="METOCGraphics" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RelativeHumidity">
+		<xs:annotation>
+			<xs:documentation> The amount of water vapor actually in the air divided by the amount of water vapor the air can hold expressed as a percentage in decimal form</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="100.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ChanceOfPrecipitation">
+		<xs:annotation>
+			<xs:documentation> It is the likelihood of occurrence, expressed as a percentage in decimal form, that measurable precipitation will occur at any point within the specified area of interest over the time period of the scenario. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="100.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="GeneralVisibility" type="xs:float">
+		<xs:annotation>
+			<xs:documentation>The distance, in meters,  that a person is able to see.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Temperature">
+		<xs:annotation>
+			<xs:documentation>Scenario environmental temperature in degrees Celcius</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="High" minOccurs="0"/>
+				<xs:element ref="Low" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Moon">
+		<xs:annotation>
+			<xs:documentation>Scenario Moon information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="TimeOfRise" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Time of the day the moon wil rise</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TimeOfSet" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Time of the day the moon wil set.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Phase" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Phase of the moon .</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Illumination" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Percentage, in decimal form, of moon illumination over the sky.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Sun">
+		<xs:annotation>
+			<xs:documentation>Scenario Sun information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="TimeOfRise" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Time of the day the sun wil rise</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TimeOfSet" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Time of the day the sun wil set.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NauticalTwilight">
+		<xs:annotation>
+			<xs:documentation>Scenario Twilight information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="BMNT" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Beginning Morning Nautical Twilight in 24 hour time.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="EENT" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>End Evening  Nautical Twilight in 24 hour time.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Wind">
+		<xs:annotation>
+			<xs:documentation>Scenario Wind information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="WindSpeed" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Speed of the wind.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="WindDirection" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Direction of the wind.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Clouds">
+		<xs:annotation>
+			<xs:documentation>General cloud coverage information for the scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Enabled"/>
+				<xs:element ref="Ceiling"/>
+				<xs:element ref="Base"/>
+				<xs:element ref="Visibility"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Fog">
+		<xs:annotation>
+			<xs:documentation>Scenario Fog information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Enabled">
+					<xs:annotation>
+						<xs:documentation>Flag indicating when fog is enabled in the scenario</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Visibility">
+					<xs:annotation>
+						<xs:documentation>Percentage, in decimal form, of visibility due to fog</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Ceiling">
+					<xs:annotation>
+						<xs:documentation>Distance between earth and fog.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Haze">
+		<xs:annotation>
+			<xs:documentation>Scenario Haze information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Enabled">
+					<xs:annotation>
+						<xs:documentation>Flag indicating when haze is enabled in the scenario</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Visibility">
+					<xs:annotation>
+						<xs:documentation>Percentage, in decimal form, of visibility due to haze</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Ceiling">
+					<xs:annotation>
+						<xs:documentation>Distance between earth and haze.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="High" type="xs:float">
+		<xs:annotation>
+			<xs:documentation>The highest temperature, in degrees celcius, that the scenario temperature would reach during the scenario time period.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Low" type="xs:float">
+		<xs:annotation>
+			<xs:documentation>The lowest temperature, in degrees celcius, that the scenario temperature would reach during the scenario time period.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TimeOfRise" type="Time24Hour">
+		<xs:annotation>
+			<xs:documentation>The Time of the rise in 24 hour format HHMMSS</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TimeOfSet" type="Time24Hour">
+		<xs:annotation>
+			<xs:documentation>The Time of the set in 24 hour format HHMMSS</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Phase">
+		<xs:annotation>
+			<xs:documentation>Phase of the moon.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="STARLIGHT"/>
+				<xs:enumeration value="FULLMOON"/>
+				<xs:enumeration value="HALFMOON"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Illumination">
+		<xs:annotation>
+			<xs:documentation>Percentage, in decimal form, of moon illumination over the sky in decimal form.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="1.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="WindSpeed">
+		<xs:annotation>
+			<xs:documentation>The tyipical Wind Speed in meters per second</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minExclusive value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="WindDirection">
+		<xs:annotation>
+			<xs:documentation>The tyipcal Wind Direction in compass degrees</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="360"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="BMNT" type="Time24Hour">
+		<xs:annotation>
+			<xs:documentation>BMNT Begin Morning Nautical Twilight - The start of that period where, in good conditions and in the absence of other illumination, enough light is available to identify the general outlines of ground objects and conduct limited military operations with unaided vision.  The sun is twelve degrees below the eastern horizon.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="EENT" type="Time24Hour">
+		<xs:annotation>
+			<xs:documentation>EENT End Evening Nautical Twilight - The time at which the sun has dropped 12 degrees beneath the western horizon and is the instant of last available daylight.  At EENT, there is no further sunlight visible.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Enabled" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>A flag indicating that an atmospheric condition exists for the scenario.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Visibility">
+		<xs:annotation>
+			<xs:documentation>Percent, in decimal form, of visibility through the atmosphereic condition.  This is the opposite of cloud density.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="1.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Ceiling" type="xs:float">
+		<xs:annotation>
+			<xs:documentation>The altitude above sea level, in meters, of the atmosphereic condition cleiling. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Base" type="xs:float">
+		<xs:annotation>
+			<xs:documentation>The altitude above sea level, in meters, of the base or floor of the atmosphereic condition</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Equipment">
+		<xs:annotation>
+			<xs:documentation>Information on all pieces of equipment used in the scenario.  The equipment follows the MIL-STD-2525B equipment classification.  In this version, the relationship established by a piece of equipment mounted on another piece of equipment is included as part of the function of the mounting platform. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="EquipmentItem"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="EquipmentItem">
+			<xs:selector xpath=".//Equipment/EquipmentItem"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+		<xs:unique name="BumperNumber">
+			<xs:selector xpath=".//Equipment/EquipmentItem/EquipmentSymbolModifiers"/>
+			<xs:field xpath="HigherFormation"/>
+			<xs:field xpath="UniqueDesignation"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="EquipmentItem">
+		<xs:annotation>
+			<xs:documentation>Information about a single piece of equipment. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="SymbolId"/>
+				<xs:element ref="Location"/>
+				<xs:element ref="Orientation" minOccurs="0"/>
+				<xs:element ref="Name" minOccurs="0"/>
+				<xs:element ref="OrganicSuperiorHandle" minOccurs="0"/>
+				<xs:element ref="CommandRelation" minOccurs="0"/>
+				<xs:element ref="CommunicationNetReferences" minOccurs="0"/>
+				<xs:element name="FormationOrder" type="xs:int" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The order of the equipment in the higher unit formation.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Enumeration" type="EquipmentEnumeration" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The enumerated value of the military equipment. The enumeration is based on the MIL STD 2525B hierarchy.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Resolution" minOccurs="0"/>
+				<xs:element ref="EquipmentSymbolModifiers" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovement" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ForceStructure">
+		<xs:annotation>
+			<xs:documentation>Forces and Sides for the scenario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ForceSides"/>
+				<xs:element ref="BluforSideHandle"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ForceSides">
+		<xs:annotation>
+			<xs:documentation>Forces and Sides for the scenario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="ForceSide"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="ForceSide">
+			<xs:selector xpath=".//ForceSides/ForceSide"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="ForceSide">
+		<xs:annotation>
+			<xs:documentation>Force or Side information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="ForceSideName"/>
+				<xs:element ref="ForceSideType"/>
+				<xs:element ref="Affiliation"/>
+				<xs:element ref="Coalition"/>
+				<xs:element ref="AllegianceHandle" minOccurs="0"/>
+				<xs:element ref="CountryCode" minOccurs="0"/>
+				<xs:element ref="Service" minOccurs="0"/>
+				<xs:element ref="Associations" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CountryCode" type="CountryCode">
+		<xs:annotation>
+			<xs:documentation>Country code as defined in FIPS PUB 10-4</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Service">
+		<xs:annotation>
+			<xs:documentation>Enumeration type that indicates if this a Force or a Side</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ARMY"/>
+				<xs:enumeration value="NAVY"/>
+				<xs:enumeration value="AIR FORCE"/>
+				<xs:enumeration value="MARINE_CORPS"/>
+				<xs:enumeration value="COAST_GUARD"/>
+				<xs:enumeration value="OTHER"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ForceSideName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Name of the force or side</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ForceSideType">
+		<xs:annotation>
+			<xs:documentation>Enumeration type that indicates if this a Force or a Side</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="FORCE"/>
+				<xs:enumeration value="SIDE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="BluforSideHandle" type="UUID">
+		<xs:annotation>
+			<xs:documentation>The reference to the Side that represents the principle BLUFOR perspective.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AllegianceHandle" type="UUID">
+		<xs:annotation>
+			<xs:documentation>The reference to the Force or Side that this Force/Side shows Allegiance to.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Affiliation">
+		<xs:annotation>
+			<xs:documentation>The thread posed by a warfighting element being represented, reference MIL STD 2525B.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="HOSTILE"/>
+				<xs:enumeration value="FRIEND"/>
+				<xs:enumeration value="NEUTRAL"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Relationship">
+		<xs:annotation>
+			<xs:documentation>A force or side's relationship with another force or side determines the level of threat posed by that force or side.  Units or entities inherit their affiliation to other units or entities based on the relationships between their containing forces and sides.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="HOSTILE"/>
+				<xs:enumeration value="FRIEND"/>
+				<xs:enumeration value="NEUTRAL"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Coalition">
+		<xs:annotation>
+			<xs:documentation>Name given to the ad-hoc arrangement between two or more nations for a common action</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BLUFOR"/>
+				<xs:enumeration value="OPFOR"/>
+				<xs:enumeration value="NEUTRAL"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Associations">
+		<xs:annotation>
+			<xs:documentation>Associations between forces and sides</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Association"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Association">
+		<xs:annotation>
+			<xs:documentation>Association between this force/side and another force/side</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="AffiliateHandle"/>
+				<xs:element ref="Relationship"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AffiliateHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>Reference to another Force or Side which has some affiliation to this force</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Installations">
+		<xs:annotation>
+			<xs:documentation>Each installtaion follows the MIL-STD-2525B installation classification.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Installation"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="Installation">
+			<xs:selector xpath=".//Installations/Installation"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="Installation">
+		<xs:annotation>
+			<xs:documentation>An installation as defined in the MIL-STD-2525B installation classification.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="SymbolId"/>
+				<xs:element ref="Location"/>
+				<xs:element ref="Orientation" minOccurs="0"/>
+				<xs:element ref="Name" minOccurs="0"/>
+				<xs:element ref="ForceSideHandle" minOccurs="0"/>
+				<xs:element ref="InstallationSymbolModifiers" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="METOCGraphics">
+		<xs:annotation>
+			<xs:documentation>Thr Tactical Symbols representing the Meterological conditions for the scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="METOCGraphic"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="METOCGraphic">
+			<xs:selector xpath=".//Environment/Weather/METOCGraphics/METOCGraphic"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="METOCGraphic">
+		<xs:annotation>
+			<xs:documentation>The METOC Graphic of a Military Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="SymbolId"/>
+				<xs:element ref="AnchorPoints"/>
+				<xs:element ref="METOCSymbolModifiers" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MILSTD2525BSymbolClass">
+		<xs:annotation>
+			<xs:documentation>Class of symbol as defined in MIL-STD-2525B</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PointSymbolModifiers" minOccurs="0"/>
+				<xs:element ref="LineSymbolModifiers" minOccurs="0"/>
+				<xs:element ref="AreaSymbolModifiers" minOccurs="0"/>
+				<xs:element ref="BoundarySymbolModifiers" minOccurs="0"/>
+				<xs:element ref="NBCEventSymbolModifiers" minOccurs="0"/>
+				<xs:element ref="TaskSymbolModifiers" minOccurs="0"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UnitSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Unit Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Echelon" minOccurs="0"/>
+				<xs:element ref="ReinforcedReduced" minOccurs="0"/>
+				<xs:element ref="FrameShapeModifier" minOccurs="0"/>
+				<xs:element ref="StaffComments" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="EvaluationRating" minOccurs="0"/>
+				<xs:element ref="CombatEffectiveness" minOccurs="0"/>
+				<xs:element ref="HigherFormation" minOccurs="0"/>
+				<xs:element ref="IFF" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovementIndicator" minOccurs="0"/>
+				<xs:element ref="LocationOffsetIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="AltitudeDepth" minOccurs="0"/>
+				<xs:element ref="LocationDisplay" minOccurs="0"/>
+				<xs:element ref="Speed" minOccurs="0"/>
+				<xs:element ref="SpecialC2HQ" minOccurs="0"/>
+				<xs:element ref="FeintDummyIndicator" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MOOTWSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B MOOTW Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Echelon" minOccurs="0"/>
+				<xs:element ref="ReinforcedReduced" minOccurs="0"/>
+				<xs:element ref="FrameShapeModifier" minOccurs="0"/>
+				<xs:element ref="StaffComments" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="EvaluationRating" minOccurs="0"/>
+				<xs:element ref="CombatEffectiveness" minOccurs="0"/>
+				<xs:element ref="IFF" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovementIndicator" minOccurs="0"/>
+				<xs:element ref="HeadquarterStaff" minOccurs="0"/>
+				<xs:element ref="LocationOffsetIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="AltitudeDepth" minOccurs="0"/>
+				<xs:element ref="LocationDisplay" minOccurs="0"/>
+				<xs:element ref="Speed" minOccurs="0"/>
+				<xs:element ref="SpecialC2HQ" minOccurs="0"/>
+				<xs:element ref="FeintDummyIndicator" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="METOCSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B METOC Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ReinforcedReduced" minOccurs="0"/>
+				<xs:element ref="StaffComments" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="EvaluationRating" minOccurs="0"/>
+				<xs:element ref="CombatEffectiveness" minOccurs="0"/>
+				<xs:element ref="IFF" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovementIndicator" minOccurs="0"/>
+				<xs:element ref="LocationOffsetIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="AltitudeDepth" minOccurs="0"/>
+				<xs:element ref="LocationDisplay" minOccurs="0"/>
+				<xs:element ref="Speed" minOccurs="0"/>
+				<xs:element ref="SpecialC2HQ" minOccurs="0"/>
+				<xs:element ref="FeintDummyIndicator" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EquipmentSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Equipment Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Quantity" minOccurs="0"/>
+				<xs:element ref="StaffComments" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="EvaluationRating" minOccurs="0"/>
+				<xs:element ref="CombatEffectiveness" minOccurs="0"/>
+				<xs:element ref="FrameShapeModifier" minOccurs="0"/>
+				<xs:element ref="SignatureEquipment" minOccurs="0"/>
+				<xs:element ref="HigherFormation"/>
+				<xs:element ref="Hostile" minOccurs="0"/>
+				<xs:element ref="IFF" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovementIndicator" minOccurs="0"/>
+				<xs:element ref="HeadquarterStaff" minOccurs="0"/>
+				<xs:element ref="LocationOffsetIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation"/>
+				<xs:element ref="EquipmentType" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="AltitudeDepth" minOccurs="0"/>
+				<xs:element ref="LocationDisplay" minOccurs="0"/>
+				<xs:element ref="Speed" minOccurs="0"/>
+				<xs:element ref="FeintDummyIndicator" minOccurs="0"/>
+				<xs:element ref="AuxiliaryEquipment" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InstallationSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Unit Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="FrameShapeModifier" minOccurs="0"/>
+				<xs:element ref="StaffComments" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="EvaluationRating" minOccurs="0"/>
+				<xs:element ref="CombatEffectiveness" minOccurs="0"/>
+				<xs:element ref="IFF" minOccurs="0"/>
+				<xs:element ref="HeadquarterStaff" minOccurs="0"/>
+				<xs:element ref="LocationOffsetIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="AltitudeDepth" minOccurs="0"/>
+				<xs:element ref="LocationDisplay" minOccurs="0"/>
+				<xs:element ref="FeintDummyIndicator" minOccurs="0"/>
+				<xs:element ref="InstallationIndicator" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PointSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Point Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo1" minOccurs="0"/>
+				<xs:element ref="LocationOffsetIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation"/>
+				<xs:element ref="UniqueDesignation1" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup1" minOccurs="0"/>
+				<xs:element name="Orientation" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Tactical graphics shall be displayed in the orientation shown in MIL STD 2525B appendix B. Point graphics that are positioned based on their anchor point can be rotated +/-90 degrees when necessary to minimize interference with other symbology or terrain features.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="ORIENT_RIGHT">
+								<xs:annotation>
+									<xs:documentation>Orientation of the point graphic is 90 degress to the right.</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="ORIENT_LEFT">
+								<xs:annotation>
+									<xs:documentation>Orientation of the point graphic is 90 degress to the left.</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LineSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Line Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Hostile" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation1" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup1" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AreaSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Area Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Echelon" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo1" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo2" minOccurs="0"/>
+				<xs:element ref="Hostile" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup1" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BoundarySymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Boundary Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Echelon" minOccurs="0"/>
+				<xs:element ref="Hostile" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation1" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NBCEventSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B NBC Event Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Quantity" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="Hostile" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovementIndicator" minOccurs="0"/>
+				<xs:element ref="UniqueDesignation" minOccurs="0"/>
+				<xs:element ref="NBCType" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TaskSymbolModifiers">
+		<xs:annotation>
+			<xs:documentation>Modifiers of a MIL-STD-2525B Task Symbol</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="UniqueDesignation" minOccurs="0"/>
+				<xs:element ref="DateTimeGroup" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Quantity" default="1">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B text modifier ia an equipment symbol that identifies the number of items present</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="999999999"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FrameShapeModifier">
+		<xs:annotation>
+			<xs:documentation>The modifier of the frame shape to support Affiliations beyond Hostile, Friend, Unknown, and Neutral.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="1"/>
+				<xs:pattern value="[UJK?_]{1}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ReinforcedReduced">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifier in a unit symbol that displays (+) for reinforced, (-) for reduced, (±) for reinforced and reduced.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="(+)"/>
+				<xs:enumeration value="(-)"/>
+				<xs:enumeration value="(±)"/>
+				<xs:enumeration value="_"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="StaffComments">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B text modifier for staff comments field.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="20"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AdditionalInfo">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B text modifier for additional information field.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="20"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AdditionalInfo1">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier for additional information field.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="20"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AdditionalInfo2">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier for additional information field.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="20"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EvaluationRating">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier for units, equipment, and installations that consists of a one letter credibility rating and a one number credibility rating:  </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Reliability" minOccurs="0"/>
+				<xs:element ref="Credibility" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CombatEffectiveness">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B text modifier for units and  installations that indicates unit effectiveness or installation capability.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="GREEN"/>
+				<xs:enumeration value="AMBER"/>
+				<xs:enumeration value="RED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SignatureEquipment">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier for hostile equipment; '!' indicates detectable electronic signature. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[ !]{1}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="HigherFormation">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier For units that indicates the designation of the unit's superior.  For boundaries this is the second designation used to identify the line</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="21"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Hostile" type="xs:boolean" default="false">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier: letters 'ENY' denoting hostile symbols.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IFF">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier displaying IFF/SIF Identification modes and codes.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="5"/>
+				<xs:minLength value="0"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DirectionOfMovementIndicator" type="xs:boolean" default="false">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifierfor units, equipment, and installations that identifies the direction of movement or intended direction of movement.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SIGINT">
+		<xs:annotation>
+			<xs:documentation>Enumeration type that describes the signal intelligence equipment mobility Indicators of MILSTD2525.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="1"/>
+				<xs:pattern value="[MSU]{1}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="HeadquarterStaff" type="xs:boolean" default="false">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifierfor units, equipment, and installations that identifies a unit as a headquarters.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LocationOffsetIndicator" type="Coordinates">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifierfor units, equipment, and installations used when placing an object away from its actual location.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UniqueDesignation">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier for The symbols unique designation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="21"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UniqueDesignation1">
+		<xs:annotation>
+			<xs:documentation>Second designation used for lines and boundaries</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="21"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EquipmentType">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier that indicates type of equipment.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="24"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="NBCType">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier that indicates type of nuclear weapon.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="20"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DateTimeGroup" type="DTGRelative">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B Date Time Group an Alphanumeric field for date/time which identifies the timeframe, relative to ScenarioTime, for which the symbol is a valid.  </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DateTimeGroup1" type="DTGRelative">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B Date Time Group an Alphanumeric field for date/time which identifies the timeframe, relative to ScenarioTime, for which the symbol is a valid.   </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AltitudeDepth">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier for units, equipment, and installations that displays the altitude portion of GPS; flight level for aircraft; depth for submerged objects; height in feet of equioment or structures on the ground.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="-999999.0"/>
+				<xs:maxInclusive value="999999.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="LocationDisplay" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifierfor units, equipment, and installations that displays a symbol's location in degrees, minutes, and seconds (or in UTM or other applicable display format).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Speed">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B field for unit or equipment speed (for display only). Kilometers per Hour for ground units, Nautical miles per Hour for Air.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="999999.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SpecialC2HQ">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B  text modifier For units that indicates a unit is a special command and control headquarters</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="9"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FeintDummyIndicator" type="xs:boolean" default="false">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifierfor units, equipment, and installations that identifies an offensive or defensive unit intended to draw the enemy's attention away from the area of the main attack.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InstallationIndicator" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifierfor units, equipment, and installations used to show that aparticular symbol is denotes an installation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AuxiliaryEquipment" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B graphic modifier for equipment that denotes the presence of a towed sonar array</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IsDetached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Flag indicating if the vehicle is out of formation </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Reliability">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B text modifier indicator that establishes the reliability of a unit, equipment or installation. Reliability Ratings: A-completely reliable, B-usually reliable, C-fairly reliable, D-not usually reliable, E-unreliable, F-realibility cannot be judged.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-F]{1}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Credibility">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B text modifier indicator that establishes the credibility of a unit, equipment or installation. Credibility Ratings: 1-confirmed by other sources, 2-probably true, 3-possibly true, 4-doubtfully true, 5-improbable, 6-truth cannot be judged.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="1"/>
+				<xs:maxInclusive value="6"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SymbolId" type="SymbolID">
+		<xs:annotation>
+			<xs:documentation>MIL-STD-2525B 15 character Symbol identifier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Width">
+		<xs:annotation>
+			<xs:documentation>Width, in meters, of a line tactical graphic</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:float">
+				<xs:minInclusive value="0.0"/>
+				<xs:maxInclusive value="1000.0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MOOTWGraphics">
+		<xs:annotation>
+			<xs:documentation>Thr TacticalGraphics representing the control measures for the scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="MOOTWGraphic"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="MOOTWGraphic">
+			<xs:selector xpath=".//MOOTWGraphics/MOOTWGraphic"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="MOOTWGraphic">
+		<xs:annotation>
+			<xs:documentation>The MOOTW Graphic of a Military Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="SymbolId"/>
+				<xs:element ref="Location"/>
+				<xs:element ref="MOOTWSymbolModifiers" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Options">
+		<xs:annotation>
+			<xs:documentation>Scenario Options</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="MSDLVersion"/>
+				<xs:element ref="TaskOrganizationDetail" minOccurs="0"/>
+				<xs:element ref="ScenarioDataStandards" minOccurs="0"/>
+				<xs:element ref="Applications" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MSDLVersion" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Specifies MSDL schema version used by this military scenario.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaskOrganizationDetail">
+		<xs:annotation>
+			<xs:documentation>The Task Organization detail of the scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="AggregateBased">
+					<xs:annotation>
+						<xs:documentation>Flags scenario as an aggregate unit scenario that does not neccessarily include subordinate units or equipment</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="AggregateEchelon" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Identifies the aggregate echelon level planned to in the scenario</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AggregateBased">
+		<xs:annotation>
+			<xs:documentation>Flags scenario as an aggregate unit scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:boolean"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AggregateEchelon" type="Echelon">
+		<xs:annotation>
+			<xs:documentation>Identifies the aggregate echelon level planned to in the scenario.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ScenarioDataStandards">
+		<xs:annotation>
+			<xs:documentation>Standards to be used throughout the exercise.  </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="EnumerationStandard" minOccurs="0"/>
+				<xs:element ref="EnumerationVersion" minOccurs="0"/>
+				<xs:element ref="CoordinateSystemType"/>
+				<xs:element ref="Datum" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CoordinateSystemType" default="GDC">
+		<xs:annotation>
+			<xs:documentation>Cooridinate system used in this scenario</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="MGRS"/>
+				<xs:enumeration value="GDC"/>
+				<xs:enumeration value="UTM"/>
+				<xs:enumeration value="GCC"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EnumerationStandard" default="BSO">
+		<xs:annotation>
+			<xs:documentation>The enumeration standard used to identify specific type of units and equipment for this scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="DIS"/>
+				<xs:enumeration value="BSO"/>
+				<xs:enumeration value="LIN"/>
+				<xs:enumeration value="MIDB"/>
+				<xs:enumeration value="OTHER"/>
+				<xs:enumeration value="NONE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EnumerationVersion" default="C24">
+		<xs:annotation>
+			<xs:documentation>The version of the enumeration standard used to identify specific type of units and equipment for this scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Applications">
+		<xs:annotation>
+			<xs:documentation>Set of applications providing the options</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Application"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Application">
+		<xs:annotation>
+			<xs:documentation>A specific application's custom options that have been applied to the scenario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="AppName"/>
+				<xs:element ref="AppOptions" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AppName">
+		<xs:annotation>
+			<xs:documentation> Name of the application</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AppOptions">
+		<xs:annotation>
+			<xs:documentation>Application-dependent options</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Application schema. The schema will not be parsed and validated</xs:documentation>
+					</xs:annotation>
+				</xs:any>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Datum" default="WGS84">
+		<xs:annotation>
+			<xs:documentation>The Datum used to calculate cooridinates</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Overlays">
+		<xs:annotation>
+			<xs:documentation>The Overlays defined in the context of this  scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Overlay"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="Overlay">
+			<xs:selector xpath=".//Overlays/Overlay"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="Overlay">
+		<xs:annotation>
+			<xs:documentation>A specific overlay used in the scenario, that is then referenced by the control measures that are to be included on the overlay.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="OverlayType"/>
+				<xs:element ref="OverlayName"/>
+				<xs:element ref="Visible" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OverlayName">
+		<xs:annotation>
+			<xs:documentation>The freetext Name of the overlay.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="OverlayType">
+		<xs:annotation>
+			<xs:documentation>Name of the overlay. This field accepts an enumerated data type or a user define name </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="OPERATIONS"/>
+				<xs:enumeration value="FIRE_SUPPORT"/>
+				<xs:enumeration value="MODIFIED_COMBINED_OBSTACLES"/>
+				<xs:enumeration value="INTEL"/>
+				<xs:enumeration value="RECON_SURVEILLANCE"/>
+				<xs:enumeration value="OBSTACLE"/>
+				<xs:enumeration value="AIR_DEFENSE"/>
+				<xs:enumeration value="LOGISTICS"/>
+				<xs:enumeration value="A2C2"/>
+				<xs:enumeration value="USER_DEFINED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Visible" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Flag indicating whether the overlay is visible</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Plan">
+		<xs:annotation>
+			<xs:documentation>Military plan Information and documents </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ExecutiveSummary" minOccurs="0"/>
+				<xs:element ref="Objectives" minOccurs="0"/>
+				<xs:element ref="MilitaryDomain" minOccurs="0"/>
+				<xs:element ref="PlanningDocuments" minOccurs="0"/>
+				<xs:element ref="ReferenceDocuments" minOccurs="0"/>
+				<xs:element ref="DecisionSupportMatrix" minOccurs="0"/>
+				<xs:element ref="CoursesOfAction" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PlanningUnitHandle">
+		<xs:annotation>
+			<xs:documentation>A refernce to the scenario unit ObjectHandle (UUID) to which the plan applies.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9a-z]{8}\-[0-9a-z]{4}\-[0-9a-z]{4}\-[0-9a-z]{4}\-[0-9a-z]{12}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Objectives">
+		<xs:annotation>
+			<xs:documentation>The scenario planners Objectives for the scenario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Objective"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Objective">
+		<xs:annotation>
+			<xs:documentation>An objective for the scenario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Title"/>
+				<xs:element ref="Description"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Title">
+		<xs:annotation>
+			<xs:documentation>The Title of an Objective.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="64"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MilitaryDomain">
+		<xs:annotation>
+			<xs:documentation>Military domain for the scenario</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ACR"/>
+				<xs:enumeration value="RDA"/>
+				<xs:enumeration value="TEMO"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ReferenceDocuments">
+		<xs:annotation>
+			<xs:documentation>Documents referneced by this scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="DocumentReference"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentReference">
+		<xs:annotation>
+			<xs:documentation>A reference to a document which applies to the scenario (field manual, task manual, etc).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentName" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The name of a referenced document.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DocumentTitle" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>The title of a referenced document.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DocumentNumber" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The number by which a document is identified.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="References" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="References">
+		<xs:annotation>
+			<xs:documentation>Specific document references.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Reference"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Reference">
+		<xs:annotation>
+			<xs:documentation>Specific document references.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ReferenceBookmark" minOccurs="0"/>
+				<xs:element ref="ReferenceText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReferenceText">
+		<xs:annotation>
+			<xs:documentation>Specific document reference Text of a hyperlink.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ReferenceBookmark">
+		<xs:annotation>
+			<xs:documentation>Specific document reference Bookmark of a hyperlink.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PlanningDocuments">
+		<xs:annotation>
+			<xs:documentation>The planning documents which make up a complete military operations order, training support package, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="DocumentReference"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExecutiveSummary">
+		<xs:annotation>
+			<xs:documentation>The executive summary of the operational order document.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="TaskOrganization" minOccurs="0"/>
+				<xs:element ref="FriendlyForces" minOccurs="0"/>
+				<xs:element ref="EnemyForces" minOccurs="0"/>
+				<xs:element ref="AttachmentsDetachments" minOccurs="0"/>
+				<xs:element ref="Mission" minOccurs="0"/>
+				<xs:element ref="Intent" minOccurs="0"/>
+				<xs:element ref="ConceptOfOperation" minOccurs="0"/>
+				<xs:element ref="TasksManeuver" minOccurs="0"/>
+				<xs:element ref="TasksCSS" minOccurs="0"/>
+				<xs:element ref="Coordination" minOccurs="0"/>
+				<xs:element ref="ServiceGeneral" minOccurs="0"/>
+				<xs:element ref="ServiceMaterial" minOccurs="0"/>
+				<xs:element ref="ServiceMedical" minOccurs="0"/>
+				<xs:element ref="ServicePersonnel" minOccurs="0"/>
+				<xs:element ref="Command" minOccurs="0"/>
+				<xs:element ref="Signal" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TaskOrganization">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Task Organization section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FriendlyForces">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Friendly Forces section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EnemyForces">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Enemy Forces section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AttachmentsDetachments">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Attachments and Detachments section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Mission">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Mission section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Intent">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Commander's Intent section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ConceptOfOperation">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Concept of Operation section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TasksManeuver">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Tasks to Maneuver Units section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TasksCSS">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Tasks to CSS Units section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Coordination">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Coordinating Instructions of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceGeneral">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the General section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceMaterial">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Material and Services section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceMedical">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Medical Evacuation section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServicePersonnel">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Personnel section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Command">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Command  section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Signal">
+		<xs:annotation>
+			<xs:documentation>A text paragraph representing the Signal section of an OPORD.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1024"/>
+				<xs:pattern value="([ -z]{1})*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TacticalGraphics">
+		<xs:annotation>
+			<xs:documentation>The TacticalGraphics representing the control measures for the scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="TacticalGraphic"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="TacticalGraphic">
+			<xs:selector xpath=".//TacticalGraphics/TacticalGraphic"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="TacticalGraphic">
+		<xs:annotation>
+			<xs:documentation>The TacticalGraphic of TacticalGraphics.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="SymbolId"/>
+				<xs:element ref="AssociatedOverlays" minOccurs="0"/>
+				<xs:element ref="AnchorPoints"/>
+				<xs:element ref="MILSTD2525BSymbolClass" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AssociatedOverlays">
+		<xs:annotation>
+			<xs:documentation>The overlays for which this tactical graphic is to be displayed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="AssociatedOverlay"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AssociatedOverlay">
+		<xs:annotation>
+			<xs:documentation>The overlays on which this tactical graphic is to be placed on.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="OverlayHandle"/>
+				<xs:element ref="UnitOwnerHandle" minOccurs="0"/>
+				<xs:element ref="OwnedByOverlay" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OverlayHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>UUID of the overlay where the tactical graphic is to be included.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OwnedByOverlay" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Flag specifying whether the tactical graphic is owned by the associated overlay.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AnchorPoints">
+		<xs:annotation>
+			<xs:documentation>Anchor points of the symbol as established in MIL-STD-2525B</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="AnchorPoint"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AnchorPoint">
+		<xs:annotation>
+			<xs:documentation>Single anchor point description</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Sequence"/>
+				<xs:element ref="Location" minOccurs="0"/>
+				<xs:element ref="PointSymbolHandle" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PointSymbolHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>UUID of the Point Symbol whose location is to be used for the anchor point.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Sequence" type="xs:int">
+		<xs:annotation>
+			<xs:documentation>The contiguous sequential order of the anchor point, 1 to N, used to draw the symbol</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Threats">
+		<xs:annotation>
+			<xs:documentation>The identification of non-military organizations or envronmental conditions which represent a threat to military operational success.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Threat"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="Threat">
+			<xs:selector xpath=".//Threat"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="Threat">
+		<xs:annotation>
+			<xs:documentation>A specific threat organization.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="ThreatType"/>
+				<xs:element ref="Characterization"/>
+				<xs:element ref="ForceSideHandle" minOccurs="0"/>
+				<xs:element ref="TypicalActivities"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ThreatType">
+		<xs:annotation>
+			<xs:documentation>The type of threat as a non-military organization, or environmental threat.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ENVIRONMENTAL"/>
+				<xs:enumeration value="POLITICAL_GOVERNMENTAL"/>
+				<xs:enumeration value="CRIMINAL"/>
+				<xs:enumeration value="ETHNIC_CONFLICT"/>
+				<xs:enumeration value="INTERNATIONAL_ORGANIZATIONS"/>
+				<xs:enumeration value="TERRORIST_GROUPS"/>
+				<xs:enumeration value="NON_GOVERNMENTAL_ORGANIZATIONS"/>
+				<xs:enumeration value="OTHER"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Characterization">
+		<xs:annotation>
+			<xs:documentation>Characterization of the theat as Most Likely, Most Dangerous, or Other.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="MOST_DANGEROUS"/>
+				<xs:enumeration value="MOST_LIKELY"/>
+				<xs:enumeration value="OTHER"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TypicalActivities">
+		<xs:annotation>
+			<xs:documentation>The identification a typical threat activity and corresponding effects.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="ThreatActivity"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="ThreatActivity">
+			<xs:selector xpath=".//TypicalActivities/ThreatActivity"/>
+			<xs:field xpath="ObjectHandle"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="ThreatActivity">
+		<xs:annotation>
+			<xs:documentation>The identification a typical threat activity and corresponding effects.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="Name"/>
+				<xs:element ref="StaffComments" minOccurs="0"/>
+				<xs:element ref="AdditionalInfo" minOccurs="0"/>
+				<xs:element ref="Characterization"/>
+				<xs:element ref="METOCSymbolID" minOccurs="0"/>
+				<xs:element ref="MOOTWSymbolID" minOccurs="0"/>
+				<xs:element ref="Intensity"/>
+				<xs:element ref="TrendOfIntensity"/>
+				<xs:element ref="Effect"/>
+				<xs:element ref="Timing"/>
+				<xs:element ref="NAIHandle" minOccurs="0"/>
+				<xs:element ref="SubsequentActivities" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SubsequentActivities">
+		<xs:annotation>
+			<xs:documentation>The identification the typical subsequent/followon threat activity.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="MostLikelyActivityHandle" type="UUIDRef" minOccurs="0"/>
+				<xs:element name="MostDangerousActivityHandle" type="UUIDRef" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Timing">
+		<xs:annotation>
+			<xs:documentation>The effect an event has on the military situation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="DAYTIME"/>
+				<xs:enumeration value="MORNING"/>
+				<xs:enumeration value="EVENING"/>
+				<xs:enumeration value="NIGHTTIME"/>
+				<xs:enumeration value="TWILIGHT"/>
+				<xs:enumeration value="ANYTIME"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Intensity">
+		<xs:annotation>
+			<xs:documentation>The effect an event has on the military situation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="SEVERE"/>
+				<xs:enumeration value="HIGH"/>
+				<xs:enumeration value="MEDIUM"/>
+				<xs:enumeration value="LOW"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TrendOfIntensity">
+		<xs:annotation>
+			<xs:documentation>The effect an event has on the military situation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="INCREASING"/>
+				<xs:enumeration value="DECREASING"/>
+				<xs:enumeration value="STEADY"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="NAIHandle" type="UUIDRef">
+		<xs:annotation>
+			<xs:documentation>A reference to a Named Area of Interest in which the Threat operates.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MOOTWSymbolID" type="SymbolID">
+		<xs:annotation>
+			<xs:documentation>The MOOTW effect a threat's activity has on the military situation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="METOCSymbolID" type="SymbolID">
+		<xs:annotation>
+			<xs:documentation>The METOC effect a threat's activity has on the military situation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Effect">
+		<xs:annotation>
+			<xs:documentation>The effect an event has on the military situation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BURN"/>
+				<xs:enumeration value="CAPTURE_KIDNAP"/>
+				<xs:enumeration value="DESTOROY"/>
+				<xs:enumeration value="FORCE_TO_WITHDRAW"/>
+				<xs:enumeration value="IDENTIFY"/>
+				<xs:enumeration value="ILLUMINATE"/>
+				<xs:enumeration value="KILL"/>
+				<xs:enumeration value="DAMAGE-LIGHT"/>
+				<xs:enumeration value="DAMAGE-MODERATE"/>
+				<xs:enumeration value="DAMAGE-SEVERE"/>
+				<xs:enumeration value="NEUTRALIZE"/>
+				<xs:enumeration value="INFLICT_NON-BATTLE_CASUALTY"/>
+				<xs:enumeration value="SUPPRESS"/>
+				<xs:enumeration value="WOUND"/>
+				<xs:enumeration value="UNKNOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Units">
+		<xs:annotation>
+			<xs:documentation>The identification of Units of a Military Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="Unit"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Unit">
+		<xs:annotation>
+			<xs:documentation>The identification of a Unit of a Military Scenario.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="ObjectHandle"/>
+				<xs:element ref="SymbolId"/>
+				<xs:element ref="Name" minOccurs="0"/>
+				<xs:element name="Enumeration" type="UnitEnumeration" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The enumerated value of the military organiztions. The enumeration is based on the MIL STD 2525B hierarchy.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Resolution" minOccurs="0"/>
+				<xs:element ref="IsDeaggregatedOnDisplay" minOccurs="0"/>
+				<xs:element ref="IsDeaggregated" minOccurs="0"/>
+				<xs:element ref="OrganicSuperiorHandle" minOccurs="0"/>
+				<xs:element ref="ForceRelation"/>
+				<xs:element ref="SupportRelations" minOccurs="0"/>
+				<xs:element ref="CommunicationNetInstances" minOccurs="0"/>
+				<xs:element ref="Location" minOccurs="0"/>
+				<xs:element ref="Position" minOccurs="0"/>
+				<xs:element ref="DirectionOfMovement" minOccurs="0"/>
+				<xs:element ref="UnitSymbolModifiers" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Position">
+		<xs:annotation>
+			<xs:documentation>Position, as in Spacing, Formation and Formation order, of the aggregated unit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Spacing" minOccurs="0"/>
+				<xs:element ref="Formation" minOccurs="0"/>
+				<xs:element ref="Orientation" minOccurs="0"/>
+				<xs:element ref="FormationOrder" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Formation" default="COLUMN">
+		<xs:annotation>
+			<xs:documentation>This is the relative location from which subordinate elements are placed in formation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="COLUMN"/>
+				<xs:enumeration value="STAGGERED_COLUMN"/>
+				<xs:enumeration value="ECHELON_LEFT"/>
+				<xs:enumeration value="ECHELON_RIGHT"/>
+				<xs:enumeration value="LINE"/>
+				<xs:enumeration value="WEDGE"/>
+				<xs:enumeration value="VEE"/>
+				<xs:enumeration value="ASSAULT_VEE"/>
+				<xs:enumeration value="FSE_COLUMN"/>
+				<xs:enumeration value="STACK"/>
+				<xs:enumeration value="NONE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FormationOrder" type="xs:int">
+		<xs:annotation>
+			<xs:documentation>The placement, 1 to N, of a subordinate in the superior unit formation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Spacing" type="xs:int">
+		<xs:annotation>
+			<xs:documentation>The default Spacing in meteres between subordinates elements on echelon below.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IsDeaggregatedOnDisplay" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Flag indicating that a unit's graphical representation has been deaggregated to to its subordinates.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IsDeaggregated" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Flag indicating that a unit's underlying task organization has been deaggregated to to its subordinates.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Resolution" default="NOT_SPECIFIED">
+		<xs:annotation>
+			<xs:documentation>Enumeration indicating the level of fidelity appropriate for instancing the unit or equipment in the simulation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="NONE">
+					<xs:annotation>
+						<xs:documentation>No resolution/representation of the unit or equipment is neccesary to achieve scenario objectives.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="MINIMAL">
+					<xs:annotation>
+						<xs:documentation>Minimal resolution representation (graphical display only, no behaviors) of the unit or equipment is necessary to achieve scenario objectives.  This resolution typically applies to elements that are displayed as part of the common operating picture, but have not direct impact on scenario objectives.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="STANDARD">
+					<xs:annotation>
+						<xs:documentation>Standard (low) resolution representation of the unit or equipment necessary to achieve scenario objectives.  This resolution typically applies to elements that are two or more echelons above, below or adjacient to the principle planning unit.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="ENHANCED">
+					<xs:annotation>
+						<xs:documentation>Enhanced (medium) resolution representation of the unit or equipment necessary to achieve scenario objectives.  This resolution typically applies to elements that are within two echelons of the principle planning unit.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="HIGH">
+					<xs:annotation>
+						<xs:documentation>High resolution representation of the unit or equipment necessary to achieve scenario objectives.  This resolution typically applies to elements that are within one echelon of the principle planning unit.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="NOT_SPECIFIED">
+					<xs:annotation>
+						<xs:documentation>No resolution has been specified for the unit or equipment.</xs:documentation>
+					</xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+</xs:schema>

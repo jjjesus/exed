@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <Environment SeaClutter="false" RainClutter="false" UseTerrainHeight="true" SendPropertyChanges="true">
+    <Platform>
+      <Aircraft>  </Aircraft>
+      <Fighter></Fighter>
+      <Chaff></Chaff>
+      <LandPlatform ObjectName="FP01" HitRadius="100" SwerlingCase="1" Identification="Friendly" SendPropertyChanges="true">
+        <InternalCommunicationTable>
+          <Import FileName="Defense Platforms/InternalCommunicationTables/Patriot_ECS-InternalCommunicationTable.tpl" ReplaceText="FP01"></Import>
+        </InternalCommunicationTable>
+        <Course_Course Heading_deg="73.0" Elevation_deg="0.0" Speed="0.0"></Course_Course>
+        <Classification_PlatformClassification SpecificType="PATRIOT ECS">
+          <EntityType>LANDPLATFORM</EntityType>
+          <GeneralType>LAND</GeneralType>
+        </Classification_PlatformClassification>
+        <LinkTable>
+          <Import FileName="Defense Platforms/LinkTables/Patriot_ECS-LinkTable.tpl" ReplaceText="FP01"></Import>
+        </LinkTable>
+        <LinkedAsset>"Adana City"</LinkedAsset>
+        <LinkedAsset>"JFACC"</LinkedAsset>
+        <Position_Position Latitude_DMS="035°12'39.00" Longitude_DMS="36°59'35.00" Altitude_AGL="8.0"></Position_Position>
+        <MFR ObjectName="FP01_RS" DataObject="false" MinCueDelay="0.2" TimeToConfirmDetection="0.1" TimeToConfirmCuedDetection="0.1" MaxTIs="4" GainAdjustment="false" MinInstrRange="0" MaxInstrRange="250000" SigmaAzimuth_deg="0.2" SigmaElevation_deg="0.2" SigmaRange="20.0" DuctingFactor="1.3333" BeamWidth_deg="2.0" Tilt_deg="15.0" PeakPower_dBW="56.99" SCIF_dB="0.0" TransmitGain_dB="40.0" ReceiveGain_dB="40.0" Frequency_GHz="5.5" FalseAlarmRate="0.000001" RangeGate="100.0" SystemLosses_dB="4.0" NoiseFigure_dB="3.8" MinElevation_deg="-2.0" MaxElevation_deg="90.0" OnAtStart="true" NumberOfFaces="1" SendPropertyChanges="true" DopplerFilterEnabled="true" CurrentSensorMode="TBM" ChangeSensorModeTime="10.0" RemainActiveWhileChangingSensorMode="false" UseEclipsing="false">
+          <Classification_SubSystemClassification SpecificType="PATRIOT-RS">
+            <EntityType>RADAR</EntityType>
+            <GeneralType>SENSOR</GeneralType>
+          </Classification_SubSystemClassification><RelativePosition_RelativePosition ForwardDistance="0.0" LateralDistance="0.0" UpwardDistance="5.0"></RelativePosition_RelativePosition><Tracker_InternalTracker ObjectName="FP01-RS-Tracker" InitialToTentativeM="1" InitialToTentativeN="1" TentativeToConfirmedM="1" TentativeToConfirmedN="1" UseTimeLostCriteria="false" InitialToLost="2" TentativeToLost="2" ConfirmedToLost="2"></Tracker_InternalTracker>
+          Important to note that the tracker is an inherited object
+          attribute.
+          It has to be added BEFORE the object attributes of the
+          MFR.
+          If not an
+          error will be generated (apparently some typical XML feature).
+          <MFRMode SensorModeName="TBM">
+            <MFRDwellParameters FalseAlarmRate="0.000001" DuringTI="false">
+              <DwellType>VOLUMESEARCH</DwellType>
+              <MFRSectorParameters SectorName="ABT short" AzimuthFrom_deg="-60.0" AzimuthTo_deg="60.0" ElevationFrom_deg="-2.0" ElevationTo_deg="15.0" RangeFrom="2000.0" RangeTo="100000.0" UpdateRate="0.25" Occupancy="0.2">
+                <Waveform>
+                  <RadarWaveformName PRF="2000" NumberOfPulses="3" PulseLength="0.0000333" NeededBurstSuccesses="1" NumberOfBursts="1"></RadarWaveformName>
+                </Waveform>
+              </MFRSectorParameters>
+              <MFRSectorParameters SectorName="ABT long" AzimuthFrom_deg="-60.0" AzimuthTo_deg="60.0" ElevationFrom_deg="15.0" ElevationTo_deg="35.0" RangeFrom="2000.0" RangeTo="150000.0" UpdateRate="0.1" Occupancy="0.15">
+                <Waveform>
+                  <RadarWaveformName PRF="2000" NumberOfPulses="3" PulseLength="0.00005" NeededBurstSuccesses="1" NumberOfBursts="1"></RadarWaveformName>
+                </Waveform>
+              </MFRSectorParameters>
+            </MFRDwellParameters>
+            <MFRDwellParameters FalseAlarmRate="0.001" UpdateRate="1.0">
+              <DwellType>CUEDSEARCH</DwellType>
+              <Waveform>
+                <RadarWaveformName PRF="2000" NumberOfPulses="3" PulseLength="0.002917" NeededBurstSuccesses="1" NumberOfBursts="1"></RadarWaveformName>
+              </Waveform>
+            </MFRDwellParameters>
+          </MFRMode><MFRMode SensorModeName="ABT"></MFRMode><TransmitIlluminationType>PARABOLIC</TransmitIlluminationType><Band>X_BAND</Band><Polarisation>HORIZONTAL</Polarisation><Waveform PRF="2000" NumberOfPulses="10" PulseLength="0.00001"></Waveform><DopplerFilterTaper>UNIFORM_TAPER</DopplerFilterTaper><AntennaApertureType>RECTANGULAR</AntennaApertureType><MFRFaceCoverage Heading_deg="0.0" CoverageWidth_deg="120.0"></MFRFaceCoverage>
+        </MFR>
+        <FixedHeadingLauncher ObjectName="FP01_LS01" FactoryName="LaunchableFactory_Patriot" LaunchOrderToMissileAwayPeriod="3.0" LaunchOccupationPeriod="1.0" ActivationTime="10.0" DeActivationTime="5.0" MovingSpeed="50.0" TurningTime="60.0" SendPropertyChanges="true">
+          <RelativeOrientation Elevation_deg="65.0" Azimuth_deg="0.0"></RelativeOrientation>
+          <Classification_SubSystemClassification SpecificType="PATRIOT LS">
+            <EntityType>LAUNCHER</EntityType>
+            <GeneralType>WEAPON</GeneralType>
+          </Classification_SubSystemClassification>
+          <Magazine>
+            <MagazineEntry AmmoType="PATRIOT PAC3" Present="8"></MagazineEntry>
+          </Magazine>
+        </FixedHeadingLauncher>
+        <FixedHeadingLauncher ObjectName="FP01_LS02" FactoryName="LaunchableFactory_Patriot" LaunchOrderToMissileAwayPeriod="3.0" LaunchOccupationPeriod="1.0" ActivationTime="10.0" DeActivationTime="5.0" MovingSpeed="50.0" TurningTime="60.0" SendPropertyChanges="true">
+          <RelativeOrientation Elevation_deg="65.0" Azimuth_deg="0.0"></RelativeOrientation>
+          <Classification_SubSystemClassification SpecificType="PATRIOT LS">
+            <EntityType>LAUNCHER</EntityType>
+            <GeneralType>WEAPON</GeneralType>
+          </Classification_SubSystemClassification>
+          <Magazine>
+            <MagazineEntry AmmoType="PATRIOT Standard" Present="4"></MagazineEntry>
+            <MagazineEntry AmmoType="PATRIOT PAC2" Present="8"></MagazineEntry>
+            <MagazineEntry AmmoType="PATRIOT GEM" Present="8"></MagazineEntry>
+          </Magazine>
+        </FixedHeadingLauncher>
+      </LandPlatform>
+      <Aircraft>
+        
+      </Aircraft>
+    </Platform>
+  </Environment>
+</Scenario>

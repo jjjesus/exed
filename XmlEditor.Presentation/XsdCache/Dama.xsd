@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:int:nato:tdl:dama:0:1"
+	targetNamespace="urn:int:nato:tdl:dama:0:1"
+	elementFormDefault="qualified">
+  <xsd:annotation>
+    <xsd:documentation
+			source="DAMA protocol is independent of the communications carrier" />
+  </xsd:annotation>
+
+  <!-- MESSAGE STRUCTURES -->
+
+  <!--INITIALIZATION MESSAGES BELOW-->
+  <xsd:element name="DAMA">
+    <xsd:annotation>
+      <xsd:documentation>The Defence Against Mortar Attack protocol.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+
+        <xsd:element name="Initialization">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="InitializationSourceID" type="xsd:string" />
+              <xsd:element name="SourceInfo" type="SourceInfo" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="SystemInitialPosition" type="Position" >
+                <xsd:annotation>
+                  <xsd:documentation
+                    source="When any Dama asset such as a weapon system , sensor system , etc .
+							changes its location , it has to sent a new initilialization message to the C2
+							system in order to report its new position." />
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Acknowledgement">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="C2SystemReferenceTime" type="xsd:dateTime" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation
+                    source="Time Synchronization of all elements should  not be handled 
+							at DAMA protocol layer but at lower layers .
+							This field is optional and can be used if C2 systems wants to
+							send its time to an element."	 />
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="AcknowledgementSourceID"
+                type="xsd:string" />
+              <xsd:element name="SimulationIndicator"
+                type="xsd:boolean" />
+              <xsd:element name="AcknowledgementConsumerID"
+                type="xsd:string" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Tasking">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="TaskingSourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="TaskingType" type="TaskingType" />
+              <xsd:element name="EngageToTrackNumber" type="xsd:positiveInteger" />
+              <xsd:element name="TaskingConsumerID" type="xsd:string" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+
+        <!-- SYSTEM DETECTION BELOW-->
+        <!-- Please note that the two detection messages below might be merged to a single detection message-->
+        <xsd:element name="AcousticSystemDetection">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="AcousticSourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator"
+                type="xsd:boolean" />
+              <xsd:element name="DetectionTime" type="xsd:dateTime" />
+              <xsd:element name="DetectionNumber"
+                type="xsd:positiveInteger" />
+              <xsd:element name="DetectionPosition" type="Position" />
+              <xsd:element name="DetectionType" type="DetectionType" />
+              <xsd:element name="AcousticTowerArray"
+                type="xsd:integer" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="GenericSystemDetection">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime" />
+              <xsd:element name="SystemSourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="DetectorType" type="DetectorType" />
+              <xsd:element name="DetectionTime" type="xsd:dateTime" />
+              <xsd:element name="DetectionNumber" type="xsd:positiveInteger" />
+              <xsd:element name="DetectionPosition" type="Position" />
+              <xsd:element name="DetectionLOB" type="LOB" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <!--TRACK MESSAGES  BELOW-->
+        <xsd:element name="Track">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime" />
+              <xsd:element name="TrackSourceID" type="xsd:string" />
+              <xsd:element name="TrackType" type="TrackType" />
+              <xsd:element name="SimulationIndicator"
+                type="xsd:boolean" />
+              <xsd:element name="TrackTime" type="xsd:dateTime" />
+              <xsd:element name="TrackNumber"
+                type="xsd:positiveInteger" />
+              <xsd:element name="TrackState" type="TrackState" />
+              <xsd:element name="Position" type="Position" />
+              <xsd:element name="Velocity" type="Velocity" />
+              <xsd:element name="Orientation" type="Orientation" />
+              <xsd:element name="TrackID" type="TrackID"
+                minOccurs="0" />
+              <xsd:element name="TrackQuality"
+                type="xsd:positiveInteger" minOccurs="0" />
+              <xsd:element name="RaidSize" type="xsd:positiveInteger"
+                minOccurs="0" />
+              <xsd:element name="Classification"
+                type="Classification" />
+              <xsd:element name="ReportingResponsibility"
+                type="xsd:string" minOccurs="0" />
+
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Plot">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime" />
+              <xsd:element name="PlotSourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="PlotTime" type="xsd:dateTime" />
+              <xsd:element name="PlotNumber" type="xsd:positiveInteger" />
+              <xsd:element name="Position" type="Position" />
+              <xsd:element name="Velocity" type="Velocity" />
+              <xsd:element name="Classification" type="Classification" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="StrobeTrack">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:string" />
+              <xsd:element name="StrobeSourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="TrackTime" type="xsd:positiveInteger" />
+              <xsd:element name="TrackNumber" type="xsd:positiveInteger" />
+              <xsd:element name="TrackState" type="TrackState" />
+              <xsd:element name="TrackLOB">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Azimuth" type="xsd:float" />
+                    <xsd:element name="AzError" type="xsd:float" />
+                    <xsd:element name="Elevation" type="xsd:float" />
+                    <xsd:element name="ElError" type="xsd:float" />
+                    <xsd:element name="MaxRange" type="xsd:float" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="TrackID" type="TrackID" />
+              <xsd:element name="Classification" type="Classification" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+
+
+        <!--SYSTEM STATUS MESSAGES BELOW-->
+        <xsd:element name="AcousticSystemStatus">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="AcousticSourceID" type="xsd:string" />
+              <xsd:element name="SensorInfo" type="SensorInfo" maxOccurs="32" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="WeaponSystemStatus">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="WeaponSourceID" type="xsd:string" />
+              <xsd:element name="NumberOfRoundsFired" type="xsd:positiveInteger" minOccurs="0" />
+              <xsd:element name="NumberOfRoundsRemaining" type="xsd:positiveInteger" minOccurs="0" />
+              <xsd:element name="ReloadTime" type="xsd:dateTime" minOccurs="0"></xsd:element>
+              <xsd:element name="WeaponStatus" type="WeaponStatus" />
+              <xsd:element name="Position" type="Position"  minOccurs="0"/>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="TrackingSystemStatus">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="TrackingSourceID" type="xsd:string" />
+              <xsd:element name="TrackingSystemAttributes" type="SensorAttributes" minOccurs="0" />
+              <xsd:element name="TrackingSystemType" type="TrackingSystemType" minOccurs="0" />
+              <xsd:element name="TrackingSystemStatus" type="TrackingStatus" />
+              <xsd:element name="Position" type="Position"  minOccurs="0"/>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="RFSystemStatus">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime" maxOccurs="1" minOccurs="1">
+              </xsd:element>
+              <xsd:element name="RFSourceID" type="xsd:string" maxOccurs="1" minOccurs="1" />
+              <xsd:element name="RFPosition" type="Position" maxOccurs="1" minOccurs="1" />
+              <xsd:element name="RFSystemStatus" type="RFSystemStatus" maxOccurs="1" minOccurs="1" />
+              <xsd:element name="RFRange" type="xsd:double" maxOccurs="1" minOccurs="1" />
+              <xsd:element name="RFChannelStatus" type="RFChannelStatus" maxOccurs="unbounded" minOccurs="0" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="OpticalSystemStatus">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="OSSourceID" type="xsd:string" />
+              <xsd:element name="Status" type="OpticalStatus" />
+              <xsd:element name="Azimuth" type="xsd:float" minOccurs="0"/>
+              <xsd:element name="Elevation" type="xsd:float" minOccurs="0" />
+              <xsd:element name="Range" type="xsd:float" minOccurs="0"/>
+              <xsd:element name="FieldOfViewWidth" type="xsd:float" minOccurs="0" />
+              <xsd:element name="FieldOfViewHeight" type="xsd:float" minOccurs="0" />
+              <xsd:element name="Magnification" type="xsd:int" minOccurs="0" />
+              <xsd:element name="Position" type="Position"  minOccurs="0"/>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="C2SystemStatus">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="C2SourceID" type="xsd:string" />
+              <xsd:element name="C2Status" type="C2Status" />
+              <xsd:element name="Position" type="Position"  minOccurs="0"/>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+
+        <!--POSITION INFORMATION MESSAGES BELOW-->
+        <xsd:element name="TSPIReport">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="TSPISourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="TSPITime" type="xsd:dateTime" />
+              <xsd:element name="Position" type="Position" />
+              <xsd:element name="Velocity" type="Velocity" />
+              <xsd:element name="Orientation" type="Orientation" />
+              <xsd:element name="PlatformName" type="xsd:string" />
+              <xsd:element name="PlatformType" type="xsd:string" />
+              <xsd:element name="ForceID" type="ForceID" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="SPOI">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="SPOISourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="PositionTime" type="xsd:dateTime" />
+              <xsd:element name="Position" type="Position" />
+              <xsd:element name="Velocity" type="Velocity" />
+              <xsd:element name="Orientation" type="Orientation" />
+              <xsd:element name="SPOIName" type="xsd:string" />
+              <xsd:element name="SPOIType" type="xsd:string" />
+              <xsd:element name="ForceID" type="ForceID" />
+              <xsd:element name="SPOIStatus" type="SPOIStatus" />
+              <xsd:element name="SPOIHost" type="xsd:string" />
+              <xsd:element name="SPOIAzimuth" type="xsd:float" />
+              <xsd:element name="SPOIElevation" type="xsd:float" />
+              <xsd:element name="SPOIRadius" type="xsd:float" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <!--AREA DECLARATION MESSAGE  BELOW-->
+        <xsd:element name="AreaDeclaration">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="AreaDeclarationSourceID" type="xsd:string" />
+              <xsd:element name="AreaDeclarationConsumerID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="AreaID" type="xsd:string" />
+              <xsd:element name="AreaDeclarationPurpose" type="AreaDeclarationPurpose" />
+              <xsd:element name="AreaType" type="AreaType" />
+              <xsd:element name="Radius" type="xsd:float" />
+              <xsd:element name="MajorAxis" type="xsd:float" />
+              <xsd:element name="MinorAxis" type="xsd:float" />
+              <xsd:element name="Heading" type="xsd:float" />
+              <xsd:element name="CenterPosition" type="Position" />
+              <xsd:element name="PolygonPosition" type="Position" minOccurs="3" maxOccurs="32" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+
+        <!--POO or POI or POOPOI PAIR MESSAGE  BELOW-->
+        <xsd:element name="POOPOIPair">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime"></xsd:element>
+              <xsd:element name="POOPOIPairSourceID" type="xsd:string" />
+              <xsd:element name="POOPOIPairType" type="POOPOIPairType" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="TrackNumber" type="xsd:positiveInteger" />
+              <xsd:element name="LaunchTime" type="xsd:dateTime" />
+              <xsd:element name="LaunchPosition" type="Position" />
+              <xsd:element name="LaunchError" type="Error" />
+              <xsd:element name="ImpactTime" type="xsd:dateTime" />
+              <xsd:element name="ImpactPosition" type="Position" />
+              <xsd:element name="ImpactError" type="Error" />
+              <xsd:element name="MunitionType" type="MunitionType" />
+              <xsd:element name="SequenceType" type="SequenceType" />
+              <xsd:element name="SequenceNumber" type="xsd:positiveInteger" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <!--AUDIO SCHEMA MESSAGE  BELOW-->
+
+        <xsd:element name="AreaAlert">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="MessageTime" type="xsd:dateTime">
+              </xsd:element>
+              <xsd:element name="C2SourceID" type="xsd:string" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" />
+              <xsd:element name="AlertTime" type="xsd:dateTime" />
+              <xsd:element name="AlertNumber" type="xsd:positiveInteger" />
+              <xsd:element name="AlertType" type="AlertType" />
+              <xsd:element name="Position" type="Position" />
+              <xsd:element name="AlertRadius" type="xsd:float" />
+              <xsd:element name="ExpirationTime" type="xsd:dateTime" />
+              <xsd:element name="AlertScriptName" type="AlertScriptName" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="AudioAlertEvent">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime" maxOccurs="1" minOccurs="1">
+              </xsd:element>
+              <xsd:element name="AudioSystemSourceID" type="xsd:string" maxOccurs="1" minOccurs="1" />
+              <xsd:element name="SimulationIndicator" type="xsd:boolean" maxOccurs="1" />
+              <xsd:element name="EventTime" type="xsd:dateTime" maxOccurs="1" />
+              <xsd:element name="EventNumber" type="xsd:positiveInteger" maxOccurs="1" />
+              <xsd:element name="EventPosition" type="Position" maxOccurs="1" />
+              <xsd:element name="EventAction" type="EventAction" maxOccurs="1" />
+              <xsd:element name="AlertType" type="AlertType" maxOccurs="1" />
+              <xsd:element name="AudioTowers" type="xsd:integer" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="AudioAlertSystemStatus">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageTime" type="xsd:dateTime" maxOccurs="1" minOccurs="1">
+              </xsd:element>
+              <xsd:element name="AudioSourceID" type="xsd:string" maxOccurs="1" minOccurs="1" default="WAVES" />
+              <xsd:element name="TowerStatus" type="TowerStatus" maxOccurs="unbounded" minOccurs="0" />
+              <xsd:element name="AudioSystemStatus" type="AudioSystemStatus" maxOccurs="1" minOccurs="1" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <!--DATA ELEMENT DEFINITIONS-->
+
+  <!-- COMMON TYPES BELOW -->
+  <xsd:complexType name="Position">
+    <xsd:sequence>
+      <xsd:element name="Latitude" type="xsd:double" />
+      <xsd:element name="Longitude" type="xsd:double" />
+      <xsd:element name="Altitude" type="xsd:double" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Velocity">
+    <xsd:sequence>
+      <xsd:element name="X" type="xsd:float" />
+      <xsd:element name="Y" type="xsd:float" />
+      <xsd:element name="Z" type="xsd:float" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Orientation">
+    <xsd:annotation>
+      <xsd:documentation
+        source="Yaw element is not used for Track Message if the Track type  is Ground" />
+      <xsd:documentation
+        source="Yaw element is not used for SPOI Message" />
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Heading" type="xsd:float" />
+      <xsd:element name="Pitch" type="xsd:float" />
+      <xsd:element name="Roll" type="xsd:float" />
+      <xsd:element name="Yaw" type="xsd:float" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!--INITIALIZATION TYPES BELOW -->
+
+  <xsd:complexType name="SourceInfo">
+    <xsd:sequence>
+      <xsd:element name="SystemType" type="SystemType" />
+      <xsd:element name="SpecificType" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="SystemType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="C2System" />
+      <xsd:enumeration value="SensorSystem" />
+      <xsd:enumeration value="WeaponSystem" />
+      <xsd:enumeration value="AlerterSystem" />
+      <xsd:enumeration value="InstrumentedVehicle" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--  TASKING TYPES BELOW -->
+  <xsd:simpleType name="TaskingType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="WeaponTightState" />
+      <xsd:enumeration value="Engagement" />
+      <xsd:enumeration value="StopEngagement" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- System Status TYPES BELOW -->
+  <xsd:complexType name="SensorInfo" >
+    <xsd:sequence>
+      <xsd:element name="SensorNumber" type="xsd:integer" />
+      <xsd:element name="Position" type="Position"></xsd:element>
+      <xsd:element name="AcousticSystemStatus" type="AcousticSystemStatus" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="AcousticSystemStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Operational" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Initialize" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+      <xsd:enumeration value="Unavailable" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="WeaponStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Locked" />
+      <xsd:enumeration value="Engaging" />
+      <xsd:enumeration value="ImpactExploded" />
+      <!--Added recently based on requirements  -->
+      <xsd:enumeration value="Disengaging" />
+      <!--Added recently based on requirements  -->
+      <xsd:enumeration value="Tracking" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Initializing" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+      <xsd:enumeration value="Unavailable" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="SensorAttributes">
+    <xsd:sequence>
+      <xsd:element name="StartAz" type="xsd:float" />
+      <xsd:element name="StopAz" type="xsd:float" />
+      <xsd:element name="StartEl" type="xsd:float" />
+      <xsd:element name="StopEl" type="xsd:float" />
+      <xsd:element name="PTL" type="xsd:float" />
+      <xsd:element name="Range" type="xsd:double" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TrackingSystemType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Radar" />
+      <xsd:enumeration value="Infra-Red" />
+      <xsd:enumeration value="Laser" />
+      <xsd:enumeration value="Other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TrackingStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Operational" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Initialize" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+      <xsd:enumeration value="Unavailable" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="RFSystemStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Operational" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Initialize" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+      <xsd:enumeration value="Unavailable" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="ChannelState">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Passive" />
+      <xsd:enumeration value="Active" />
+      <xsd:enumeration value="Idle" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="ChannelLevel">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Low" />
+      <xsd:enumeration value="Med" />
+      <xsd:enumeration value="High" />
+      <xsd:enumeration value="None" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="RFChannelStatus">
+    <xsd:sequence>
+      <xsd:element name="ChannelNumber" type="xsd:positiveInteger" maxOccurs="1" minOccurs="1" />
+      <xsd:element name="ChannelState" type="ChannelState" maxOccurs="1" minOccurs="1" />
+      <xsd:element name="ChannelLevel" type="ChannelLevel" maxOccurs="1" minOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="C2Status">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Operational" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Initializing" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="OpticalStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Operational" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Initialize" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+      <xsd:enumeration value="Unavailable" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- Acoustic System Detection TYPES BELOW -->
+  <xsd:simpleType name="DetectionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="RAMLaunch" />
+      <xsd:enumeration value="MissileLaunch" />
+      <xsd:enumeration value="TrackedVehicle" />
+      <xsd:enumeration value="WheeledVehicle" />
+      <xsd:enumeration value="Human" />
+      <xsd:enumeration value="JetAircraft" />
+      <xsd:enumeration value="FixedWingAircraft" />
+      <xsd:enumeration value="RotaryWingAircraft" />
+      <xsd:enumeration value="Detonation" />
+      <xsd:enumeration value="Unknown" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- TRACK TYPES BELOW -->
+
+  <xsd:simpleType name="TrackState">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Initial" />
+      <xsd:enumeration value="Update" />
+      <xsd:enumeration value="Coasting" />
+      <xsd:enumeration value="Drop" />
+      <xsd:enumeration value="Automatic" />
+      <xsd:enumeration value="Manual" />
+      <xsd:enumeration value="AutoPopup" />
+      <xsd:enumeration value="AutoSplit" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TrackID">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="PENDING" />
+      <xsd:enumeration value="UNKNOWN" />
+      <xsd:enumeration value="ASSUMED FRIEND" />
+      <xsd:enumeration value="FRIEND" />
+      <xsd:enumeration value="NEUTRAL" />
+      <xsd:enumeration value="SUSPECT" />
+      <xsd:enumeration value="HOSTILE" />
+      <xsd:enumeration value="UNDEFINED" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Classification">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="UAV" />
+      <!-- AIR TRACK  -->
+      <xsd:enumeration value="FIXED WING" />
+      <!-- AIR TRACK   & STROBE TRACK-->
+      <xsd:enumeration value="ROTARY WING" />
+      <!-- AIR TRACK  & STROBE TRACK-->
+      <xsd:enumeration value="MISSILE" />
+      <!-- AIR TRACK  & STROBE TRACK-->
+      <xsd:enumeration value="UNKNOWN" />
+      <!-- AIR TRACK  & RAM  TRACK &PLOT & STROBE TRACK-->
+      <xsd:enumeration value="TRACKED" />
+      <!-- GROUND TRACK & STROBE TRACK-->
+      <xsd:enumeration value="WHEELED" />
+      <!-- GROUND TRACK &PLOT& STROBE TRACK -->
+      <xsd:enumeration value="TOWED" />
+      <!-- GROUND TRACK -->
+      <xsd:enumeration value="HUMAN" />
+      <!-- GROUND  TRACK & STROBE TRACK-->
+      <xsd:enumeration value="MARITIME VESSEL" />
+      <!-- GROUND  TRACK-->
+      <xsd:enumeration value="MORTAR" />
+      <!-- RAM  TRACK-->
+      <xsd:enumeration value="ROCKET" />
+      <!-- RAM  TRACK-->
+      <xsd:enumeration value="ARTILLERY" />
+      <!-- RAM  TRACK-->
+      <xsd:enumeration value="RAM" />
+      <!-- RAM  TRACK-->
+      <xsd:enumeration value="GROUND" />
+      <!-- PLOT-->
+      <xsd:enumeration value="HELO" />
+      <!-- PLOT-->
+      <xsd:enumeration value="OTHER" />
+      <!-- PLOT-->
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TrackType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="AIR" />
+      <xsd:enumeration value="GROUND" />
+      <xsd:enumeration value="RAM" />
+      <xsd:enumeration value="SurfaceMaritimeTrack"/>
+      <!--Added recently based on requirements  -->
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--POSITION INFORMATION TYPES BELOW-->
+
+  <xsd:simpleType name="ForceID">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Friend" />
+      <xsd:enumeration value="Hostile" />
+      <xsd:enumeration value="Neutral" />
+      <xsd:enumeration value="Unknown" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <xsd:simpleType name="SPOIStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Locked" />
+      <xsd:enumeration value="Slaved" />
+      <xsd:enumeration value="Free" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!--AREA DECLARATION TYPES BELOW -->
+  <xsd:simpleType name="AreaDeclarationPurpose">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="NamedAreaOfInterest" />
+      <xsd:enumeration value="AreaToBeDefended" />
+      <xsd:enumeration value="NoFireZoneArea" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AreaType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Sphere" />
+      <xsd:enumeration value="Elliptical" />
+      <xsd:enumeration value="Circular" />
+      <xsd:enumeration value="Polygon" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!--POO or POI or POOPOI PAIR TYPES  BELOW-->
+  <xsd:simpleType name="POOPOIPairType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="POO" />
+      <xsd:enumeration value="POI" />
+      <xsd:enumeration value="POOPOIPair" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="ErrorType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Sphere" />
+      <xsd:enumeration value="Ellipse" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="Error">
+    <xsd:sequence>
+      <xsd:element name="ErrorType" type="ErrorType" />
+      <xsd:element name="SphRadius" type="xsd:float" />
+      <xsd:element name="MajorAxis" type="xsd:float" />
+      <xsd:element name="MinorAxis" type="xsd:float" />
+      <xsd:element name="Heading" type="xsd:float" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="MunitionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="RAM" />
+      <xsd:enumeration value="Rocket" />
+      <xsd:enumeration value="Mortar" />
+      <xsd:enumeration value="Artillery" />
+      <xsd:enumeration value="TBM" />
+      <xsd:enumeration value="SAM" />
+      <xsd:enumeration value="CM" />
+      <xsd:enumeration value="SSM" />
+      <xsd:enumeration value="Unknown" />
+      <!--Added recently based on requirements  -->
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="SequenceType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Initial" />
+      <xsd:enumeration value="Update" />
+      <xsd:enumeration value="Final" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--AUDIO SCHEMA DATA ELEMENTS BELOW -->
+
+  <xsd:simpleType name="AlertType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="MissileLaunch" />
+      <xsd:enumeration value="MissileImpact" />
+      <xsd:enumeration value="NuclearEvent" />
+      <xsd:enumeration value="ChemBioRelease" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="AlertScriptName">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Mortar" />
+      <xsd:enumeration value="AllClear" />
+      <xsd:enumeration value="Attack" />
+      <xsd:enumeration value="FriendlyFire" />
+      <xsd:enumeration value="Script2" />
+      <xsd:enumeration value="Script3" />
+      <xsd:enumeration value="Script4" />
+      <xsd:enumeration value="Script5" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="EventAction">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Accepted" />
+      <xsd:enumeration value="Rejected" />
+      <xsd:enumeration value="Expired" />
+      <xsd:enumeration value="Other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AudioSystemStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Operational" />
+      <xsd:enumeration value="Down" />
+      <xsd:enumeration value="Test" />
+      <xsd:enumeration value="Simulation" />
+      <xsd:enumeration value="Initialize" />
+      <xsd:enumeration value="Idle" />
+      <xsd:enumeration value="Pending" />
+      <xsd:enumeration value="Unavailable" />
+      <xsd:enumeration value="Degraded" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="TowerStatus">
+    <xsd:sequence>
+      <xsd:element name="Position" type="Position" maxOccurs="1" minOccurs="1" />
+      <xsd:element name="AudioRange" type="xsd:float" maxOccurs="1" minOccurs="1" />
+      <xsd:element name="Status" type="AudioSystemStatus" maxOccurs="1" minOccurs="1" />
+      <xsd:element name="Address" type="xsd:int" minOccurs="1" maxOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--DETECTION DATA ELEMENTS BELOW -->
+
+
+  <xsd:simpleType name="DetectorType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="EO" />
+      <xsd:enumeration value="IR" />
+      <xsd:enumeration value="Seismic" />
+      <xsd:enumeration value="Acoustic" />
+      <xsd:enumeration value="Chemical" />
+      <xsd:enumeration value="Biological" />
+      <xsd:enumeration value="Radiation" />
+      <xsd:enumeration value="Motion" />
+      <xsd:enumeration value="Laser" />
+      <xsd:enumeration value="RF" />
+      <xsd:enumeration value="Other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="LOB">
+    <xsd:sequence>
+      <xsd:element name="Azimuth" type="xsd:float" />
+      <xsd:element name="AzError" type="xsd:float" />
+      <xsd:element name="Elevation" type="xsd:float" />
+      <xsd:element name="ElError" type="xsd:float" />
+      <xsd:element name="MaxRange" type="xsd:float" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

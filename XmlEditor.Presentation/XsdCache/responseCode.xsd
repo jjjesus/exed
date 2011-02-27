@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <xs:schema id="uitext"
+        targetNamespace="http://foo.bar/responsecode.xsd"
+        elementFormDefault="qualified"
+        xmlns:responsecodes="http://foo.bar/responsecode.xsd"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+        <xs:element name="root" type="responsecodes:rootType">
+                <xs:key name="responseCode">
+                        <xs:selector xpath="responsecodes:responses/responsecodes:response">
+                                <xs:annotation>
+                                        <xs:documentation>All defined responsecodes</xs:documentation>
+                                </xs:annotation>
+                        </xs:selector>
+                        <xs:field xpath="@code">
+                                <xs:annotation>
+                                        <xs:documentation>Unique responsecode</xs:documentation>
+                                </xs:annotation>
+                        </xs:field>
+                </xs:key>
+        </xs:element>
+
+        <xs:complexType name="rootType">
+                <xs:sequence>
+                        <xs:element name="responses" minOccurs="1" maxOccurs="1" type="responsecodes:responseList">
+                                <xs:annotation>
+                                        <xs:documentation>Defined responsecodes</xs:documentation>
+                                </xs:annotation>
+                        </xs:element>
+                </xs:sequence>
+        </xs:complexType>
+
+        <xs:complexType name="responseList">
+                <xs:sequence>
+                        <xs:element name="response" minOccurs="0" maxOccurs="unbounded" type="responsecodes:response"/>
+                </xs:sequence>
+        </xs:complexType>
+
+        <xs:complexType name="response">
+                <xs:sequence>
+                        <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1">
+                                <xs:annotation>
+                                        <xs:documentation>
+                                                Explains the use of the responsecode.
+                                        </xs:documentation>
+                                </xs:annotation>
+                        </xs:element>
+                </xs:sequence>
+                <xs:attribute name="code" type="xs:string" use="required">
+                        <xs:annotation>
+                                <xs:documentation>Unique code representing the response provided.</xs:documentation>
+                        </xs:annotation>
+                </xs:attribute>
+        </xs:complexType>
+    </xs:schema>

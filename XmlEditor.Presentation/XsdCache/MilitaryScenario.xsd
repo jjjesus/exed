@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?purpose description="This schema defines the Military Scenario" ?>
+<?version number="4.1.0" block="D" build="24" date="March 15, 2005"?>
+<?dataSource source="N/A" version="N/A" description="N/A"?>
+<?copyright statement="This work was generated under U.S. Government contract and the government has unlimited data rights therein." classification="Unclassified" projectName="OneSAF Objective System Military Scenario Definition Language" contractNumber="#N61339-02-6-0047" taskOrder="MSDE" copyrights="Copyrights 2001-2004. Acusoft Inc. All rights reserved." distribution statement="APPROVED FOR PUBLIC RELEASE; DISTRIBUTION IS UNLIMITED"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="4.1.0" id="MSDL">
+	<xs:include schemaLocation="msdlElements.xsd"/>
+	<xs:element name="MilitaryScenario">
+		<xs:annotation>
+			<xs:documentation>The Military Scenario for the exercise.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="Options">
+		<xs:annotation>
+			<xs:documentation>The scenario options.</xs:documentation>
+		</xs:annotation>
+				</xs:element>
+				<xs:element ref="Plan" minOccurs="0"/>
+				<xs:element ref="Environment"/>
+				<xs:element ref="ForceStructure" minOccurs="0"/>
+				<xs:element ref="TaskOrganizations" minOccurs="0"/>
+				<xs:element ref="Installations" minOccurs="0"/>
+				<xs:element ref="Overlays" minOccurs="0"/>
+				<xs:element ref="TacticalGraphics" minOccurs="0"/>
+				<xs:element ref="MOOTWGraphics" minOccurs="0"/>
+				<xs:element ref="Threats" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

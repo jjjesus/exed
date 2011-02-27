@@ -1,0 +1,1743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?purpose description="This schema defines the Enumeration of the Units in the Military Scenario" ?>
+<?version number="0.1" block="D" date="March 30, 2005"?>
+<?copyright statement="This work was generated under U.S. Government contract and the government has unlimited data rights therein." classification="Unclassified" projectName="OneSAF Objective System Military Scenario Definition Language" contractNumber="#N61339-02-6-0047" taskOrder="MSDE" copyrights="Copyrights 2001-2004. Acusoft Inc. All rights reserved." distribution statement="APPROVED FOR PUBLIC RELEASE; DISTRIBUTION IS UNLIMITED"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:simpleType name="UnitEnumeration">
+		<xs:annotation>
+			<xs:documentation>The enumerated values of the army units. The enumerations are based on the Mil Standard 2525B hierarchy.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1.X.3.1">
+				<xs:annotation>
+					<xs:documentation>Ground track unit.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - short range</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2">
+				<xs:annotation>
+					<xs:documentation>Ground track unit - combat - air defense - missile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - missile - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - missle - light - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - missle -medium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - missle - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense  - missile - H/MAD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - missile - H/MAD - Hawk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.2.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - missile - H/MAD - Patriot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - gun unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - composite</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - targetting unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat - air defense - theater missle defense unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat - armor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - amphibious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - amphibious - amphibious recovery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - medium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - track - recovery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - amphibious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - amphibious - amphibious recover</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.5">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - medium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.2.2.6">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3.1.1.2.2.7">
+				<xs:annotation>
+					<xs:documentation>Combat - armor - wheeled - recovery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - dismounted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3.1.1.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.3">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.4">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.5">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3.1.1.3.6">
+				<xs:annotation>
+					<xs:documentation>Combat - anti  armor - arctic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.7">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - armored</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.7.1">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - armored - tracked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.7.2">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - armore - wheeled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.7.3">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - armored - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.8">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.3.8.1">
+				<xs:annotation>
+					<xs:documentation>Combat - anti armor - motorized - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - fixed wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - fixed wing - utility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - fixed wing - attack</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - fixed wing - recon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - attack</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - scout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - anti submarine warfare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - utility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat -  aviation - rotary wing - utility - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - utility - medium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.4.3">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - utility - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.5">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - C2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3.1.1.4.2.6">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - medevac</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.2.7">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - rotary wing - mine countermeasure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.3">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - search and rescue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.4">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - composite</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.5">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - V/STOL</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.6">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - unmanned aerial vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - unmanned aerial vehicle - fixed wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.4.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat - aviation - unmanned aerial vehicle - rotary wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.3">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.4">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.5">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.6">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - mechanized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.7">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - naval</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.8">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - infantry fighting vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.5.9">
+				<xs:annotation>
+					<xs:documentation>Combat - infantry - arctic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - arctic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - light (sapper)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - medium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.7">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - mech (track)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.8">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.9">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.1.10">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - combat - recon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - construction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.6.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - engineer - construction - naval</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - self-propelled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - arctic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.1.1.7.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.7">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - medium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.8">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - howitzer/gun - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.1.9">
+				<xs:annotation>
+					<xs:documentation>Combat - field  artillery - howitzer/gun - amphibious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - single rocket launcher</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - single rocket launcher - self propelled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - single rocket launcher - truck</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - single rocket launcher - towed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket  - multi rocket launcher</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - multi rocket launcher - self propelled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - multi rocket launcher - truck</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.2.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - rocket - multi rocket launcher - towed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition - radar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition - sound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition - flash (optical)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition - COLT/FIST</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquistion - COLT/FIST - dismounted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition - COLT/FIST - tracked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.3.5">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - target acquisition - anglico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3.1.1.7.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - sp tracked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - sp wheeled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - towed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - towed - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - towed - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - towed - arctic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - towed - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.4.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - mortar - amphibious</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.5">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - artillery survey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - artillery survey - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - artillery survey - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.5.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - artillery survey - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.5.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - artillery survey - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.6">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - meterological</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - meterological - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - meterological - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.6.3">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - meterological - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.7.6.4">
+				<xs:annotation>
+					<xs:documentation>Combat - field artillery - meterological - mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.1">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance  - horse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.2">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - cavalry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - cavalry - armored</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - cavalry - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - cavalry - ground</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - cavalry - air</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.3">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - arctic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.4">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - air assault</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.5">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - airborne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.6">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissanc e- mountain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.7">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.8">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - marine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.8.1">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - marine - division</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.8.2">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - marine - force</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.8.3">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - marine - light armored reconnaissance (LAR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.8.9">
+				<xs:annotation>
+					<xs:documentation>Combat - reconnaissance - long range surveillance (LRS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.9">
+				<xs:annotation>
+					<xs:documentation>Combat - missile (surf-surf)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.9.1">
+				<xs:annotation>
+					<xs:documentation>Combat - missile - tactical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.9.2">
+				<xs:annotation>
+					<xs:documentation>Combat - missile - strategic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.1">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - riverine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.2">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - ground</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - ground - dismounted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - ground - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - ground - mechanized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.3">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - wheeled mechanized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.4">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - railroad</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.1.10.5">
+				<xs:annotation>
+					<xs:documentation>Combat - internal security forces - aviation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat support</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC  Chemical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - Chemical - smoke/decon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC  - chemical - smoke/decon - mechanized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical - smoke/decon - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical - smoke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.1.2.1.1.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical - smoke - motorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical - smoke - armor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical - recon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1..3.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical  - recon - chemical wheeled armored vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.1.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - chemical - recon - chemical wheeled armored vehicle RS</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - nuclear</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - biological </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - recon equiped</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat support - NBC - decontamination</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - aerial exploitation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - signal intelligence (SIGINT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - electronic warfare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - mititary intelligence - electronic warfare - armored wheeled vehicle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - electronic warfare - direction finding</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - electronic warfare - intercept</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - electronic warfare - jamming</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - electronic warfare - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - electronic warfare - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - counterintelligence</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - surveillance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - surveillance - ground surveillance radar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - surveillance - sensor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.4.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - surveillance - sensor - sensor SCM</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.4.3">
+				<xs:annotation>
+					<xs:documentation>Combat support military intelligence - surveillance - ground station module</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.4.4">
+				<xs:annotation>
+					<xs:documentation>Combat support military intelligence - surveillance - meteorlogical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.5">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - operations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.6">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - tactical exploit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.7">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - interrogation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.2.8">
+				<xs:annotation>
+					<xs:documentation>Combat support - military intelligence - joint intelligence center</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - law enforcement unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - law enforcement unit - shore patrol</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - law enforcement unit - military police</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.3.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - law enforcement unit - civilian law enforcement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.3.4">
+				<xs:annotation>
+					<xs:documentation>Combat support - law enforcement unit - security police (air)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.3.5">
+				<xs:annotation>
+					<xs:documentation>Combat support - law enforcement unit - central intelligence division (CID)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - area</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - communication configured package</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - communication configure package - large communication configured package (LCCP)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - command operations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.4">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - forward communications</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.5">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - multiple subscriber element</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - multiple subscriber element - small extension node</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - multiple subscriber element - large extension node</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.5.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - multiple subscriber element - node center</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.6">
+				<xs:annotation>
+					<xs:documentation>Combat suppport  - signal unit - radio unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - radio unit - tactical satellite</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - radio unit - teletype center</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.6.3">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - radio unit - relay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.7">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - singal support</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.8">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - telephone switch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.4.9">
+				<xs:annotation>
+					<xs:documentation>Combat support - signal unit - electronic ranging</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.5">
+				<xs:annotation>
+					<xs:documentation>Combat support - information warfare unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.6">
+				<xs:annotation>
+					<xs:documentation>Combat support - landing support</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.2.7">
+				<xs:annotation>
+					<xs:documentation>Combat support - explosive ordinance disposal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat servie support</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative (Admin)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - admin theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - admin corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - judge advocate general (JAG)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - judge advocate general - JAG theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - judge advocate general - JAG corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support  - Administrative - postal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - administrative - postal - postal theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support -Administrative - postal - postal corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.5">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - finance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - finance - finance theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - finance - finance corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.6">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - personnel services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - personnel services - personnel theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - personnel services - personnel corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.7">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - mortuary/graves registry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.7.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - mortuary/graves registry -  theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.7.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - mortuary/graves registry - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.8">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - religious/chaplain</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.8.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - religious/chaplain -  theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.8.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - religious/chaplain - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9">
+				<xs:annotation>
+					<xs:documentation>Combat service support  - Administrative - pulbic affairs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Adminstrative - public affairs - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs - broadcast</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs -  broadcast - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs - broadcast - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs -  joint info. bureau (JIB)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs - joint info bureau - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.9.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - public affairs - joint info bureau - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.10">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - replacement holding unit (RHU)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.10.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - RHU theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.10.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - RHU corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.11">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - labor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.11.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - labor - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.11.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - labor - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.12">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - morale, welfare, recreation (MWR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.12.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - MWR theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.12.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - MWR corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.13">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - quartermaster (supply)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.13.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - quartermaster - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.1.13.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - Administrative - quartermaster - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - treatment facility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - treatment facility - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - treatment facility - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - veterinary</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - veterinary - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - veterinary - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.5">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - dental</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - dental - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - dental - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.6">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - psychological</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - pyschological - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.2.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - medical - psychological - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3">
+				<xs:annotation>
+					<xs:documentation>Combat Service Support - supply</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class I</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class II</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.5">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class III</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.6">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply- class IV</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.7">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class V</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.8">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class VI</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.9">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class VII</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.10">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class VIII</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.3.11">
+				<xs:annotation>
+					<xs:documentation>Combat service support - supply - class IX</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transporation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation  - movement control center</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - movement control center - MCC theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transporation - movement control center - MCC corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - railhead</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - railhead - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - railhead - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.5">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transporation - SPOD/SPOE</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - SPOD/SPOE - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - SPOD/SPOE - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.6">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - APOD/APOE</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - APOD/APOE - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - APOD/APOE - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.7">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - missile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.7.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - missile - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.4.7.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - transportation - missile - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - heavy - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - heavy - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.4">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - recovery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.4.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - recovery - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.4.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - recovery - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.5">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - ordnance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.5.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - ordnance - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.5.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - ordnance - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.5.3">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - ordnance - missle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.5.3.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - ordnance - missile - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.5.3.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - ordnance - missile - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.6">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - electro-optical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - electro-optical - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.5.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - maintenance - electro-optical - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.6">
+				<xs:annotation>
+					<xs:documentation>Combat service support - electronic warfare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.6.1">
+				<xs:annotation>
+					<xs:documentation>Combat service support - electronic warfare - theater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.3.1.3.6.2">
+				<xs:annotation>
+					<xs:documentation>Combat service support - electronic warfare - corps</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.4.1">
+				<xs:annotation>
+					<xs:documentation>Sea surface track - combatant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.4.2">
+				<xs:annotation>
+					<xs:documentation>Sea surface track - noncombatant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.4.3">
+				<xs:annotation>
+					<xs:documentation>Sea surface track - non military</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.4.3.1.1">
+				<xs:annotation>
+					<xs:documentation>Sea surface track - non military - merchant - cargo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.5.1">
+				<xs:annotation>
+					<xs:documentation>Subsurface track - submarine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.6.1.3">
+				<xs:annotation>
+					<xs:documentation>Special operations forces (SOF) unit - Aviation - rotary wing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.X.6.3.3">
+				<xs:annotation>
+					<xs:documentation>Special Operations forces unit - ground - psychological operations (PSYOPS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

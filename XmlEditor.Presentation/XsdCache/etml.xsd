@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="trainlog">
+    <xsd:annotation>
+      <xsd:documentation>Create a training log</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="session" type="sessionType" minOccurs="0" maxOccurs="unbounded">
+          <xsd:annotation>
+            <xsd:documentation>Create a new session</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="sessionType">
+    <xsd:annotation>
+      <xsd:documentation>Type of session</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="duration" type="xsd:duration">
+        <xsd:annotation>
+          <xsd:documentation>Duration of the training</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="distance" type="distanceType">
+        <xsd:annotation>
+          <xsd:documentation>Distance of the training</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="location" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Where the training took place</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="comments" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Any additional remarks</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="date" type="xsd:date" use="required">
+      <xsd:annotation>
+        <xsd:documentation>Date the training took place</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="type" type="typeType" use="required">
+      <xsd:annotation>
+        <xsd:documentation>Type of training like running, swimming, etc.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="heartrate" type="xsd:positiveInteger"></xsd:attribute>
+    <xsd:attribute name="trainingTime" type="xsd:time" use="required">
+      <xsd:annotation>
+        <xsd:documentation>Date the training took place</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="distanceType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:decimal">
+        <xsd:attribute name="units" type="unitsType" use="required" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="typeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="running">
+        <xsd:annotation>
+          <xsd:documentation>Let's run</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="swimming">
+        <xsd:annotation>
+          <xsd:documentation>Let's swim</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="cycling">
+        <xsd:annotation>
+          <xsd:documentation>Let's take the car</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="unitsType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="miles" />
+      <xsd:enumeration value="kilometers" />
+      <xsd:enumeration value="laps" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
