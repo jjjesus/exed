@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Scenario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Environment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Platform">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:choice maxOccurs="unbounded">
+                      <xs:element name="Aircraft" type="xs:string" />
+                      <xs:element name="Fighter" />
+                      <xs:element name="Chaff" />
+                      <xs:element name="LandPlatform">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="InternalCommunicationTable">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="Import">
+                                    <xs:complexType>
+                                      <xs:attribute name="FileName" type="xs:string" use="required" />
+                                      <xs:attribute name="ReplaceText" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Course_Course">
+                              <xs:complexType>
+                                <xs:attribute name="Heading_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="Elevation_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="Speed" type="xs:decimal" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Classification_PlatformClassification">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="EntityType" type="xs:string" />
+                                  <xs:element name="GeneralType" type="xs:string" />
+                                </xs:sequence>
+                                <xs:attribute name="SpecificType" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="LinkTable">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="Import">
+                                    <xs:complexType>
+                                      <xs:attribute name="FileName" type="xs:string" use="required" />
+                                      <xs:attribute name="ReplaceText" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="LinkedAsset" type="xs:string" />
+                            <xs:element name="Position_Position">
+                              <xs:complexType>
+                                <xs:attribute name="Latitude_DMS" type="xs:string" use="required" />
+                                <xs:attribute name="Longitude_DMS" type="xs:string" use="required" />
+                                <xs:attribute name="Altitude_AGL" type="xs:decimal" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="MFR">
+                              <xs:complexType mixed="true">
+                                <xs:sequence>
+                                  <xs:element name="Classification_SubSystemClassification">
+                                    <xs:complexType>
+                                      <xs:sequence>
+                                        <xs:element name="EntityType" type="xs:string" />
+                                        <xs:element name="GeneralType" type="xs:string" />
+                                      </xs:sequence>
+                                      <xs:attribute name="SpecificType" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="RelativePosition_RelativePosition">
+                                    <xs:complexType>
+                                      <xs:attribute name="ForwardDistance" type="xs:decimal" use="required" />
+                                      <xs:attribute name="LateralDistance" type="xs:decimal" use="required" />
+                                      <xs:attribute name="UpwardDistance" type="xs:decimal" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="Tracker_InternalTracker">
+                                    <xs:complexType>
+                                      <xs:attribute name="ObjectName" type="xs:string" use="required" />
+                                      <xs:attribute name="InitialToTentativeM" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="InitialToTentativeN" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="TentativeToConfirmedM" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="TentativeToConfirmedN" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="UseTimeLostCriteria" type="xs:boolean" use="required" />
+                                      <xs:attribute name="InitialToLost" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="TentativeToLost" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="ConfirmedToLost" type="xs:unsignedByte" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element maxOccurs="unbounded" name="MFRMode">
+                                    <xs:complexType>
+                                      <xs:sequence minOccurs="0">
+                                        <xs:element maxOccurs="unbounded" name="MFRDwellParameters">
+                                          <xs:complexType>
+                                            <xs:sequence>
+                                              <xs:element name="DwellType" type="xs:string" />
+                                              <xs:element minOccurs="0" name="Waveform">
+                                                <xs:complexType>
+                                                  <xs:sequence>
+                                                    <xs:element name="RadarWaveformName">
+                                                      <xs:complexType>
+                                                        <xs:attribute name="PRF" type="xs:unsignedShort" use="required" />
+                                                        <xs:attribute name="NumberOfPulses" type="xs:unsignedByte" use="required" />
+                                                        <xs:attribute name="PulseLength" type="xs:decimal" use="required" />
+                                                        <xs:attribute name="NeededBurstSuccesses" type="xs:unsignedByte" use="required" />
+                                                        <xs:attribute name="NumberOfBursts" type="xs:unsignedByte" use="required" />
+                                                      </xs:complexType>
+                                                    </xs:element>
+                                                  </xs:sequence>
+                                                </xs:complexType>
+                                              </xs:element>
+                                              <xs:element minOccurs="0" maxOccurs="unbounded" name="MFRSectorParameters">
+                                                <xs:complexType>
+                                                  <xs:sequence>
+                                                    <xs:element name="Waveform">
+                                                      <xs:complexType>
+                                                        <xs:sequence>
+                                                          <xs:element name="RadarWaveformName">
+                                                            <xs:complexType>
+                                                              <xs:attribute name="PRF" type="xs:unsignedShort" use="required" />
+                                                              <xs:attribute name="NumberOfPulses" type="xs:unsignedByte" use="required" />
+                                                              <xs:attribute name="PulseLength" type="xs:decimal" use="required" />
+                                                              <xs:attribute name="NeededBurstSuccesses" type="xs:unsignedByte" use="required" />
+                                                              <xs:attribute name="NumberOfBursts" type="xs:unsignedByte" use="required" />
+                                                            </xs:complexType>
+                                                          </xs:element>
+                                                        </xs:sequence>
+                                                      </xs:complexType>
+                                                    </xs:element>
+                                                  </xs:sequence>
+                                                  <xs:attribute name="SectorName" type="xs:string" use="required" />
+                                                  <xs:attribute name="AzimuthFrom_deg" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="AzimuthTo_deg" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="ElevationFrom_deg" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="ElevationTo_deg" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="RangeFrom" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="RangeTo" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="UpdateRate" type="xs:decimal" use="required" />
+                                                  <xs:attribute name="Occupancy" type="xs:decimal" use="required" />
+                                                </xs:complexType>
+                                              </xs:element>
+                                            </xs:sequence>
+                                            <xs:attribute name="FalseAlarmRate" type="xs:decimal" use="required" />
+                                            <xs:attribute name="DuringTI" type="xs:boolean" use="optional" />
+                                            <xs:attribute name="UpdateRate" type="xs:decimal" use="optional" />
+                                          </xs:complexType>
+                                        </xs:element>
+                                      </xs:sequence>
+                                      <xs:attribute name="SensorModeName" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="TransmitIlluminationType" type="xs:string" />
+                                  <xs:element name="Band" type="xs:string" />
+                                  <xs:element name="Polarisation" type="xs:string" />
+                                  <xs:element name="Waveform">
+                                    <xs:complexType>
+                                      <xs:attribute name="PRF" type="xs:unsignedShort" use="required" />
+                                      <xs:attribute name="NumberOfPulses" type="xs:unsignedByte" use="required" />
+                                      <xs:attribute name="PulseLength" type="xs:decimal" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="DopplerFilterTaper" type="xs:string" />
+                                  <xs:element name="AntennaApertureType" type="xs:string" />
+                                  <xs:element name="MFRFaceCoverage">
+                                    <xs:complexType>
+                                      <xs:attribute name="Heading_deg" type="xs:decimal" use="required" />
+                                      <xs:attribute name="CoverageWidth_deg" type="xs:decimal" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="ObjectName" type="xs:string" use="required" />
+                                <xs:attribute name="DataObject" type="xs:boolean" use="required" />
+                                <xs:attribute name="MinCueDelay" type="xs:decimal" use="required" />
+                                <xs:attribute name="TimeToConfirmDetection" type="xs:decimal" use="required" />
+                                <xs:attribute name="TimeToConfirmCuedDetection" type="xs:decimal" use="required" />
+                                <xs:attribute name="MaxTIs" type="xs:unsignedByte" use="required" />
+                                <xs:attribute name="GainAdjustment" type="xs:boolean" use="required" />
+                                <xs:attribute name="MinInstrRange" type="xs:unsignedByte" use="required" />
+                                <xs:attribute name="MaxInstrRange" type="xs:unsignedInt" use="required" />
+                                <xs:attribute name="SigmaAzimuth_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="SigmaElevation_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="SigmaRange" type="xs:decimal" use="required" />
+                                <xs:attribute name="DuctingFactor" type="xs:decimal" use="required" />
+                                <xs:attribute name="BeamWidth_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="Tilt_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="PeakPower_dBW" type="xs:decimal" use="required" />
+                                <xs:attribute name="SCIF_dB" type="xs:decimal" use="required" />
+                                <xs:attribute name="TransmitGain_dB" type="xs:decimal" use="required" />
+                                <xs:attribute name="ReceiveGain_dB" type="xs:decimal" use="required" />
+                                <xs:attribute name="Frequency_GHz" type="xs:decimal" use="required" />
+                                <xs:attribute name="FalseAlarmRate" type="xs:decimal" use="required" />
+                                <xs:attribute name="RangeGate" type="xs:decimal" use="required" />
+                                <xs:attribute name="SystemLosses_dB" type="xs:decimal" use="required" />
+                                <xs:attribute name="NoiseFigure_dB" type="xs:decimal" use="required" />
+                                <xs:attribute name="MinElevation_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="MaxElevation_deg" type="xs:decimal" use="required" />
+                                <xs:attribute name="OnAtStart" type="xs:boolean" use="required" />
+                                <xs:attribute name="NumberOfFaces" type="xs:unsignedByte" use="required" />
+                                <xs:attribute name="SendPropertyChanges" type="xs:boolean" use="required" />
+                                <xs:attribute name="DopplerFilterEnabled" type="xs:boolean" use="required" />
+                                <xs:attribute name="CurrentSensorMode" type="xs:string" use="required" />
+                                <xs:attribute name="ChangeSensorModeTime" type="xs:decimal" use="required" />
+                                <xs:attribute name="RemainActiveWhileChangingSensorMode" type="xs:boolean" use="required" />
+                                <xs:attribute name="UseEclipsing" type="xs:boolean" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="FixedHeadingLauncher">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="RelativeOrientation">
+                                    <xs:complexType>
+                                      <xs:attribute name="Elevation_deg" type="xs:decimal" use="required" />
+                                      <xs:attribute name="Azimuth_deg" type="xs:decimal" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="Classification_SubSystemClassification">
+                                    <xs:complexType>
+                                      <xs:sequence>
+                                        <xs:element name="EntityType" type="xs:string" />
+                                        <xs:element name="GeneralType" type="xs:string" />
+                                      </xs:sequence>
+                                      <xs:attribute name="SpecificType" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="Magazine">
+                                    <xs:complexType>
+                                      <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="MagazineEntry">
+                                          <xs:complexType>
+                                            <xs:attribute name="AmmoType" type="xs:string" use="required" />
+                                            <xs:attribute name="Present" type="xs:unsignedByte" use="required" />
+                                          </xs:complexType>
+                                        </xs:element>
+                                      </xs:sequence>
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="ObjectName" type="xs:string" use="required" />
+                                <xs:attribute name="FactoryName" type="xs:string" use="required" />
+                                <xs:attribute name="LaunchOrderToMissileAwayPeriod" type="xs:decimal" use="required" />
+                                <xs:attribute name="LaunchOccupationPeriod" type="xs:decimal" use="required" />
+                                <xs:attribute name="ActivationTime" type="xs:decimal" use="required" />
+                                <xs:attribute name="DeActivationTime" type="xs:decimal" use="required" />
+                                <xs:attribute name="MovingSpeed" type="xs:decimal" use="required" />
+                                <xs:attribute name="TurningTime" type="xs:decimal" use="required" />
+                                <xs:attribute name="SendPropertyChanges" type="xs:boolean" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="ObjectName" type="xs:string" use="required" />
+                          <xs:attribute name="HitRadius" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="SwerlingCase" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="Identification" type="xs:string" use="required" />
+                          <xs:attribute name="SendPropertyChanges" type="xs:boolean" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="SeaClutter" type="xs:boolean" use="required" />
+            <xs:attribute name="RainClutter" type="xs:boolean" use="required" />
+            <xs:attribute name="UseTerrainHeight" type="xs:boolean" use="required" />
+            <xs:attribute name="SendPropertyChanges" type="xs:boolean" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

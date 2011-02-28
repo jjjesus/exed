@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="XmlEditor.Presentation.Views.XmlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:TreeListControl="clr-namespace:TreeListControl;assembly=TreeListControl">
+
+    <TreeListControl:XmlEditorControl x:Name="xmlTree"
+                                      TreeListControl:XmlModel="{Binding XmlDocument}"
+                                      XsltView="{Binding XsltView}" />
+
+</UserControl>
