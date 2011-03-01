@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.Composition;
@@ -21,13 +22,17 @@ namespace XmlEditor.Applications.Services
     {
         [ImportingConstructor]
         public MostRecentlyUsedFilesService() {
-            if (Settings.Default.MRU == null)
-                Settings.Default.MRU = new StringCollection();
-            MRU = new ObservableCollection<string>(Settings.Default.MRU.Cast<string>().ToList());
+            try {
+                if (Settings.Default.MRU == null) Settings.Default.MRU = new StringCollection();
+                MRU = new ObservableCollection<string>(Settings.Default.MRU.Cast<string>().ToList());
 
-            for (var i = MRU.Count() - 1; i >= 0; i--) {
-                if (File.Exists(MRU[i])) continue;
-                MRU.RemoveAt(i);
+                for (var i = MRU.Count() - 1; i >= 0; i--) {
+                    if (File.Exists(MRU[i])) continue;
+                    MRU.RemoveAt(i);
+                }
+            }
+            catch (SystemException e) {
+                Console.WriteLine(e.Message);
             }
         }
 

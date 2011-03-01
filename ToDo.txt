@@ -1,7 +1,8 @@
 ToDo
 - Multi-line textbox 
 - Search functionality
-- Print (preview) - could use WebBrowser's Print (preview)
+- Reload (when changed externally)
+- Print preview - could use WebBrowser's Print (preview)
 - Refactor MVVM setup
 - How to add a CDATA section?
 - Check undo functionality
