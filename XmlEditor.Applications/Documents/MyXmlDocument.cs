@@ -43,5 +43,6 @@ namespace XmlEditor.Applications.Documents
 
             //return clone;
         }
+
     }
 }

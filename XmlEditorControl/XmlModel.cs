@@ -853,7 +853,10 @@ namespace TreeListControl
 	        genr.WriteXml(textWriter);
 	        return memStream;
 	    }
-
 */
+
+        public void Search(string searchTerm, bool nextTerm) {
+            
+        }
     }
 }

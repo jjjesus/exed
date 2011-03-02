@@ -11,13 +11,14 @@ using TreeListControl.Resources;
 using TreeListControl.Tree;
 using XmlEditor.Applications.Documents;
 using XmlEditor.Applications.Helpers;
+using XmlEditor.Applications.Interfaces;
 using XmlEditor.Applications.Views;
 
 #endregion
 
 namespace XmlEditor.Applications.ViewModels
 {
-    public class XmlViewModel : ViewModel<IXmlView>
+    public class XmlViewModel : ViewModel<IXmlView>, ISearch
     {
         private readonly MyXmlDocument document;
         private readonly XsltViewModel xsltViewModel;
@@ -183,6 +184,15 @@ namespace XmlEditor.Applications.ViewModels
                 selectedTab = value;
                 RaisePropertyChanged("SelectedTab");
             }
+        }
+
+        public void Search(string searchTerm, bool nextTerm)
+        {
+            if (Document == null) return;
+            XmlNode node = null;
+            if (selectedNode != null) node = (XmlNode)selectedNode;
+            if (node == null) node = Document.Content.Document.DocumentElement;
+
         }
 
     }

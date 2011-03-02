@@ -7,8 +7,10 @@ using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
+using System.Windows;
 using System.Windows.Input;
 using XmlEditor.Applications.Documents;
+using XmlEditor.Applications.Interfaces;
 using XmlEditor.Applications.Views;
 
 #endregion
@@ -32,6 +34,8 @@ namespace XmlEditor.Applications.ViewModels
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand printCommand;
         private readonly DelegateCommand printPreviewCommand;
+        private readonly DelegateCommand nextSearchTermCommand;
+        private readonly DelegateCommand previousSearchTermCommand;
         //private readonly DelegateCommand undoCommand;
         //private readonly DelegateCommand redoCommand;
         private IDocument activeDocument;
@@ -55,6 +59,8 @@ namespace XmlEditor.Applications.ViewModels
             nextDocumentCommand = new DelegateCommand(SetNextDocumentActive);
             printCommand = new DelegateCommand(PrintDocument, CanPrintDocument);
             printPreviewCommand = new DelegateCommand(PrintPreviewDocument, CanPrintDocument);
+            nextSearchTermCommand = new DelegateCommand(() => Search(true));
+            previousSearchTermCommand = new DelegateCommand(() => Search(false));
             //undoCommand = new DelegateCommand(Undo, CanUndo);
             //redoCommand = new DelegateCommand(Redo, CanRedo);
 
@@ -73,6 +79,23 @@ namespace XmlEditor.Applications.ViewModels
                     RaisePropertyChanged("ActiveDocumentView");
                 }
             }
+        }
+
+        private string searchTerm;
+        public string SearchTerm {
+            get { return searchTerm; } 
+            set {
+                if (searchTerm == value) return;
+                searchTerm = value;
+                Search(true);
+                RaisePropertyChanged("SearchTerm");
+            }
+        }
+
+        private void Search(bool nextTerm) {
+            if (ActiveDocumentView == null) return;
+            if (!(((FrameworkElement)ActiveDocumentView).DataContext is ISearch)) return;
+            (((FrameworkElement)ActiveDocumentView).DataContext as ISearch).Search(searchTerm, nextTerm);
         }
 
         public CultureInfo NewLanguage { get; private set; }
@@ -220,11 +243,8 @@ namespace XmlEditor.Applications.ViewModels
         private void DocumentManagerPropertyChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName != "ActiveDocument") return;
             if (activeDocument != null) RemoveWeakEventListener(activeDocument, ActiveDocumentPropertyChanged);
-
             activeDocument = documentManager.ActiveDocument;
-
             if (activeDocument != null) AddWeakEventListener(activeDocument, ActiveDocumentPropertyChanged);
-
             UpdateCommands();
         }
 

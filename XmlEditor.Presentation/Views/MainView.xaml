@@ -87,6 +87,7 @@
                 <Button Command="ApplicationCommands.Cut" Content="{StaticResource CutImage}" ToolTip="{x:Static Properties:Resources.Cut}"/>
                 <Button Command="ApplicationCommands.Copy" Content="{StaticResource CopyImage}" ToolTip="{x:Static Properties:Resources.Copy}"/>
                 <Button Command="ApplicationCommands.Paste" Content="{StaticResource PasteImage}" ToolTip="{x:Static Properties:Resources.Paste}"/>
+                <TextBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" />
             </ToolBar>
         </ToolBarTray>
 

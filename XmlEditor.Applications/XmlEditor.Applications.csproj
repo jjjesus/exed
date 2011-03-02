@@ -71,6 +71,7 @@
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\WindowsSettings.cs" />
+    <Compile Include="Interfaces\ISearch.cs" />
     <Compile Include="Services\IMostRecentlyUsedFilesService.cs" />
     <Compile Include="Services\IZoomService.cs" />
     <Compile Include="Services\MostRecentlyUsedFilesService.cs" />
