@@ -30,13 +30,13 @@ namespace XmlEditor.Applications.ViewModels
         private readonly DelegateCommand openCommand;
         private readonly DelegateCommand saveAsCommand;
         private readonly DelegateCommand saveCommand;
+        private readonly DelegateCommand printCommand;
+        private readonly DelegateCommand printPreviewCommand;
         //private readonly DelegateCommand undoCommand;
         //private readonly DelegateCommand redoCommand;
         private IDocument activeDocument;
         private object activeDocumentView;
         private ICommand exitCommand;
-        private ICommand printCommand;
-        private ICommand printPreviewCommand;
 
         [ImportingConstructor]
         public MainViewModel(IMainView view, IDocumentManager documentManager, IMessageService messageService)
@@ -53,8 +53,8 @@ namespace XmlEditor.Applications.ViewModels
             germanCommand = new DelegateCommand(() => SelectLanguage(new CultureInfo("de-DE")));
             aboutCommand = new DelegateCommand(ShowAboutMessage);
             nextDocumentCommand = new DelegateCommand(SetNextDocumentActive);
-            printCommand = new DelegateCommand(PrintDocument);
-            printPreviewCommand = new DelegateCommand(PrintPreviewDocument);
+            printCommand = new DelegateCommand(PrintDocument, CanPrintDocument);
+            printPreviewCommand = new DelegateCommand(PrintPreviewDocument, CanPrintDocument);
             //undoCommand = new DelegateCommand(Undo, CanUndo);
             //redoCommand = new DelegateCommand(Redo, CanRedo);
 
@@ -103,11 +103,6 @@ namespace XmlEditor.Applications.ViewModels
 
         public ICommand PrintPreviewCommand {
             get { return printPreviewCommand; }
-            set {
-                if (printPreviewCommand == value) return;
-                printPreviewCommand = value;
-                RaisePropertyChanged("PrintPreviewCommand");
-            }
         }
 
         private List<DocumentSubType> documentTypes;
@@ -126,11 +121,6 @@ namespace XmlEditor.Applications.ViewModels
 
         public ICommand PrintCommand {
             get { return printCommand; }
-            set {
-                if (printCommand == value) return;
-                printCommand = value;
-                RaisePropertyChanged("PrintCommand");
-            }
         }
 
         public ICommand ExitCommand {
@@ -162,12 +152,14 @@ namespace XmlEditor.Applications.ViewModels
             var dst = (DocumentSubType) docSubType;
             if (dst == null || !documentManager.DocumentTypes.Contains(dst.Type)) return;
             documentManager.New(dst.Type, dst.Tag);
+            UpdateCommands();
             //documentManager.New(documentManager.DocumentTypes.First());
         }
 
         private void OpenDocument(object fileName) {
             if (fileName == null) documentManager.Open(null);
             else documentManager.Open(fileName as string);
+            UpdateCommands();
         }
 
         private bool CanCloseDocument() {
@@ -176,6 +168,7 @@ namespace XmlEditor.Applications.ViewModels
 
         private void CloseDocument() {
             documentManager.Close(documentManager.ActiveDocument);
+            UpdateCommands();
         }
 
         private bool CanSaveDocument() {
@@ -189,6 +182,8 @@ namespace XmlEditor.Applications.ViewModels
         private void PrintDocument() {
             documentManager.Print(documentManager.ActiveDocument);
         }
+
+        private bool CanPrintDocument() { return documentManager.ActiveDocument != null; }
 
         private void PrintPreviewDocument() {
             documentManager.PrintPreview(documentManager.ActiveDocument);
@@ -241,6 +236,8 @@ namespace XmlEditor.Applications.ViewModels
             closeCommand.RaiseCanExecuteChanged();
             saveCommand.RaiseCanExecuteChanged();
             saveAsCommand.RaiseCanExecuteChanged();
+            printCommand.RaiseCanExecuteChanged();
+            printPreviewCommand.RaiseCanExecuteChanged();
         }
     }
 

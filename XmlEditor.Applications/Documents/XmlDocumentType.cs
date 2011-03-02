@@ -9,12 +9,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Xps;
+using System.Windows.Xps.Packaging;
 using System.Xml;
 using System.Xml.Xsl;
 using TreeListControl;
 using TreeListControl.Resources;
 using XmlEditor.Applications.Helpers;
 using XmlEditor.Applications.ViewModels;
+using XmlEditor.Applications.Views;
 
 #endregion
 
@@ -76,18 +79,22 @@ namespace XmlEditor.Applications.Documents
 
         protected override void PrintCore(IDocument document)
         {
-            PrintXmlDocument((MyXmlDocument)document);
+            PrintOrPreviewXmlDocument((MyXmlDocument)document, true);
         }
 
         protected override void PrintPreviewCore(IDocument document)
         {
-            PrintXmlDocument((MyXmlDocument)document);
+            PrintOrPreviewXmlDocument((MyXmlDocument)document, false);
         }
 
-        public void PrintXmlDocument(MyXmlDocument document) {
-            if (document == null || string.IsNullOrEmpty(document.Content.Document.OuterXml)) return;
+        /// <summary>
+        /// Prints or previews the XML document.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="printDocument">if set to <c>true</c> [print document] else preview.</param>
+        public void PrintOrPreviewXmlDocument(MyXmlDocument document, bool printDocument) {
+            if (document == null || document.Content == null || document.Content.Document == null || string.IsNullOrEmpty(document.Content.Document.OuterXml)) return;
             var printDialog = new PrintDialog();
-            if (printDialog.ShowDialog() != true) return;
             
             var settings = new XmlWriterSettings { Indent = true, NewLineOnAttributes = true };
             var tempFile = Path.GetTempFileName();
@@ -102,13 +109,29 @@ namespace XmlEditor.Applications.Documents
                                           PageHeight = printDialog.PrintableAreaHeight, PageWidth = printDialog.PrintableAreaWidth,
                                           PagePadding = new Thickness(25), ColumnGap = 0
                                       };
-
+            
             doc.ColumnWidth = (doc.PageWidth - doc.ColumnGap - doc.PagePadding.Left - doc.PagePadding.Right);
             using (var reader = new StreamReader(tempFile))
             {
                 doc.Blocks.Add(new Paragraph(new Run(reader.ReadToEnd())));
             }
-            printDialog.PrintDocument(((IDocumentPaginatorSource)doc).DocumentPaginator, document.FileName);
+            var paginator = ((IDocumentPaginatorSource) doc).DocumentPaginator;
+            File.Delete(tempFile);
+
+            if (printDocument) {
+                if (printDialog.ShowDialog() == true) printDialog.PrintDocument(paginator, document.FileName);
+                return;
+            }
+
+            using (var xpsDocument = new XpsDocument(tempFile, FileAccess.ReadWrite))
+            {
+                var writer = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
+                writer.Write(paginator);
+
+                var previewWindow = new PrintPreview {Document = xpsDocument.GetFixedDocumentSequence()};
+                previewWindow.ShowDialog();
+            }
+
         }
 
         protected string NewFileName(string xsd) {
