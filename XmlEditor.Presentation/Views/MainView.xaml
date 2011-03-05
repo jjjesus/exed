@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="XmlEditor.Presentation.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" 
-             xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters">
+             xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters" xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers">
 
     <UserControl.Resources>
         <DataTemplate x:Key="DocumentTypeTemplate">
@@ -10,16 +10,43 @@
     </UserControl.Resources>
     
     <UserControl.InputBindings>
-        <KeyBinding x:Name="newKeyBinding" Key="N" Modifiers="Control"/>
-        <KeyBinding x:Name="openKeyBinding" Key="O" Modifiers="Control"/>
-        <KeyBinding x:Name="closeKeyBinding" Key="F4" Modifiers="Control"/>
-        <KeyBinding x:Name="saveKeyBinding" Key="S" Modifiers="Control"/>
-        <KeyBinding x:Name="printKeyBinding" Key="P" Modifiers="Control"/>
-        <KeyBinding x:Name="aboutKeyBinding" Key="F1"/>
-        <KeyBinding x:Name="nextDocumentKeyBinding" Key="Tab" Modifiers="Control" />
+        <KeyBinding x:Name="newKeyBinding"
+                    Command="{Binding NewCommand}"
+                    Gesture="Ctrl+N" />
+        <KeyBinding x:Name="openKeyBinding"
+                    Gesture="Ctrl+O"
+                    Command="{Binding OpenCommand}" />
+        <KeyBinding Gesture="Ctrl+C"
+                    Command="{Binding CopyComand}" />
+        <KeyBinding Gesture="Ctrl+X"
+                    Command="{Binding CutComand}" />
+        <KeyBinding Gesture="Ctrl+V"
+                    Command="{Binding PasteComand}" />
+        <KeyBinding Gesture="Ctrl+Del"
+                    Command="{Binding DeleteNodeComand}" />
+        <KeyBinding x:Name="closeKeyBinding"
+                    Command="{Binding CloseCommand}"
+                    Gesture="Ctrl+F4" />
+        <KeyBinding x:Name="saveKeyBinding"
+                    Command="{Binding SaveCommand}"
+                    Gesture="Ctrl+S" />
+        <KeyBinding Command="{Binding SaveAsCommand}"
+                    Gesture="Ctrl+Shift+S" />
+        <KeyBinding x:Name="printKeyBinding"
+                    Command="{Binding PrintCommand}"
+                    Gesture="Ctrl+P" />
+        <KeyBinding x:Name="printPreviewKeyBinding"
+                    Command="{Binding PrintPreviewCommand}"
+                    Gesture="Ctrl+Shift+P" />
+        <KeyBinding x:Name="aboutKeyBinding"
+                    Gesture="F1"
+                    Command="{Binding AboutCommand}" />
+        <KeyBinding x:Name="nextDocumentKeyBinding"
+                    Command="{Binding NextDocumentCommand}"
+                    Gesture="Ctrl+Tab" />
     </UserControl.InputBindings>
 
-    <DockPanel>
+    <DockPanel FocusManager.IsFocusScope="True">
         <!-- Main menu -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static Properties:Resources.FileMenu}">
@@ -69,12 +96,14 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="{x:Static Properties:Resources.HelpMenu}">
-                <MenuItem Command="{Binding AboutCommand}" Header="{x:Static Properties:Resources.AboutMenu}"/>
+                <MenuItem Command="{Binding AboutCommand}" 
+                          Header="{x:Static Properties:Resources.AboutMenu}"/>
             </MenuItem>
         </Menu>
 
         <!--Toolbar menu-->
-        <ToolBarTray DockPanel.Dock="Top">
+        <ToolBarTray DockPanel.Dock="Top"
+                     FocusManager.IsFocusScope="True">
             <ToolBar>
                 <!--<Button Command="{Binding NewCommand}" Content="{StaticResource NewImage}" ToolTip="{x:Static Properties:Resources.New}"/>-->
                 <Button Command="{Binding OpenCommand}" Content="{StaticResource OpenImage}" ToolTip="{x:Static Properties:Resources.Open}"/>
@@ -87,12 +116,33 @@
                 <Button Command="ApplicationCommands.Cut" Content="{StaticResource CutImage}" ToolTip="{x:Static Properties:Resources.Cut}"/>
                 <Button Command="ApplicationCommands.Copy" Content="{StaticResource CopyImage}" ToolTip="{x:Static Properties:Resources.Copy}"/>
                 <Button Command="ApplicationCommands.Paste" Content="{StaticResource PasteImage}" ToolTip="{x:Static Properties:Resources.Paste}"/>
-                <TextBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+                <AdornerDecorator>
+                    <TextBox x:Name="Search"
+                             Text="{Binding SearchTerm}"
+                             Helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"
+                             Width="150"
+                             Margin="5 0"
+                             VerticalAlignment="Center">
+                        <Helpers:WatermarkService.Watermark>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/eXed;component/Resources/Images/find.png"
+                                       Height="16" Margin="5 0" />
+                                <!--<TextBlock Text="Search"
+                                       FontStyle="Italic"
+                                       VerticalAlignment="Center" />-->
+                            </StackPanel>
+                        </Helpers:WatermarkService.Watermark>
+                    </TextBox>
+                </AdornerDecorator>
+                <!--<TextBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" />-->
             </ToolBar>
         </ToolBarTray>
 
-        <!--Documents tab--> 
-        <TabControl ItemsSource="{Binding DocumentViews}" SelectedItem="{Binding ActiveDocumentView}">
+        <!--Documents tab-->
+        <TabControl x:Name="Documents"
+                    Focusable="True"
+                    ItemsSource="{Binding DocumentViews}"
+                    SelectedItem="{Binding ActiveDocumentView}">
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">
                     <Setter Property="Header" Value="{Binding Content.DataContext}"/>

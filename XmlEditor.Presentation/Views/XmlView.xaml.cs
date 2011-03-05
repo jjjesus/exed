@@ -1,6 +1,9 @@
 ﻿#region
 
 using System.ComponentModel.Composition;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using XmlEditor.Applications.Views;
 
 #endregion
@@ -14,10 +17,26 @@ namespace XmlEditor.Presentation.Views
             InitializeComponent();
         }
 
-        //private ScenarioViewModel ViewModel { get { return DataContext as ScenarioViewModel;}}
+        private void GridPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Enter && e.KeyboardDevice.Modifiers != ModifierKeys.None) || e.Key == Key.Tab) {
+                e.Handled = true;
+                var uie = e.OriginalSource as UIElement;
+                if (uie == null) return;
+                uie.MoveFocus(e.KeyboardDevice.Modifiers == ModifierKeys.Shift
+                                  ? new TraversalRequest(FocusNavigationDirection.Up)
+                                  : new TraversalRequest(FocusNavigationDirection.Down));
+            }
+        }
 
-        //private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
-        //    if (e.)
-        //}
+        private void EditableIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var uie = sender as UIElement;
+            if (uie == null || uie.Visibility != Visibility.Visible) return;
+            uie.Focus();
+            var tb = sender as TextBox;
+            if (tb == null) return;
+            tb.SelectAll();
+        }
     }
 }

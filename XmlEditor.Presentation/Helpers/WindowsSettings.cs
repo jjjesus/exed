@@ -7,7 +7,7 @@ using System.Windows;
 
 #endregion
 
-namespace XmlEditor.Applications.Helpers
+namespace XmlEditor.Presentation.Helpers
 {
     /// <summary>
     ///   Persists a Window's Size, Location and WindowState to UserScopeSettings
@@ -77,6 +77,7 @@ namespace XmlEditor.Applications.Helpers
             Settings.WindowState = window.WindowState;
             Settings.Location = window.RestoreBounds;
             Settings.Save();
+            Properties.Settings.Default.Save();
         }
 
         /// <summary>
@@ -93,17 +94,17 @@ namespace XmlEditor.Applications.Helpers
 
         private void Attach() {
             if (window != null) {
-                window.Closing += WindowClosing;
-                window.Initialized += WindowInitialized;
-                window.Loaded += WindowLoaded;
+                window.Closing += window_Closing;
+                window.Initialized += window_Initialized;
+                window.Loaded += window_Loaded;
             }
         }
 
-        private void WindowClosing(object sender, CancelEventArgs e) { SaveWindowState(); }
+        private void window_Closing(object sender, CancelEventArgs e) { SaveWindowState(); }
 
-        private void WindowInitialized(object sender, EventArgs e) { LoadWindowState(); }
+        private void window_Initialized(object sender, EventArgs e) { LoadWindowState(); }
 
-        private void WindowLoaded(object sender, RoutedEventArgs e) { if (Settings.WindowState == WindowState.Maximized) window.WindowState = Settings.WindowState; }
+        private void window_Loaded(object sender, RoutedEventArgs e) { if (Settings.WindowState == WindowState.Maximized) window.WindowState = Settings.WindowState; }
 
         #endregion Methods
 

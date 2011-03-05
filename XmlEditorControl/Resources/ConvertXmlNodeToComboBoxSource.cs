@@ -8,7 +8,7 @@ namespace TreeListControl.Resources
 	/// <summary>
 	/// When a schema is specified, extract the allowable values from the schema and export them as a List<string>
 	/// </summary>
-	class ConvertXmlNodeToComboBoxSource : IValueConverter
+	public class ConvertXmlNodeToComboBoxSource : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

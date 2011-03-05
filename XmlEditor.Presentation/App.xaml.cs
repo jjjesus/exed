@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Waf;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Threading;

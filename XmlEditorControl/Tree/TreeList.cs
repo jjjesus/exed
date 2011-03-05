@@ -112,7 +112,7 @@ namespace TreeListControl.Tree
         /// and subsequently we traverse the tree backwards starting from the root</remarks>
         /// <param name="node">The XmlNode to show in the tree</param>
         private void Select(XmlNode node) {
-            if (node == null || ((TreeNode) SelectedItem).Tag == node) return;
+            if (node == null || (SelectedItem != null && ((TreeNode)SelectedItem).Tag == node)) return;
             var stack = new Stack();
             var parent = (node is XmlAttribute) ? ((XmlAttribute) node).OwnerElement : node.ParentNode;
             while (parent != null && !(parent is XmlDocument)) {
@@ -129,7 +129,7 @@ namespace TreeListControl.Tree
                     break;
                 }
             }
-            if (node is XmlAttribute || node is XmlElement) {
+            if (node is XmlAttribute || node is XmlElement || node is XmlComment) {
                 foreach (var child in treeNode.AllVisibleChildren.Where(child => child.Tag.Equals(node)))
                 {
                     child.IsExpanded = true;
@@ -151,7 +151,6 @@ namespace TreeListControl.Tree
 	    private void ScrollToTop(TreeNode child) {
 	        child.IsExpanded = true;
             ScrollIntoView(Items[Items.Count - 1]);
-            //UpdateLayout();
             ScrollIntoView(child);
 	    }
 

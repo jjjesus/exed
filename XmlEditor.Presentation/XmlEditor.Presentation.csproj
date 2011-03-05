@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XmlEditor.Presentation</RootNamespace>
-    <AssemblyName>XmlEditor.Presentation</AssemblyName>
+    <AssemblyName>eXed</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -67,17 +67,23 @@
     <Compile Include="Converters\ConvertIntegerToBool.cs" />
     <Compile Include="Converters\ConvertNothing.cs" />
     <Compile Include="Converters\FileNameConverter.cs" />
+    <Compile Include="Helpers\InputBindingsManager.cs" />
+    <Compile Include="Helpers\WindowsSettings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WatermarkService.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SaveChangesWindow.xaml.cs">
       <DependentUpon>SaveChangesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\XmlView.xaml.cs">
       <DependentUpon>XmlView.xaml</DependentUpon>
@@ -107,6 +113,10 @@
     <Page Include="Views\SaveChangesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\XmlView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -152,19 +162,11 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="XsdCache\Dama.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="XsdCache\EquipmentEnumerations.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="XsdCache\etml.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="XsdCache\jroads.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -227,18 +229,23 @@
     <Resource Include="XsdCache\responseCode.xsl" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="XsdCache\PatriotScenario.xml" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Images\find.png" />
+    <Resource Include="Resources\Images\Map.png" />
+    <Resource Include="Resources\Images\Eye.png" />
+    <Resource Include="Resources\Images\QuestionMark.png" />
+    <Resource Include="Resources\Images\OpenIcon.png" />
+    <Resource Include="Resources\Images\CommentIcon.png" />
+    <Resource Include="Resources\Images\ClosedIcon.png" />
+    <Resource Include="Resources\Images\ElementIcon.png" />
+    <Resource Include="Resources\Images\TextIcon.png" />
+    <Resource Include="Resources\Images\AttributeIcon.png" />
+    <Resource Include="Resources\Images\RootIcon.png" />
     <Resource Include="eXed.ico" />
     <Content Include="Plugins\Readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="XsdCache\JRoadsTest.xml">
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="XsdCache\PatriotScenario2.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

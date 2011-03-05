@@ -34,6 +34,9 @@ namespace XmlEditor.Applications.ViewModels
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand printCommand;
         private readonly DelegateCommand printPreviewCommand;
+        private readonly DelegateCommand cutCommand;
+        private readonly DelegateCommand copyCommand;
+        private readonly DelegateCommand pasteCommand;
         private readonly DelegateCommand nextSearchTermCommand;
         private readonly DelegateCommand previousSearchTermCommand;
         //private readonly DelegateCommand undoCommand;
@@ -230,7 +233,6 @@ namespace XmlEditor.Applications.ViewModels
         private void ShowAboutMessage() {
             messageService.ShowMessage(string.Format(CultureInfo.CurrentCulture, "About {0}, {1}",
                                                      ApplicationInfo.ProductName, ApplicationInfo.Version));
-                //Resources.AboutText,
         }
 
         private void SetNextDocumentActive() {

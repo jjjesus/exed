@@ -22,19 +22,22 @@ namespace XmlEditor.Applications.ViewModels
     {
         private readonly MyXmlDocument document;
         private readonly XsltViewModel xsltViewModel;
+        private readonly SearchViewModel searchViewModel;
+
         private RelayCommand<TreeNode> copyNodeCommand;
         private RelayCommand<TreeNode> cutNodeCommand;
-        private TreeNode cutPasteNode;
-
         private RelayCommand<TreeNode> deleteNodeCommand;
         private RelayCommand<TreeNode> insertCommentCommand;
         private RelayCommand<TreeNode> insertNodeCommand;
         private RelayCommand<XmlMenuItem> insertNodeCommand2;
         private RelayCommand<TreeNode> pasteNodeCommand;
+        private RelayCommand undoCommand;
         private RelayCommand redoCommand;
+
+        private TreeNode cutPasteNode;
         private ErrorMessage selectedError;
         private object selectedNode;
-        private RelayCommand undoCommand;
+        private object selectedTab;
 
         public XmlViewModel(CompositionContainer container, IXmlView view, MyXmlDocument document) : base(view) {
             this.document = document;
@@ -42,11 +45,21 @@ namespace XmlEditor.Applications.ViewModels
             xsltViewModel = container.GetExportedValue<XsltViewModel>();
             xsltViewModel.Document = document;
 
+            searchViewModel = container.GetExportedValue<SearchViewModel>();
+            searchViewModel.Document = document;
+            searchViewModel.FoundNodeSelected += SearchViewModelFoundNodeSelected;
+
             document.Content.NodeChanged += DocumentChanged;
         }
 
         ~XmlViewModel() {
-            XmlDocument.Document.NodeChanged -= DocumentChanged;
+            XmlModel.Document.NodeChanged -= DocumentChanged;
+            searchViewModel.FoundNodeSelected -= SearchViewModelFoundNodeSelected;
+        }
+
+        private void SearchViewModelFoundNodeSelected(object sender, FoundNodeEventArgs e)
+        {
+            if (e.FoundNode != null) SelectedNode = e.FoundNode;
         }
 
         private void DocumentChanged(object sender, XmlNodeChangedEventArgs e)
@@ -56,24 +69,26 @@ namespace XmlEditor.Applications.ViewModels
             if (((TabItem)selectedTab).Content == xsltViewModel.View) xsltViewModel.TransformDocument();           
         }
 
-        public XmlModel XmlDocument { get { return document.Content; } }
+        public XmlModel XmlModel { get { return document.Content; } }
 
         public object XsltView { get { return xsltViewModel.View; } }
+        
+        public object SearchView { get { return searchViewModel.View; } }
 
         public MyXmlDocument Document { get { return document; } }
 
-        public ObservableCollection<ErrorMessage> ErrorMessages { get { return XmlDocument.ErrorMessages; } }
-
+        public ObservableCollection<ErrorMessage> ErrorMessages { get { return XmlModel.ErrorMessages; } }
+        
         #region Commands
         /// <summary>
         ///   Can the document be saved
         /// </summary>
-        public bool CanSave { get { return XmlDocument != null && XmlDocument.CanSave; } }
+        public bool CanSave { get { return XmlModel != null && XmlModel.CanSave; } }
 
         public ICommand CopyNodeCommand {
             get {
                 return copyNodeCommand ?? (copyNodeCommand = new RelayCommand<TreeNode>(node => {
-                                                                                            XmlDocument.CopyNode(
+                                                                                            XmlModel.CopyNode(
                                                                                                 node.Tag as XmlNode);
                                                                                             cutPasteNode = node;
                                                                                             // do not allow the xml version or the root element to be used as a copy source
@@ -87,7 +102,7 @@ namespace XmlEditor.Applications.ViewModels
             get {
                 return cutNodeCommand ?? (cutNodeCommand = new RelayCommand<TreeNode>(node => {
                                                                                           cutPasteNode = node;
-                                                                                          XmlDocument.CutNode(
+                                                                                          XmlModel.CutNode(
                                                                                               node.Tag as XmlNode,
                                                                                               node.Parent.Tag as XmlNode);
                                                                                           //node.Remove();
@@ -102,7 +117,7 @@ namespace XmlEditor.Applications.ViewModels
                 return deleteNodeCommand ??
                        (deleteNodeCommand =
                         new RelayCommand<TreeNode>(
-                            node => XmlDocument.DeleteXmlNode(node.Tag as XmlNode, node.Parent.Tag as XmlNode),
+                            node => XmlModel.DeleteXmlNode(node.Tag as XmlNode, node.Parent.Tag as XmlNode),
                             node => node != null && node.Level > 0));
                 // prevent the xml version and root element from being deleted));
             }
@@ -126,7 +141,7 @@ namespace XmlEditor.Applications.ViewModels
             get {
                 return insertNodeCommand2 ??
                        (insertNodeCommand2 =
-                        new RelayCommand<XmlMenuItem>(item => XmlDocument.InsertXmlNode(item.Node, item.Parent)));
+                        new RelayCommand<XmlMenuItem>(item => XmlModel.InsertXmlNode(item.Node, item.Parent)));
             }
         }
 
@@ -135,26 +150,26 @@ namespace XmlEditor.Applications.ViewModels
                 return insertCommentCommand ??
                        (insertCommentCommand =
                         new RelayCommand<TreeNode>(
-                            node => XmlDocument.InsertComment((XmlNode) node.Tag, (XmlNode) node.Parent.Tag),
+                            node => XmlModel.InsertComment((XmlNode) node.Tag, (XmlNode) node.Parent.Tag),
                             node => node != null && (node.Tag is XmlElement || node.Tag is XmlAttribute)));
             }
         }
 
-        public ICommand UndoCommand { get { return undoCommand ?? (undoCommand = new RelayCommand(() => XmlDocument.Undo(), () => XmlDocument.CanUndo)); } }
+        public ICommand UndoCommand { get { return undoCommand ?? (undoCommand = new RelayCommand(() => XmlModel.Undo(), () => XmlModel.CanUndo)); } }
 
         public ICommand PasteNodeCommand
         {
             get {
                 return pasteNodeCommand ??
                        (pasteNodeCommand =
-                        new RelayCommand<TreeNode>(node => XmlDocument.PasteNode(node.Tag as XmlNode),
+                        new RelayCommand<TreeNode>(node => XmlModel.PasteNode(node.Tag as XmlNode),
                                                    node =>
                                                    cutPasteNode != null && node != null && // node.Index != 0 &&
-                                                   node.Tag is XmlElement && XmlDocument.CanPaste((XmlElement) node.Tag)));
+                                                   node.Tag is XmlElement && XmlModel.CanPaste((XmlElement) node.Tag)));
             }
         }
 
-        public ICommand RedoCommand { get { return redoCommand ?? (redoCommand = new RelayCommand(() => XmlDocument.Redo(), () => XmlDocument.CanRedo)); } }
+        public ICommand RedoCommand { get { return redoCommand ?? (redoCommand = new RelayCommand(() => XmlModel.Redo(), () => XmlModel.CanRedo)); } }
 
         #endregion Commands
 
@@ -176,7 +191,6 @@ namespace XmlEditor.Applications.ViewModels
             }
         }
 
-        private object selectedTab;
         public object SelectedTab {
             get { return selectedTab; } 
             set {
@@ -188,12 +202,9 @@ namespace XmlEditor.Applications.ViewModels
 
         public void Search(string searchTerm, bool nextTerm)
         {
-            if (Document == null) return;
-            XmlNode node = null;
-            if (selectedNode != null) node = (XmlNode)selectedNode;
-            if (node == null) node = Document.Content.Document.DocumentElement;
-
+            if (Document == null || Document.Content == null || Document.Content.Document == null || string.IsNullOrEmpty(searchTerm)) return;
+            SelectedTab = SearchView;
+            searchViewModel.Search(searchTerm.ToLower(), selectedNode as XmlNode, nextTerm);
         }
-
     }
 }

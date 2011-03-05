@@ -113,6 +113,7 @@
     <Compile Include="Themes\ConvertTreeViewLine.cs" />
     <Compile Include="Tree\Converters.cs" />
     <Compile Include="Tree\ErrorMessage.cs" />
+    <Compile Include="Tree\FoundNode.cs" />
     <Compile Include="Tree\ITreeModel.cs" />
     <Compile Include="Tree\RowExpander.cs" />
     <Compile Include="Tree\TreeList.cs" />
@@ -132,9 +133,6 @@
     <Compile Include="Tree\TreeListItem.cs" />
     <Compile Include="Tree\TreeNode.cs" />
     <Compile Include="UndoBuffer.cs" />
-    <Compile Include="XmlEditorControl.xaml.cs">
-      <DependentUpon>XmlEditorControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="XmlModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -150,12 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="XmlEditorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

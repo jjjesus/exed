@@ -1,18 +1,16 @@
 ﻿using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XmlScenarioEditor.Presentation")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("eXed")]
+[assembly: AssemblyDescription("eXed is an XML editor aimed at casual users that need to create a valid XML file without being frightened by the tagging that is so cumbersome and error prone when typing XML files in a regular editor. Using the Xml Schema Definition (XSD) file, it provides assistance in creating new nodes, offering dynamic help, and error support. Note that it is an early release, so beware!")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("XmlScenarioEditor.Presentation")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCompany("EVIS")]
+[assembly: AssemblyProduct("eXed")]
+[assembly: AssemblyCopyright("Copyright © Erik Vullings 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

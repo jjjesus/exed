@@ -22,5 +22,17 @@ namespace XmlEditor.Presentation.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Auto")]
+        public global::System.Windows.GridLength ErrorMessagesTabHeight {
+            get {
+                return ((global::System.Windows.GridLength)(this["ErrorMessagesTabHeight"]));
+            }
+            set {
+                this["ErrorMessagesTabHeight"] = value;
+            }
+        }
     }
 }

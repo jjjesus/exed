@@ -1,6 +1,6 @@
 ToDo
-- Multi-line textbox 
-- Search functionality
+- Search select tab
+- Open an XSD to create a new file
 - Reload (when changed externally)
 - Refactor MVVM setup
 - How to add a CDATA section?
@@ -8,6 +8,8 @@ ToDo
 - How can make navigation with the keyboard easier: arrows, enter, insert, delete?
 
 Bugs
+- Cut/paste keys don't work anymore
+- Remove XmlEditorControl
 - What to do with empty elements (that have a value).
 - How can I delete a node that shouldn't be there, i.e. an element that should have no value?
 

@@ -357,9 +357,9 @@ namespace TreeListControl.Resources
         /// <returns>Name of the node</returns>
         public static string GetXmlNodeName(XmlNode node)
         {
-            if (node.Attributes != null) foreach (XmlAttribute attribute in node.Attributes) if (attribute.Name.ToLower().Contains("name")) return attribute.Value;
-            foreach (XmlNode child in node.ChildNodes) if (child.Name.Equals("name", StringComparison.OrdinalIgnoreCase) && child.FirstChild != null) return child.FirstChild.Value;
-            foreach (XmlNode child in node.ChildNodes) if (child.Name.ToLower().Contains("name") && child.FirstChild != null) return child.FirstChild.Value;
+            if (node.Attributes != null) foreach (XmlAttribute attribute in node.Attributes) if (attribute.Name.ToLower().Contains("name")) return attribute.Value.Replace(Environment.NewLine, " - ");
+            foreach (XmlNode child in node.ChildNodes) if (child.Name.Equals("name", StringComparison.OrdinalIgnoreCase) && child.FirstChild != null) return child.FirstChild.Value.Replace(Environment.NewLine, " - ");
+            foreach (XmlNode child in node.ChildNodes) if (child.Name.ToLower().Contains("name") && child.FirstChild != null) return child.FirstChild.Value.Replace(Environment.NewLine, " - ");
             //foreach (XmlAttribute child in node.Attributes)
             //    if (child.Name.ToLower().Contains("name"))
             //        return child.Value;

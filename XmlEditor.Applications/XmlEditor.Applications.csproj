@@ -70,7 +70,6 @@
     <Compile Include="Documents\XmlDocumentType.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
-    <Compile Include="Helpers\WindowsSettings.cs" />
     <Compile Include="Interfaces\ISearch.cs" />
     <Compile Include="Services\IMostRecentlyUsedFilesService.cs" />
     <Compile Include="Services\IZoomService.cs" />
@@ -78,12 +77,14 @@
     <Compile Include="Services\ZoomService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SaveChangesViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\XmlViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ViewResult.cs" />
     <Compile Include="ViewModels\XsltViewModel.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Views\ISaveChangesView.cs" />
+    <Compile Include="Views\ISearchView.cs" />
     <Compile Include="Views\IXmlView.cs" />
     <Compile Include="Views\IShellView.cs" />
     <Compile Include="Views\IXsltView.cs" />
