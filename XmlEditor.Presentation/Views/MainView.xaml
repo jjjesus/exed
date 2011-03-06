@@ -16,6 +16,10 @@
         <KeyBinding x:Name="openKeyBinding"
                     Gesture="Ctrl+O"
                     Command="{Binding OpenCommand}" />
+        <KeyBinding Gesture="Ctrl+Z"
+                    Command="{Binding UndoComand}" />
+        <KeyBinding Gesture="Ctrl+Y"
+                    Command="{Binding RedoComand}" />
         <KeyBinding Gesture="Ctrl+C"
                     Command="{Binding CopyComand}" />
         <KeyBinding Gesture="Ctrl+X"
@@ -79,9 +83,9 @@
                 <MenuItem Command="{Binding ExitCommand}" Header="{x:Static Properties:Resources.ExitMenu}"/>
             </MenuItem>
             <MenuItem Header="{x:Static Properties:Resources.EditMenu}">
-                <MenuItem Command="ApplicationCommands.Undo" Header="{x:Static Properties:Resources.UndoMenu}" Icon="{StaticResource UndoImage}"/>
+                <!--<MenuItem Command="ApplicationCommands.Undo" Header="{x:Static Properties:Resources.UndoMenu}" Icon="{StaticResource UndoImage}"/>
                 <MenuItem Command="ApplicationCommands.Redo" Header="{x:Static Properties:Resources.RedoMenu}" Icon="{StaticResource RedoImage}"/>
-                <Separator/>
+                <Separator/>-->
                 <MenuItem Command="ApplicationCommands.Cut" Header="{x:Static Properties:Resources.CutMenu}" Icon="{StaticResource CutImage}"/>
                 <MenuItem Command="ApplicationCommands.Copy" Header="{x:Static Properties:Resources.CopyMenu}" Icon="{StaticResource CopyImage}"/>
                 <MenuItem Command="ApplicationCommands.Paste" Header="{x:Static Properties:Resources.PasteMenu}" Icon="{StaticResource PasteImage}"/>
@@ -111,8 +115,10 @@
                 <Button Command="{Binding PrintCommand}" Content="{StaticResource PrintImage}" ToolTip="{x:Static Properties:Resources.Print}"/>
                 <Button Command="{Binding PrintPreviewCommand}" Content="{StaticResource PrintPreviewImage}" ToolTip="{x:Static Properties:Resources.PrintPreview}"/>
                 <Separator/>
-                <Button Command="ApplicationCommands.Undo" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
-                <Button Command="ApplicationCommands.Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>
+                <Button Command="{Binding UndoCommand}" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
+                <Button Command="{Binding RedoCommand}" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>
+                <!--<Button Command="ApplicationCommands.Undo" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
+                <Button Command="ApplicationCommands.Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>-->
                 <Button Command="ApplicationCommands.Cut" Content="{StaticResource CutImage}" ToolTip="{x:Static Properties:Resources.Cut}"/>
                 <Button Command="ApplicationCommands.Copy" Content="{StaticResource CopyImage}" ToolTip="{x:Static Properties:Resources.Copy}"/>
                 <Button Command="ApplicationCommands.Paste" Content="{StaticResource PasteImage}" ToolTip="{x:Static Properties:Resources.Paste}"/>

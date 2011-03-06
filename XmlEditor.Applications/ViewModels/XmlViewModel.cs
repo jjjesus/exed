@@ -155,7 +155,7 @@ namespace XmlEditor.Applications.ViewModels
             }
         }
 
-        public ICommand UndoCommand { get { return undoCommand ?? (undoCommand = new RelayCommand(() => XmlModel.Undo(), () => XmlModel.CanUndo)); } }
+        public RelayCommand UndoCommand { get { return undoCommand ?? (undoCommand = new RelayCommand(() => XmlModel.Undo(), () => XmlModel.CanUndo)); } }
 
         public ICommand PasteNodeCommand
         {

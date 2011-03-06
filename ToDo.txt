@@ -1,19 +1,17 @@
 ToDo
 - Search select tab
 - Open an XSD to create a new file
-- Reload (when changed externally)
+- Reload (when changed externally, either the file or the XSD)
 - Refactor MVVM setup
-- How to add a CDATA section?
+- How to add a CDATA section? Based on the use of tags
 - Check undo functionality
 - How can make navigation with the keyboard easier: arrows, enter, insert, delete?
 
 Bugs
-- Cut/paste keys don't work anymore
-- Remove XmlEditorControl
 - What to do with empty elements (that have a value).
 - How can I delete a node that shouldn't be there, i.e. an element that should have no value?
 
 For later
 - XsltView doesn't scale
-- Can I use this editor to create XSDs, just like an XML tree, with types as value, and an optional column for annotations
+- Can I use this editor to create XSDs, just like an XML tree, with types as value, and an optional column for annotations. Use conventions to create an XSD, e.g. Book as child of Books should allow multiple.
 - Optionally, add dotted lines to connect treelistitems

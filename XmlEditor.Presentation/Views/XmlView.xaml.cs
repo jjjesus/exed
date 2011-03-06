@@ -1,9 +1,12 @@
 ﻿#region
 
+using System;
 using System.ComponentModel.Composition;
+using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using XmlEditor.Applications.ViewModels;
 using XmlEditor.Applications.Views;
 
 #endregion

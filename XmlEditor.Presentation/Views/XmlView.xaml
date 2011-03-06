@@ -1,8 +1,33 @@
 ﻿<UserControl x:Class="XmlEditor.Presentation.Views.XmlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" xmlns:Resources="clr-namespace:TreeListControl.Resources;assembly=TreeListControl" xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" xmlns:Resources="clr-namespace:TreeListControl.Resources;assembly=TreeListControl" xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications">
+    <!--<UserControl.InputBindings>
+        <KeyBinding Gesture="Ctrl+C"
+                    Command="{Binding CopyNodeComand}" />
+        <KeyBinding Gesture="Ctrl+X"
+                    Command="{Binding CutNodeComand}" />
+        <KeyBinding Gesture="Ctrl+V"
+                    Command="{Binding PasteNodeComand}" />
+        <KeyBinding Gesture="Ctrl+Z"
+                    Command="{Binding UndoComand}" />
+        <KeyBinding Gesture="Ctrl+Y"
+                    Command="{Binding RedoComand}" />
+        <KeyBinding Gesture="Ctrl+Del"
+                    Command="{Binding DeleteNodeComand}" />
+    </UserControl.InputBindings>-->
     <UserControl.Resources>
-        
+        <c:CommandReference x:Key="UndoCommandReference"
+                            Command="{Binding UndoCommand}" />
+        <c:CommandReference x:Key="RedoCommandReference"
+                            Command="{Binding RedoCommand}" />
+        <c:CommandReference x:Key="CutNodeCommandReference"
+                            Command="{Binding CutNodeCommand}" />
+        <c:CommandReference x:Key="PasteNodeCommandReference"
+                            Command="{Binding PasteNodeCommand}" />
+        <c:CommandReference x:Key="CopyNodeCommandReference"
+                            Command="{Binding CopyNodeCommand}" />
+        <c:CommandReference x:Key="DeleteNodeCommandReference"
+                            Command="{Binding DeleteNodeCommand}" />
         <!--Round tab-->
         <ControlTemplate x:Key="RoundTab"
                          TargetType="{x:Type TabItem}">
@@ -454,6 +479,30 @@
         </DataTemplate>
 
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Z"
+                    Modifiers="Control"
+                    Command="{StaticResource UndoCommandReference}" />
+        <KeyBinding Key="Y"
+                    Modifiers="Control"
+                    Command="{StaticResource RedoCommandReference}" />
+        <KeyBinding Key="C"
+                    Modifiers="Control"
+                    CommandParameter="{Binding ElementName=xmlTree, Path=SelectedItem}"
+                    Command="{StaticResource CopyNodeCommandReference}" />
+        <KeyBinding Key="X"
+                    Modifiers="Control"
+                    CommandParameter="{Binding ElementName=xmlTree, Path=SelectedItem}"
+                    Command="{StaticResource CutNodeCommandReference}" />
+        <KeyBinding Key="V"
+                    Modifiers="Control"
+                    CommandParameter="{Binding ElementName=xmlTree, Path=SelectedItem}"
+                    Command="{StaticResource PasteNodeCommandReference}" />
+        <KeyBinding Key="Delete"
+                    Modifiers="Ctrl"
+                    CommandParameter="{Binding ElementName=xmlTree, Path=SelectedItem}"
+                    Command="{StaticResource DeleteNodeCommandReference}" />
+    </UserControl.InputBindings>
     <Grid PreviewKeyDown="GridPreviewKeyDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -520,11 +569,11 @@
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <Separator />
                     <MenuItem Header="Undo"
-                              Command="{Binding UndoCommand}"
-                              InputGestureText="Ctrl-Z" />
+                              Command="Undo"
+                              />
                     <MenuItem Header="Redo"
                               Command="{Binding RedoCommand}"
-                              InputGestureText="Ctrl-Y" />
+                              InputGestureText="Ctrl+Y" />
                 </ContextMenu>
             </Tree:TreeList.ContextMenu>
             <Tree:TreeList.View>
@@ -615,7 +664,7 @@
                 <TabItem Template="{StaticResource RoundTab}"
                          ToolTip="Dynamic help">
                     <TabItem.Header>
-                        <Image Source="/XmlEditor.Presentation;component/Resources/Images/QuestionMark.png"
+                        <Image Source="/eXed;component/Resources/Images/QuestionMark.png"
                                Height="16" />
                     </TabItem.Header>
                     <ContentControl Content="{Binding ElementName=xmlTree, Path=SelectedItem.Tag, Converter={StaticResource convertXmlNodeToEditHelp}}" />
