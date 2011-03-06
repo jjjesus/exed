@@ -211,7 +211,7 @@ namespace XmlEditor.Applications.ViewModels
 
         private void Undo()
         {
-            documentManager.Save(documentManager.ActiveDocument);
+            //documentManager.Save(documentManager.ActiveDocument);
         }
 
         private bool CanRedo()

@@ -1,12 +1,15 @@
 ﻿<UserControl x:Class="XmlEditor.Presentation.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" 
-             xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters" xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers">
+             xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters" xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers" xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications">
 
     <UserControl.Resources>
         <DataTemplate x:Key="DocumentTypeTemplate">
             <TextBlock Text="{Binding Description}" />
         </DataTemplate>
+        <c:CommandReference x:Key="UndoCommandReference"
+                            Command="{Binding ActiveDocumentView.DataContext.UndoCommand}" />
+
     </UserControl.Resources>
     
     <UserControl.InputBindings>
@@ -16,8 +19,9 @@
         <KeyBinding x:Name="openKeyBinding"
                     Gesture="Ctrl+O"
                     Command="{Binding OpenCommand}" />
-        <KeyBinding Gesture="Ctrl+Z"
-                    Command="{Binding UndoComand}" />
+        <!--<KeyBinding Key="Z"
+                    Modifiers="Control"
+                    Command="{StaticResource UndoCommandReference}" />
         <KeyBinding Gesture="Ctrl+Y"
                     Command="{Binding RedoComand}" />
         <KeyBinding Gesture="Ctrl+C"
@@ -25,7 +29,7 @@
         <KeyBinding Gesture="Ctrl+X"
                     Command="{Binding CutComand}" />
         <KeyBinding Gesture="Ctrl+V"
-                    Command="{Binding PasteComand}" />
+                    Command="{Binding PasteComand}" />-->
         <KeyBinding Gesture="Ctrl+Del"
                     Command="{Binding DeleteNodeComand}" />
         <KeyBinding x:Name="closeKeyBinding"
@@ -115,10 +119,10 @@
                 <Button Command="{Binding PrintCommand}" Content="{StaticResource PrintImage}" ToolTip="{x:Static Properties:Resources.Print}"/>
                 <Button Command="{Binding PrintPreviewCommand}" Content="{StaticResource PrintPreviewImage}" ToolTip="{x:Static Properties:Resources.PrintPreview}"/>
                 <Separator/>
-                <Button Command="{Binding UndoCommand}" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
-                <Button Command="{Binding RedoCommand}" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>
-                <!--<Button Command="ApplicationCommands.Undo" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
-                <Button Command="ApplicationCommands.Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>-->
+                <!--<Button Command="{Binding ActiveDocumentView.DataContext.UndoCommand}" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
+                <Button Command="Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>-->
+                <Button Command="ApplicationCommands.Undo" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
+                <Button Command="ApplicationCommands.Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>
                 <Button Command="ApplicationCommands.Cut" Content="{StaticResource CutImage}" ToolTip="{x:Static Properties:Resources.Cut}"/>
                 <Button Command="ApplicationCommands.Copy" Content="{StaticResource CopyImage}" ToolTip="{x:Static Properties:Resources.Copy}"/>
                 <Button Command="ApplicationCommands.Paste" Content="{StaticResource PasteImage}" ToolTip="{x:Static Properties:Resources.Paste}"/>

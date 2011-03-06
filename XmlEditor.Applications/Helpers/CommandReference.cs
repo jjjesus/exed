@@ -26,8 +26,7 @@ namespace XmlEditor.Applications.Helpers
         #region ICommand Members
 
         public bool CanExecute(object parameter) {
-            if (Command != null) return Command.CanExecute(parameter);
-            return false;
+            return Command != null && Command.CanExecute(parameter);
         }
 
         public void Execute(object parameter) { Command.Execute(parameter); }
@@ -38,6 +37,7 @@ namespace XmlEditor.Applications.Helpers
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var commandReference = d as CommandReference;
+            if (commandReference == null) return;
             var oldCommand = e.OldValue as ICommand;
             var newCommand = e.NewValue as ICommand;
 

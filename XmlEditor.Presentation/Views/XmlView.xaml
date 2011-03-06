@@ -1,20 +1,6 @@
 ﻿<UserControl x:Class="XmlEditor.Presentation.Views.XmlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" xmlns:Resources="clr-namespace:TreeListControl.Resources;assembly=TreeListControl" xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications">
-    <!--<UserControl.InputBindings>
-        <KeyBinding Gesture="Ctrl+C"
-                    Command="{Binding CopyNodeComand}" />
-        <KeyBinding Gesture="Ctrl+X"
-                    Command="{Binding CutNodeComand}" />
-        <KeyBinding Gesture="Ctrl+V"
-                    Command="{Binding PasteNodeComand}" />
-        <KeyBinding Gesture="Ctrl+Z"
-                    Command="{Binding UndoComand}" />
-        <KeyBinding Gesture="Ctrl+Y"
-                    Command="{Binding RedoComand}" />
-        <KeyBinding Gesture="Ctrl+Del"
-                    Command="{Binding DeleteNodeComand}" />
-    </UserControl.InputBindings>-->
     <UserControl.Resources>
         <c:CommandReference x:Key="UndoCommandReference"
                             Command="{Binding UndoCommand}" />
@@ -569,8 +555,8 @@
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <Separator />
                     <MenuItem Header="Undo"
-                              Command="Undo"
-                              />
+                              Command="{Binding UndoCommand}"
+                              InputGestureText="Ctrl+Z" />
                     <MenuItem Header="Redo"
                               Command="{Binding RedoCommand}"
                               InputGestureText="Ctrl+Y" />
