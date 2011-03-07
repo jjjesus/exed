@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="XmlEditor.Presentation.Views.XmlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" xmlns:Resources="clr-namespace:TreeListControl.Resources;assembly=TreeListControl" xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" xmlns:Resources="clr-namespace:TreeListControl.Resources;assembly=TreeListControl" xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications" xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers">
     <UserControl.Resources>
         <c:CommandReference x:Key="UndoCommandReference"
                             Command="{Binding UndoCommand}" />
@@ -465,6 +465,34 @@
         </DataTemplate>
 
     </UserControl.Resources>
+    
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Undo"
+                        x:Name="Undo"
+                        Executed="UndoExecuted"
+                        CanExecute="UndoCanExecute" />
+        <CommandBinding Command="ApplicationCommands.Redo"
+                        x:Name="Redo"
+                        Executed="RedoExecuted"
+                        CanExecute="RedoCanExecute" />
+        <CommandBinding Command="Cut"
+                        x:Name="Cut"
+                        Executed="CutExecuted"
+                        CanExecute="CutCanExecute" />
+        <CommandBinding Command="Copy"
+                        x:Name="Copy"
+                        Executed="CopyExecuted"
+                        CanExecute="CopyCanExecute" />
+        <CommandBinding Command="Paste"
+                        x:Name="Paste"
+                        Executed="PasteExecuted"
+                        CanExecute="PasteCanExecute" />
+        <CommandBinding Command="EditingCommands.Delete"
+                        x:Name="Delete"
+                        Executed="DeleteExecuted"
+                        CanExecute="DeleteCanExecute" />
+    </UserControl.CommandBindings>
+    
     <UserControl.InputBindings>
         <KeyBinding Key="Z"
                     Modifiers="Control"
@@ -489,6 +517,8 @@
                     CommandParameter="{Binding ElementName=xmlTree, Path=SelectedItem}"
                     Command="{StaticResource DeleteNodeCommandReference}" />
     </UserControl.InputBindings>
+    
+    <!-- The XML view and custom panels -->
     <Grid PreviewKeyDown="GridPreviewKeyDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

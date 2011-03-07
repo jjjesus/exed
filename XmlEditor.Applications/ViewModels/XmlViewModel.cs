@@ -105,7 +105,7 @@ namespace XmlEditor.Applications.ViewModels
                                                                                           XmlModel.CutNode(
                                                                                               node.Tag as XmlNode,
                                                                                               node.Parent.Tag as XmlNode);
-                                                                                          //node.Remove();
+                                                                                          UpdateCommands();
                                                                                       },
                                                                                       node => node != null && node.Level > 0));
                 // do not allow to cut the xml version or the root element
@@ -205,6 +205,10 @@ namespace XmlEditor.Applications.ViewModels
             if (Document == null || Document.Content == null || Document.Content.Document == null || string.IsNullOrEmpty(searchTerm)) return;
             SelectedTab = SearchView;
             searchViewModel.Search(searchTerm.ToLower(), selectedNode as XmlNode, nextTerm);
+        }
+
+        private void UpdateCommands() {
+            //undoCommand
         }
     }
 }

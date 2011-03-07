@@ -8,6 +8,7 @@ ToDo
 
 Bugs
 - Check undo functionality, e.g. when deleting an attribute, I need to undo twice before it reappears
+- When displaying the search window, and adding a new zone, an exception is raised
 - What to do with empty elements (that have a value).
 - How can I delete a node that shouldn't be there, i.e. an element that should have no value?
 
