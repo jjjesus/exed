@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ErrorMessagesTabHeight" Type="System.Windows.GridLength" Scope="User">
-      <Value Profile="(Default)">Auto</Value>
+      <Value Profile="(Default)">200</Value>
     </Setting>
   </Settings>
 </SettingsFile>

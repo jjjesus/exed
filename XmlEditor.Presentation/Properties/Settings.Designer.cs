@@ -25,7 +25,7 @@ namespace XmlEditor.Presentation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Auto")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public global::System.Windows.GridLength ErrorMessagesTabHeight {
             get {
                 return ((global::System.Windows.GridLength)(this["ErrorMessagesTabHeight"]));

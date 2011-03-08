@@ -20,38 +20,36 @@ namespace XmlEditor.Applications.ViewModels
     [Export]
     public class MainViewModel : ViewModel<IMainView>
     {
-        private readonly DelegateCommand aboutCommand;
-        private readonly DelegateCommand closeCommand;
+        private readonly IMessageService messageService;
+        private readonly IFileDialogService fileDialogService;
         private readonly IDocumentManager documentManager;
         private readonly ObservableCollection<object> documentViews;
+
+        private readonly DelegateCommand aboutCommand;
+        private readonly DelegateCommand closeCommand;
         private readonly DelegateCommand englishCommand;
         private readonly DelegateCommand germanCommand;
-        private readonly IMessageService messageService;
-        private readonly DelegateCommand newCommand;
+        private readonly DelegateCommand newDocumentCommand;
+        private readonly DelegateCommand newXsdCacheBasedDocumentCommand;
         private readonly DelegateCommand nextDocumentCommand;
         private readonly DelegateCommand openCommand;
         private readonly DelegateCommand saveAsCommand;
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand printCommand;
         private readonly DelegateCommand printPreviewCommand;
-        private readonly DelegateCommand cutCommand;
-        private readonly DelegateCommand copyCommand;
-        private readonly DelegateCommand pasteCommand;
-        private readonly DelegateCommand nextSearchTermCommand;
-        private readonly DelegateCommand previousSearchTermCommand;
-        private readonly DelegateCommand undoCommand;
-        private readonly DelegateCommand redoCommand;
         private IDocument activeDocument;
         private object activeDocumentView;
         private ICommand exitCommand;
 
         [ImportingConstructor]
-        public MainViewModel(IMainView view, IDocumentManager documentManager, IMessageService messageService)
+        public MainViewModel(IMainView view, IDocumentManager documentManager, IMessageService messageService, IFileDialogService fileDialogService)
             : base(view) {
             this.documentManager = documentManager;
             this.messageService = messageService;
+            this.fileDialogService = fileDialogService;
             documentViews = new ObservableCollection<object>();
-            newCommand = new DelegateCommand(NewDocument);
+            newDocumentCommand = new DelegateCommand(NewDocument);
+            newXsdCacheBasedDocumentCommand = new DelegateCommand(NewXsdCacheBasedDocument);
             openCommand = new DelegateCommand(OpenDocument);
             closeCommand = new DelegateCommand(CloseDocument, CanCloseDocument);
             saveCommand = new DelegateCommand(SaveDocument, CanSaveDocument);
@@ -62,10 +60,6 @@ namespace XmlEditor.Applications.ViewModels
             nextDocumentCommand = new DelegateCommand(SetNextDocumentActive);
             printCommand = new DelegateCommand(PrintDocument, CanPrintDocument);
             printPreviewCommand = new DelegateCommand(PrintPreviewDocument, CanPrintDocument);
-            nextSearchTermCommand = new DelegateCommand(() => Search(true));
-            previousSearchTermCommand = new DelegateCommand(() => Search(false));
-            undoCommand = new DelegateCommand(Undo, CanUndo);
-            redoCommand = new DelegateCommand(Redo, CanRedo);
 
             AddWeakEventListener(documentManager, DocumentManagerPropertyChanged);
         }
@@ -77,10 +71,9 @@ namespace XmlEditor.Applications.ViewModels
         public object ActiveDocumentView {
             get { return activeDocumentView; }
             set {
-                if (activeDocumentView != value) {
-                    activeDocumentView = value;
-                    RaisePropertyChanged("ActiveDocumentView");
-                }
+                if (activeDocumentView == value) return;
+                activeDocumentView = value;
+                RaisePropertyChanged("ActiveDocumentView");
             }
         }
 
@@ -88,7 +81,6 @@ namespace XmlEditor.Applications.ViewModels
         public string SearchTerm {
             get { return searchTerm; } 
             set {
-                if (searchTerm == value) return;
                 searchTerm = value;
                 Search(true);
                 RaisePropertyChanged("SearchTerm");
@@ -107,16 +99,12 @@ namespace XmlEditor.Applications.ViewModels
 
         //public ICommand UndoCommand { get { return undoCommand; } }
 
-        public ICommand UndoCommand {
-            get { return undoCommand; }
+        public ICommand NewDocumentCommand {
+            get { return newDocumentCommand; }
         }
 
-        public ICommand RedoCommand {
-            get { return redoCommand; }
-        }
-
-        public ICommand NewCommand {
-            get { return newCommand; }
+        public ICommand NewXsdCacheBasedDocumentCommand {
+            get { return newXsdCacheBasedDocumentCommand; }
         }
 
         public ICommand OpenCommand {
@@ -182,12 +170,19 @@ namespace XmlEditor.Applications.ViewModels
             get { return nextDocumentCommand; }
         }
 
-        private void NewDocument(object docSubType) {
+        public void NewDocument() {
+            documentManager.Open(string.Empty);
+            //var result = fileDialogService.ShowOpenFileDialog(new FileType("XSD files", ".xsd"));
+            //if (!result.IsValid) return;
+            //var dst = new DocumentSubType { Tag = result.FileName, Type = documentManager.DocumentTypes };
+            //NewXsdCacheBasedDocument(dst);
+        }
+
+        private void NewXsdCacheBasedDocument(object docSubType) {
             var dst = (DocumentSubType) docSubType;
             if (dst == null || !documentManager.DocumentTypes.Contains(dst.Type)) return;
             documentManager.New(dst.Type, dst.Tag);
             UpdateCommands();
-            //documentManager.New(documentManager.DocumentTypes.First());
         }
 
         private void OpenDocument(object fileName) {
@@ -203,25 +198,6 @@ namespace XmlEditor.Applications.ViewModels
         private void CloseDocument() {
             documentManager.Close(documentManager.ActiveDocument);
             UpdateCommands();
-        }
-
-        private bool CanUndo() {
-            return true;// documentManager.ActiveDocument != null && documentManager.ActiveDocument.Modified;
-        }
-
-        private void Undo()
-        {
-            //documentManager.Save(documentManager.ActiveDocument);
-        }
-
-        private bool CanRedo()
-        {
-            return true;//documentManager.ActiveDocument != null && documentManager.ActiveDocument.Modified;
-        }
-
-        private void Redo()
-        {
-            documentManager.Save(documentManager.ActiveDocument);
         }
 
         private bool CanSaveDocument()
@@ -288,8 +264,6 @@ namespace XmlEditor.Applications.ViewModels
             saveAsCommand.RaiseCanExecuteChanged();
             printCommand.RaiseCanExecuteChanged();
             printPreviewCommand.RaiseCanExecuteChanged();
-            undoCommand.RaiseCanExecuteChanged();
-            redoCommand.RaiseCanExecuteChanged();
         }
     }
 

@@ -43,7 +43,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -68,7 +67,7 @@
     <Compile Include="Converters\ConvertIntegerToBool.cs" />
     <Compile Include="Converters\ConvertNothing.cs" />
     <Compile Include="Converters\FileNameConverter.cs" />
-    <Compile Include="Helpers\CommandAction.cs" />
+    <None Include="Helpers\CommandAction.cs" />
     <Compile Include="Helpers\InputBindingsManager.cs" />
     <Compile Include="Helpers\WindowsSettings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

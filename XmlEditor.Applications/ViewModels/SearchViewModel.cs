@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Waf.Applications;
 using System.Xml;
+using TreeListControl.Resources;
 using TreeListControl.Tree;
 using XmlEditor.Applications.Documents;
 using XmlEditor.Applications.Views;
@@ -128,16 +129,32 @@ namespace XmlEditor.Applications.ViewModels
                     var node1 = node;
                     found.AddRange(from XmlAttribute attribute in node.Attributes
                                    where attribute.Name.ToLower().Contains(mySearchTerm) || (node1.Value != null && node1.Value.ToLower().Contains(mySearchTerm))
-                                   select new FoundNode { Name = (attribute.OwnerElement == null ? string.Empty : attribute.OwnerElement.Name + "\\") + attribute.Name, Value = attribute.Value, Tag = attribute });
+                                   select new FoundNode { Name = GetNodeName(attribute), Value = attribute.Value, Tag = attribute });
                 }
                 // Check element or comment
-                if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm))) found.Add(new FoundNode { Name = node.Name, Value = node.Value, Tag = node });
+                if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm))) found.Add(new FoundNode { Name = GetNodeName(node), Value = node.Value, Tag = node });
                 // Check children
                 if (node.HasChildNodes) found.AddRange(SearchNodes(node, worker, e));
                 // Check if we've already passed the selected node (used when finding the next or previous search hit)
                 if (node == mySelectedNode) indexOfSelectedNodeInFoundNodes = found.Count;
             }
             return found;
+        }
+
+        private static string GetNodeName(XmlNode node) {
+            if (!(node is XmlElement)) return node.Name;
+            var friendlyName = Utils.GetXmlNodeName(node);
+            return (string.IsNullOrEmpty(friendlyName) ?
+                node.Name :
+                string.Format("{0} {1}", node.Name, friendlyName));
+        }
+
+        private static string GetNodeName(XmlAttribute attribute) {
+            if (attribute.OwnerElement == null) return attribute.Name;
+            var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
+            return (string.IsNullOrEmpty(friendlyName) ?  
+                string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) : 
+                string.Format("{0} {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
         }
 
         /// <summary>

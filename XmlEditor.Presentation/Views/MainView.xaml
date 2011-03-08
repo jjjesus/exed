@@ -1,37 +1,25 @@
 ﻿<UserControl x:Class="XmlEditor.Presentation.Views.MainView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties" 
-             xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters" xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers" xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters"
+             xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers"
+             xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties">
 
     <UserControl.Resources>
         <DataTemplate x:Key="DocumentTypeTemplate">
             <TextBlock Text="{Binding Description}" />
         </DataTemplate>
-        <c:CommandReference x:Key="UndoCommandReference"
-                            Command="{Binding ActiveDocumentView.DataContext.UndoCommand}" />
-
     </UserControl.Resources>
-    
+
     <UserControl.InputBindings>
         <KeyBinding x:Name="newKeyBinding"
-                    Command="{Binding NewCommand}"
+                    Command="{Binding NewDocumentCommand}"
                     Gesture="Ctrl+N" />
         <KeyBinding x:Name="openKeyBinding"
-                    Gesture="Ctrl+O"
-                    Command="{Binding OpenCommand}" />
-        <!--<KeyBinding Key="Z"
-                    Modifiers="Control"
-                    Command="{StaticResource UndoCommandReference}" />
-        <KeyBinding Gesture="Ctrl+Y"
-                    Command="{Binding RedoComand}" />
-        <KeyBinding Gesture="Ctrl+C"
-                    Command="{Binding CopyComand}" />
-        <KeyBinding Gesture="Ctrl+X"
-                    Command="{Binding CutComand}" />
-        <KeyBinding Gesture="Ctrl+V"
-                    Command="{Binding PasteComand}" />-->
-        <KeyBinding Gesture="Ctrl+Del"
-                    Command="{Binding DeleteNodeComand}" />
+                    Command="{Binding OpenCommand}"
+                    Gesture="Ctrl+O" />
+        <KeyBinding Command="{Binding DeleteNodeComand}"
+                    Gesture="Ctrl+Del" />
         <KeyBinding x:Name="closeKeyBinding"
                     Command="{Binding CloseCommand}"
                     Gesture="Ctrl+F4" />
@@ -47,8 +35,8 @@
                     Command="{Binding PrintPreviewCommand}"
                     Gesture="Ctrl+Shift+P" />
         <KeyBinding x:Name="aboutKeyBinding"
-                    Gesture="F1"
-                    Command="{Binding AboutCommand}" />
+                    Command="{Binding AboutCommand}"
+                    Gesture="F1" />
         <KeyBinding x:Name="nextDocumentKeyBinding"
                     Command="{Binding NextDocumentCommand}"
                     Gesture="Ctrl+Tab" />
@@ -58,54 +46,93 @@
         <!-- Main menu -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static Properties:Resources.FileMenu}">
-                <!--<MenuItem Command="{Binding NewCommand}" Header="{x:Static Properties:Resources.NewMenu}" Icon="{StaticResource NewImage}" InputGestureText="{x:Static Properties:Resources.ControlN}"/>-->
-                <MenuItem Header="New..." ItemsSource="{Binding DocumentTypes}" ItemTemplate="{StaticResource DocumentTypeTemplate}">
+                <MenuItem Command="{Binding NewDocumentCommand}"
+                          Header="{x:Static Properties:Resources.NewMenu}"
+                          Icon="{StaticResource NewImage}"
+                          InputGestureText="{x:Static Properties:Resources.ControlN}" />
+                <MenuItem Header="New..."
+                          ItemsSource="{Binding DocumentTypes}"
+                          ItemTemplate="{StaticResource DocumentTypeTemplate}">
                     <MenuItem.ItemContainerStyle>
                         <Style>
-                            <Setter Property="MenuItem.Command" Value="{Binding RelativeSource={RelativeSource AncestorType=Menu}, Path=DataContext.NewCommand}"/>
-                            <Setter Property="MenuItem.CommandParameter" Value="{Binding}" />
+                            <Setter Property="MenuItem.Command"
+                                    Value="{Binding RelativeSource={RelativeSource AncestorType=Menu}, Path=DataContext.NewXsdCacheBasedDocumentCommand}" />
+                            <Setter Property="MenuItem.CommandParameter"
+                                    Value="{Binding}" />
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
-                <MenuItem Command="{Binding OpenCommand}" Header="{x:Static Properties:Resources.OpenMenu}" Icon="{StaticResource OpenImage}" InputGestureText="{x:Static Properties:Resources.ControlO}"/>
-                <MenuItem x:Name="closeMenuItem" Command="{Binding CloseCommand}" Header="{x:Static Properties:Resources.CloseMenu}"/>
-                <MenuItem Command="{Binding SaveCommand}" Header="{x:Static Properties:Resources.SaveMenu}" Icon="{StaticResource SaveImage}" InputGestureText="{x:Static Properties:Resources.ControlS}"/>
-                <MenuItem Command="{Binding SaveAsCommand}" Header="{x:Static Properties:Resources.SaveAsMenu}"/>
-                <Separator/>
-                <MenuItem Command="{Binding PrintCommand}" Header="{x:Static Properties:Resources.PrintMenu}" Icon="{StaticResource PrintImage}" InputGestureText="{x:Static Properties:Resources.ControlP}"/>
-                <MenuItem Command="{Binding PrintPreviewCommand}" Header="{x:Static Properties:Resources.PrintPreviewMenu}" Icon="{StaticResource PrintPreviewImage}"/>
-                <Separator/>
-                <MenuItem Header="Recent..." ItemsSource="{Binding MRU}" IsEnabled="{Binding MRU.Count, Converter={x:Static Converters:ConvertIntegerToBool.Default}, ConverterParameter='0'}">
+                <MenuItem Command="{Binding OpenCommand}"
+                          Header="{x:Static Properties:Resources.OpenMenu}"
+                          Icon="{StaticResource OpenImage}"
+                          InputGestureText="{x:Static Properties:Resources.ControlO}" />
+                <MenuItem x:Name="closeMenuItem"
+                          Command="{Binding CloseCommand}"
+                          Header="{x:Static Properties:Resources.CloseMenu}" />
+                <MenuItem Command="{Binding SaveCommand}"
+                          Header="{x:Static Properties:Resources.SaveMenu}"
+                          Icon="{StaticResource SaveImage}"
+                          InputGestureText="{x:Static Properties:Resources.ControlS}" />
+                <MenuItem Command="{Binding SaveAsCommand}"
+                          Header="{x:Static Properties:Resources.SaveAsMenu}" />
+                <Separator />
+                <MenuItem Command="{Binding PrintCommand}"
+                          Header="{x:Static Properties:Resources.PrintMenu}"
+                          Icon="{StaticResource PrintImage}"
+                          InputGestureText="{x:Static Properties:Resources.ControlP}" />
+                <MenuItem Command="{Binding PrintPreviewCommand}"
+                          Header="{x:Static Properties:Resources.PrintPreviewMenu}"
+                          Icon="{StaticResource PrintPreviewImage}" />
+                <Separator />
+                <MenuItem Header="Recent..."
+                          IsEnabled="{Binding MRU.Count, Converter={x:Static Converters:ConvertIntegerToBool.Default}, ConverterParameter='0'}"
+                          ItemsSource="{Binding MRU}">
                     <MenuItem.ItemContainerStyle>
                         <Style>
-                            <Setter Property="MenuItem.Command" Value="{Binding RelativeSource={RelativeSource AncestorType=Menu}, Path=DataContext.OpenCommand}"/>
-                            <Setter Property="MenuItem.CommandParameter" Value="{Binding}" />
+                            <Setter Property="MenuItem.Command"
+                                    Value="{Binding RelativeSource={RelativeSource AncestorType=Menu}, Path=DataContext.OpenCommand}" />
+                            <Setter Property="MenuItem.CommandParameter"
+                                    Value="{Binding}" />
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
-                <Separator/>
-                <MenuItem Command="{Binding ExitCommand}" Header="{x:Static Properties:Resources.ExitMenu}"/>
+                <Separator />
+                <MenuItem Command="{Binding ExitCommand}"
+                          Header="{x:Static Properties:Resources.ExitMenu}" />
             </MenuItem>
             <MenuItem Header="{x:Static Properties:Resources.EditMenu}">
                 <!--<MenuItem Command="ApplicationCommands.Undo" Header="{x:Static Properties:Resources.UndoMenu}" Icon="{StaticResource UndoImage}"/>
                 <MenuItem Command="ApplicationCommands.Redo" Header="{x:Static Properties:Resources.RedoMenu}" Icon="{StaticResource RedoImage}"/>
                 <Separator/>-->
-                <MenuItem Command="ApplicationCommands.Cut" Header="{x:Static Properties:Resources.CutMenu}" Icon="{StaticResource CutImage}"/>
-                <MenuItem Command="ApplicationCommands.Copy" Header="{x:Static Properties:Resources.CopyMenu}" Icon="{StaticResource CopyImage}"/>
-                <MenuItem Command="ApplicationCommands.Paste" Header="{x:Static Properties:Resources.PasteMenu}" Icon="{StaticResource PasteImage}"/>
-                <MenuItem Command="EditingCommands.Delete" Header="{x:Static Properties:Resources.DeleteMenu}" Icon="{StaticResource DeleteImage}"/>
-                <Separator/>
-                <MenuItem Command="ApplicationCommands.SelectAll" Header="{x:Static Properties:Resources.SelectAllMenu}"/>
+                <MenuItem Command="ApplicationCommands.Cut"
+                          Header="{x:Static Properties:Resources.CutMenu}"
+                          Icon="{StaticResource CutImage}" />
+                <MenuItem Command="ApplicationCommands.Copy"
+                          Header="{x:Static Properties:Resources.CopyMenu}"
+                          Icon="{StaticResource CopyImage}" />
+                <MenuItem Command="ApplicationCommands.Paste"
+                          Header="{x:Static Properties:Resources.PasteMenu}"
+                          Icon="{StaticResource PasteImage}" />
+                <MenuItem Command="EditingCommands.Delete"
+                          Header="{x:Static Properties:Resources.DeleteMenu}"
+                          Icon="{StaticResource DeleteImage}" />
+                <Separator />
+                <MenuItem Command="ApplicationCommands.SelectAll"
+                          Header="{x:Static Properties:Resources.SelectAllMenu}" />
             </MenuItem>
             <MenuItem Header="{x:Static Properties:Resources.ToolsMenu}">
                 <MenuItem Header="{x:Static Properties:Resources.LanguageMenu}">
-                    <MenuItem Command="{Binding EnglishCommand}" Header="{x:Static Properties:Resources.EnglishMenu}" Icon="{StaticResource FlagEnImage}"/>
-                    <MenuItem Command="{Binding GermanCommand}" Header="{x:Static Properties:Resources.GermanMenu}" Icon="{StaticResource FlagDeImage}"/>
+                    <MenuItem Command="{Binding EnglishCommand}"
+                              Header="{x:Static Properties:Resources.EnglishMenu}"
+                              Icon="{StaticResource FlagEnImage}" />
+                    <MenuItem Command="{Binding GermanCommand}"
+                              Header="{x:Static Properties:Resources.GermanMenu}"
+                              Icon="{StaticResource FlagDeImage}" />
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="{x:Static Properties:Resources.HelpMenu}">
-                <MenuItem Command="{Binding AboutCommand}" 
-                          Header="{x:Static Properties:Resources.AboutMenu}"/>
+                <MenuItem Command="{Binding AboutCommand}"
+                          Header="{x:Static Properties:Resources.AboutMenu}" />
             </MenuItem>
         </Menu>
 
@@ -113,30 +140,51 @@
         <ToolBarTray DockPanel.Dock="Top"
                      FocusManager.IsFocusScope="True">
             <ToolBar>
-                <!--<Button Command="{Binding NewCommand}" Content="{StaticResource NewImage}" ToolTip="{x:Static Properties:Resources.New}"/>-->
-                <Button Command="{Binding OpenCommand}" Content="{StaticResource OpenImage}" ToolTip="{x:Static Properties:Resources.Open}"/>
-                <Button Command="{Binding SaveCommand}" Content="{StaticResource SaveImage}" ToolTip="{x:Static Properties:Resources.Save}"/>
-                <Button Command="{Binding PrintCommand}" Content="{StaticResource PrintImage}" ToolTip="{x:Static Properties:Resources.Print}"/>
-                <Button Command="{Binding PrintPreviewCommand}" Content="{StaticResource PrintPreviewImage}" ToolTip="{x:Static Properties:Resources.PrintPreview}"/>
-                <Separator/>
+                <Button Command="{Binding NewDocumentCommand}"
+                        Content="{StaticResource NewImage}"
+                        ToolTip="{x:Static Properties:Resources.New}" />
+                <Button Command="{Binding OpenCommand}"
+                        Content="{StaticResource OpenImage}"
+                        ToolTip="{x:Static Properties:Resources.Open}" />
+                <Button Command="{Binding SaveCommand}"
+                        Content="{StaticResource SaveImage}"
+                        ToolTip="{x:Static Properties:Resources.Save}" />
+                <Button Command="{Binding PrintCommand}"
+                        Content="{StaticResource PrintImage}"
+                        ToolTip="{x:Static Properties:Resources.Print}" />
+                <Button Command="{Binding PrintPreviewCommand}"
+                        Content="{StaticResource PrintPreviewImage}"
+                        ToolTip="{x:Static Properties:Resources.PrintPreview}" />
+                <Separator />
                 <!--<Button Command="{Binding ActiveDocumentView.DataContext.UndoCommand}" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
                 <Button Command="Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>-->
-                <Button Command="ApplicationCommands.Undo" Content="{StaticResource UndoImage}" ToolTip="{x:Static Properties:Resources.Undo}"/>
-                <Button Command="ApplicationCommands.Redo" Content="{StaticResource RedoImage}" ToolTip="{x:Static Properties:Resources.Redo}"/>
-                <Button Command="ApplicationCommands.Cut" Content="{StaticResource CutImage}" ToolTip="{x:Static Properties:Resources.Cut}"/>
-                <Button Command="ApplicationCommands.Copy" Content="{StaticResource CopyImage}" ToolTip="{x:Static Properties:Resources.Copy}"/>
-                <Button Command="ApplicationCommands.Paste" Content="{StaticResource PasteImage}" ToolTip="{x:Static Properties:Resources.Paste}"/>
+                <Button Command="ApplicationCommands.Undo"
+                        Content="{StaticResource UndoImage}"
+                        ToolTip="{x:Static Properties:Resources.Undo}" />
+                <Button Command="ApplicationCommands.Redo"
+                        Content="{StaticResource RedoImage}"
+                        ToolTip="{x:Static Properties:Resources.Redo}" />
+                <Button Command="ApplicationCommands.Cut"
+                        Content="{StaticResource CutImage}"
+                        ToolTip="{x:Static Properties:Resources.Cut}" />
+                <Button Command="ApplicationCommands.Copy"
+                        Content="{StaticResource CopyImage}"
+                        ToolTip="{x:Static Properties:Resources.Copy}" />
+                <Button Command="ApplicationCommands.Paste"
+                        Content="{StaticResource PasteImage}"
+                        ToolTip="{x:Static Properties:Resources.Paste}" />
                 <AdornerDecorator>
                     <TextBox x:Name="Search"
-                             Text="{Binding SearchTerm}"
-                             Helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"
-                             Width="150"
                              Margin="5 0"
-                             VerticalAlignment="Center">
+                             Width="150"
+                             Text="{Binding SearchTerm}"
+                             VerticalAlignment="Center"
+                             Helpers:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">
                         <Helpers:WatermarkService.Watermark>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/eXed;component/Resources/Images/find.png"
-                                       Height="16" Margin="5 0" />
+                                <Image Height="16"
+                                       Margin="5 0"
+                                       Source="/eXed;component/Resources/Images/find.png" />
                                 <!--<TextBlock Text="Search"
                                        FontStyle="Italic"
                                        VerticalAlignment="Center" />-->
@@ -155,7 +203,8 @@
                     SelectedItem="{Binding ActiveDocumentView}">
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">
-                    <Setter Property="Header" Value="{Binding Content.DataContext}"/>
+                    <Setter Property="Header"
+                            Value="{Binding Content.DataContext}" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
@@ -163,25 +212,30 @@
                                     <TextBlock VerticalAlignment="Center">
                                         <TextBlock.Text>
                                             <MultiBinding Converter="{x:Static Converters:FileNameConverter.Default}">
-                                                <Binding Path="Document.FileName"/>
-                                                <Binding Path="Document.Modified"/>
+                                                <Binding Path="Document.FileName" />
+                                                <Binding Path="Document.Modified" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
-                                    <Button Command="{Binding Command, ElementName=closeMenuItem}" Content="{StaticResource CloseSmallImage}"
-                                            Visibility="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}},
-                                                Converter={x:Static Converters:BoolToVisibilityConverter.Default}}"
-                                            Width="16" Height="16" BorderThickness="0"
-                                            MinWidth="0" MinHeight="0" Padding="0" Margin="7,0,0,0">
+                                    <Button Height="16"
+                                            Margin="7,0,0,0"
+                                            Padding="0"
+                                            Width="16"
+                                            BorderThickness="0"
+                                            Command="{Binding Command, ElementName=closeMenuItem}"
+                                            Content="{StaticResource CloseSmallImage}"
+                                            MinHeight="0"
+                                            MinWidth="0"
+                                            Visibility="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}},                                                 Converter={x:Static Converters:BoolToVisibilityConverter.Default}}">
                                         <Button.Template>
                                             <ControlTemplate TargetType="{x:Type Button}">
-                                                <ContentPresenter Margin="{TemplateBinding Control.Padding}" 
-                                                                  HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                                                                  VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                                                                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                                                <ContentPresenter Margin="{TemplateBinding Control.Padding}"
+                                                                  Content="{TemplateBinding ContentControl.Content}"
                                                                   ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                                                                  HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
                                                                   RecognizesAccessKey="True"
-                                                                  Content="{TemplateBinding ContentControl.Content}"/>
+                                                                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                                                                  VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" />
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
