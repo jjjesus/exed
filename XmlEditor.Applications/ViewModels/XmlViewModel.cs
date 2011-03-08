@@ -20,6 +20,9 @@ namespace XmlEditor.Applications.ViewModels
 {
     public class XmlViewModel : ViewModel<IXmlView>, ISearch
     {
+        private const int ErrorViewIndex = 0;
+        private const int XsltViewIndex = 0;
+        private const int SearchViewIndex = 2;
         private readonly MyXmlDocument document;
         private readonly XsltViewModel xsltViewModel;
         private readonly SearchViewModel searchViewModel;
@@ -37,7 +40,7 @@ namespace XmlEditor.Applications.ViewModels
         private TreeNode cutPasteNode;
         private ErrorMessage selectedError;
         private object selectedNode;
-        private object selectedTab;
+        private int selectedViewIndex;
 
         public XmlViewModel(CompositionContainer container, IXmlView view, MyXmlDocument document) : base(view) {
             this.document = document;
@@ -50,11 +53,17 @@ namespace XmlEditor.Applications.ViewModels
             searchViewModel.FoundNodeSelected += SearchViewModelFoundNodeSelected;
 
             document.Content.NodeChanged += DocumentChanged;
+
+            if (XmlModel.ErrorMessages != null) AddWeakEventListener(XmlModel.ErrorMessages, ErrorMessages_CollectionChanged);
         }
 
         ~XmlViewModel() {
             XmlModel.Document.NodeChanged -= DocumentChanged;
             searchViewModel.FoundNodeSelected -= SearchViewModelFoundNodeSelected;
+        }
+
+        private void ErrorMessages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            SelectedViewIndex = ErrorViewIndex;
         }
 
         private void SearchViewModelFoundNodeSelected(object sender, FoundNodeEventArgs e)
@@ -66,7 +75,7 @@ namespace XmlEditor.Applications.ViewModels
         {
             document.Modified = true;
             // When the XSLTView is loaded, transform when the document is changed.
-            if (((TabItem)selectedTab).Content == xsltViewModel.View) xsltViewModel.TransformDocument();           
+            if (SelectedViewIndex == XsltViewIndex) xsltViewModel.TransformDocument();           
         }
 
         public XmlModel XmlModel { get { return document.Content; } }
@@ -191,19 +200,19 @@ namespace XmlEditor.Applications.ViewModels
             }
         }
 
-        public object SelectedTab {
-            get { return selectedTab; } 
+        public int SelectedViewIndex {
+            get { return selectedViewIndex; }
             set {
-                if (selectedTab == value) return;
-                selectedTab = value;
-                RaisePropertyChanged("SelectedTab");
+                if (selectedViewIndex == value) return;
+                selectedViewIndex = value;
+                RaisePropertyChanged("SelectedViewIndex");
             }
         }
 
         public void Search(string searchTerm, bool nextTerm)
         {
             if (Document == null || Document.Content == null || Document.Content.Document == null || string.IsNullOrEmpty(searchTerm)) return;
-            SelectedTab = SearchView;
+            SelectedViewIndex = SearchViewIndex;
             searchViewModel.Search(searchTerm.ToLower(), selectedNode as XmlNode, nextTerm);
         }
 

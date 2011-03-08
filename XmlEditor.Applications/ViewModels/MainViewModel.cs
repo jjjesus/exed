@@ -34,13 +34,6 @@ namespace XmlEditor.Applications.ViewModels
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand printCommand;
         private readonly DelegateCommand printPreviewCommand;
-        private readonly DelegateCommand cutCommand;
-        private readonly DelegateCommand copyCommand;
-        private readonly DelegateCommand pasteCommand;
-        private readonly DelegateCommand nextSearchTermCommand;
-        private readonly DelegateCommand previousSearchTermCommand;
-        private readonly DelegateCommand undoCommand;
-        private readonly DelegateCommand redoCommand;
         private IDocument activeDocument;
         private object activeDocumentView;
         private ICommand exitCommand;
@@ -62,10 +55,6 @@ namespace XmlEditor.Applications.ViewModels
             nextDocumentCommand = new DelegateCommand(SetNextDocumentActive);
             printCommand = new DelegateCommand(PrintDocument, CanPrintDocument);
             printPreviewCommand = new DelegateCommand(PrintPreviewDocument, CanPrintDocument);
-            nextSearchTermCommand = new DelegateCommand(() => Search(true));
-            previousSearchTermCommand = new DelegateCommand(() => Search(false));
-            undoCommand = new DelegateCommand(Undo, CanUndo);
-            redoCommand = new DelegateCommand(Redo, CanRedo);
 
             AddWeakEventListener(documentManager, DocumentManagerPropertyChanged);
         }
@@ -77,10 +66,9 @@ namespace XmlEditor.Applications.ViewModels
         public object ActiveDocumentView {
             get { return activeDocumentView; }
             set {
-                if (activeDocumentView != value) {
-                    activeDocumentView = value;
-                    RaisePropertyChanged("ActiveDocumentView");
-                }
+                if (activeDocumentView == value) return;
+                activeDocumentView = value;
+                RaisePropertyChanged("ActiveDocumentView");
             }
         }
 
@@ -88,7 +76,6 @@ namespace XmlEditor.Applications.ViewModels
         public string SearchTerm {
             get { return searchTerm; } 
             set {
-                if (searchTerm == value) return;
                 searchTerm = value;
                 Search(true);
                 RaisePropertyChanged("SearchTerm");
@@ -106,14 +93,6 @@ namespace XmlEditor.Applications.ViewModels
         public ObservableCollection<string> MRU { get { return documentManager.MRU; } }
 
         //public ICommand UndoCommand { get { return undoCommand; } }
-
-        public ICommand UndoCommand {
-            get { return undoCommand; }
-        }
-
-        public ICommand RedoCommand {
-            get { return redoCommand; }
-        }
 
         public ICommand NewCommand {
             get { return newCommand; }
@@ -205,25 +184,6 @@ namespace XmlEditor.Applications.ViewModels
             UpdateCommands();
         }
 
-        private bool CanUndo() {
-            return true;// documentManager.ActiveDocument != null && documentManager.ActiveDocument.Modified;
-        }
-
-        private void Undo()
-        {
-            //documentManager.Save(documentManager.ActiveDocument);
-        }
-
-        private bool CanRedo()
-        {
-            return true;//documentManager.ActiveDocument != null && documentManager.ActiveDocument.Modified;
-        }
-
-        private void Redo()
-        {
-            documentManager.Save(documentManager.ActiveDocument);
-        }
-
         private bool CanSaveDocument()
         {
             return documentManager.ActiveDocument != null && documentManager.ActiveDocument.Modified;
@@ -288,8 +248,6 @@ namespace XmlEditor.Applications.ViewModels
             saveAsCommand.RaiseCanExecuteChanged();
             printCommand.RaiseCanExecuteChanged();
             printPreviewCommand.RaiseCanExecuteChanged();
-            undoCommand.RaiseCanExecuteChanged();
-            redoCommand.RaiseCanExecuteChanged();
         }
     }
 

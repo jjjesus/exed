@@ -553,15 +553,15 @@ namespace TreeListControl
         /// </summary>
         /// <param name="element">The element.</param>
         private static void AssignValuesToEmptyElements(XmlElement element) {
-            return;
-            foreach (XmlAttribute child in element.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
-            foreach (var child in element.ChildNodes) {
-                if (child is XmlElement) {
-                    var el = child as XmlElement;
-                    if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyElements(el);
-                    else if (el.FirstChild == null) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
-                }
-            }
+            //return;
+            //foreach (XmlAttribute child in element.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
+            //foreach (var child in element.ChildNodes) {
+            //    if (child is XmlElement) {
+            //        var el = child as XmlElement;
+            //        if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyElements(el);
+            //        else if (el.FirstChild == null) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
+            //    }
+            //}
         }
 
 
@@ -641,7 +641,7 @@ namespace TreeListControl
             var source = (XmlNode) (((XmlSchemaValidationException) e.Exception).SourceObject);
             if (source != null) {
                 error.IsXmlElement = source is XmlElement;
-                error.Name = source.Name.Equals("#text") && source.ParentNode != null ? source.ParentNode.Name + "\\" + source.Name : source.Name;
+                error.Name = GetNodeName(source);
                 error.Value = source.Value;
                 error.Tag = source;
             }
@@ -654,6 +654,26 @@ namespace TreeListControl
                     break;
             }
             ErrorMessages.Add(error);
+        }
+
+        private static string GetNodeName(XmlNode node)
+        {
+            if (node.Name.Equals("#text") && node.ParentNode != null) return node.ParentNode.Name + "\\" + node.Name;
+            if (node is XmlAttribute) return GetNodeName(node as XmlAttribute);
+            if (!(node is XmlElement)) return node.Name;
+            var friendlyName = Utils.GetXmlNodeName(node);
+            return (string.IsNullOrEmpty(friendlyName) ?
+                node.Name :
+                string.Format("{0} {1}", node.Name, friendlyName));
+        }
+
+        private static string GetNodeName(XmlAttribute attribute)
+        {
+            if (attribute.OwnerElement == null) return attribute.Name;
+            var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
+            return (string.IsNullOrEmpty(friendlyName) ?
+                string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) :
+                string.Format("{0} {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
         }
 
         #endregion Private Methods
