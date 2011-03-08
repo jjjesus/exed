@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutMenu" xml:space="preserve">
     <value>_About...</value>
@@ -140,6 +140,9 @@
   </data>
   <data name="ControlS" xml:space="preserve">
     <value>Ctrl+S</value>
+  </data>
+  <data name="ControlW" xml:space="preserve">
+    <value>Ctrl+W</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
@@ -180,8 +183,11 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="NewFromXsdMenu" xml:space="preserve">
+    <value>_New from XSD...</value>
+  </data>
   <data name="NewMenu" xml:space="preserve">
-    <value>_New</value>
+    <value>New</value>
   </data>
   <data name="NoMenu" xml:space="preserve">
     <value>_No</value>

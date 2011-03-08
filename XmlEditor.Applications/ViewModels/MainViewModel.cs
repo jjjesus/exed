@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
+using System.Linq;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using System.Windows;
@@ -170,14 +171,21 @@ namespace XmlEditor.Applications.ViewModels
             get { return nextDocumentCommand; }
         }
 
+        /// <summary>
+        /// Create a new XML document by opening an XSD.
+        /// </summary>
         public void NewDocument() {
-            documentManager.Open(string.Empty);
-            //var result = fileDialogService.ShowOpenFileDialog(new FileType("XSD files", ".xsd"));
-            //if (!result.IsValid) return;
-            //var dst = new DocumentSubType { Tag = result.FileName, Type = documentManager.DocumentTypes };
-            //NewXsdCacheBasedDocument(dst);
+            var result = fileDialogService.ShowOpenFileDialog(new FileType("XSD files", ".xsd"));
+            if (!result.IsValid) return;
+            var docType = (from d in documentManager.DocumentTypes where d is XmlDocumentType select d).FirstOrDefault();
+            if (docType == null) return;
+            documentManager.New(docType, result.FileName);
         }
 
+        /// <summary>
+        /// Create a new XML document by opening and XSD in the XsdCache folder.
+        /// </summary>
+        /// <param name="docSubType">Type of the doc sub.</param>
         private void NewXsdCacheBasedDocument(object docSubType) {
             var dst = (DocumentSubType) docSubType;
             if (dst == null || !documentManager.DocumentTypes.Contains(dst.Type)) return;

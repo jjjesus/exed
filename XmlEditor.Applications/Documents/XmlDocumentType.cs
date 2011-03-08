@@ -48,7 +48,7 @@ namespace XmlEditor.Applications.Documents
             }
         }
 
-        private static string CreateDescription(string xsd) { return Path.GetFileNameWithoutExtension(xsd).ToUpperFirstLetter() + " xml document"; }
+        private static string CreateDescription(string xsd) { return Path.GetFileNameWithoutExtension(xsd).ToUpperFirstLetter(); }
 
         public override bool CanNew() { return true; }
 
@@ -134,6 +134,11 @@ namespace XmlEditor.Applications.Documents
 
         }
 
+        /// <summary>
+        /// Create a new name of the file.
+        /// </summary>
+        /// <param name="xsd">The XSD.</param>
+        /// <returns></returns>
         protected string NewFileName(string xsd) {
             if (!string.IsNullOrEmpty(xsd)) xsd = CreateDescription(xsd) + " ";
             return string.Format(CultureInfo.CurrentCulture, "{0:yyyyMMdd} {1}{2}{3}", DateTime.Now, xsd, ++documentCount, FileExtension);

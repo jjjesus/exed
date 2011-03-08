@@ -1,5 +1,4 @@
 ToDo
-- Open an XSD to create a new file
 - Reload (when changed externally, either the file or the XSD)
 - Refactor MVVM setup
 - How to add a CDATA section? Based on the use of tags

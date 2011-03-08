@@ -56,7 +56,7 @@ namespace XmlEditor.Applications.ViewModels
 
             document.Content.NodeChanged += DocumentChanged;
 
-            if (XmlModel.ErrorMessages != null) AddWeakEventListener(XmlModel.ErrorMessages, ErrorMessages_CollectionChanged);
+            if (XmlModel.ErrorMessages != null) AddWeakEventListener(XmlModel.ErrorMessages, ErrorMessagesCollectionChanged);
         }
 
         ~XmlViewModel() {
@@ -64,7 +64,7 @@ namespace XmlEditor.Applications.ViewModels
             searchViewModel.FoundNodeSelected -= SearchViewModelFoundNodeSelected;
         }
 
-        private void ErrorMessages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+        private void ErrorMessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             SelectedViewIndex = ErrorViewIndex;
         }
 
@@ -116,7 +116,6 @@ namespace XmlEditor.Applications.ViewModels
                                                                                           XmlModel.CutNode(
                                                                                               node.Tag as XmlNode,
                                                                                               node.Parent.Tag as XmlNode);
-                                                                                          UpdateCommands();
                                                                                       },
                                                                                       node => node != null && node.Level > 0));
                 // do not allow to cut the xml version or the root element
@@ -199,6 +198,7 @@ namespace XmlEditor.Applications.ViewModels
             set {
                 selectedNode = value;
                 RaisePropertyChanged("SelectedNode");
+                UpdateCommands();
             }
         }
 
@@ -225,7 +225,7 @@ namespace XmlEditor.Applications.ViewModels
             pasteNodeCommand.RaiseCanExecuteChanged();
             deleteNodeCommand.RaiseCanExecuteChanged();
             copyNodeCommand.RaiseCanExecuteChanged();
-            insertNodeCommand2.RaiseCanExecuteChanged();
+            insertNodeCommand.RaiseCanExecuteChanged();
             insertCommentCommand.RaiseCanExecuteChanged();
         }
     }

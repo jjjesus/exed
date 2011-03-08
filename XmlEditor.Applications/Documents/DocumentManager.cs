@@ -101,8 +101,7 @@ namespace XmlEditor.Applications.Documents
                                 where d.CanOpen()
                                 select new FileType(d.Description, d.FileExtension);
                 if (!fileTypes.Any())
-                    throw new InvalidOperationException(
-                        "No DocumentType is registered that supports the Open operation.");
+                    throw new InvalidOperationException("No DocumentType is registered that supports the Open operation.");
 
                 var result = fileDialogService.ShowOpenFileDialog(fileTypes);
                 if (!result.IsValid) return null;

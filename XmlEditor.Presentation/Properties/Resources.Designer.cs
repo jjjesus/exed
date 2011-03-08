@@ -133,6 +133,15 @@ namespace XmlEditor.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ctrl+W.
+        /// </summary>
+        public static string ControlW {
+            get {
+                return ResourceManager.GetString("ControlW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string Copy {
@@ -250,7 +259,16 @@ namespace XmlEditor.Presentation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _New.
+        ///   Looks up a localized string similar to _New from XSD....
+        /// </summary>
+        public static string NewFromXsdMenu {
+            get {
+                return ResourceManager.GetString("NewFromXsdMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
         /// </summary>
         public static string NewMenu {
             get {

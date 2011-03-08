@@ -47,10 +47,10 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static Properties:Resources.FileMenu}">
                 <MenuItem Command="{Binding NewDocumentCommand}"
-                          Header="{x:Static Properties:Resources.NewMenu}"
+                          Header="{x:Static Properties:Resources.NewFromXsdMenu}"
                           Icon="{StaticResource NewImage}"
                           InputGestureText="{x:Static Properties:Resources.ControlN}" />
-                <MenuItem Header="New..."
+                <MenuItem Header="{x:Static Properties:Resources.NewMenu}"
                           ItemsSource="{Binding DocumentTypes}"
                           ItemTemplate="{StaticResource DocumentTypeTemplate}">
                     <MenuItem.ItemContainerStyle>
@@ -101,9 +101,9 @@
                           Header="{x:Static Properties:Resources.ExitMenu}" />
             </MenuItem>
             <MenuItem Header="{x:Static Properties:Resources.EditMenu}">
-                <!--<MenuItem Command="ApplicationCommands.Undo" Header="{x:Static Properties:Resources.UndoMenu}" Icon="{StaticResource UndoImage}"/>
+                <MenuItem Command="ApplicationCommands.Undo" Header="{x:Static Properties:Resources.UndoMenu}" Icon="{StaticResource UndoImage}"/>
                 <MenuItem Command="ApplicationCommands.Redo" Header="{x:Static Properties:Resources.RedoMenu}" Icon="{StaticResource RedoImage}"/>
-                <Separator/>-->
+                <Separator/>
                 <MenuItem Command="ApplicationCommands.Cut"
                           Header="{x:Static Properties:Resources.CutMenu}"
                           Icon="{StaticResource CutImage}" />
