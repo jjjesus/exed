@@ -208,7 +208,14 @@ namespace XmlEditor.Applications.ViewModels
         }
 
         private void UpdateCommands() {
-            //undoCommand
+            undoCommand.RaiseCanExecuteChanged();
+            redoCommand.RaiseCanExecuteChanged();
+            cutNodeCommand.RaiseCanExecuteChanged();
+            pasteNodeCommand.RaiseCanExecuteChanged();
+            deleteNodeCommand.RaiseCanExecuteChanged();
+            copyNodeCommand.RaiseCanExecuteChanged();
+            insertNodeCommand2.RaiseCanExecuteChanged();
+            insertCommentCommand.RaiseCanExecuteChanged();
         }
     }
 }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
 #endregion
@@ -55,6 +56,15 @@ namespace XmlEditor.Applications.Helpers
 
         public void Execute(object parameter) {
             execute((T) parameter);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CanExecuteChanged" /> event.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate", Justification = "This cannot be an event")]
+        public void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
 
         #endregion Public Methods
@@ -126,6 +136,15 @@ namespace XmlEditor.Applications.Helpers
 
         public void Execute(object parameter) {
             execute();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CanExecuteChanged" /> event.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate", Justification = "This cannot be an event")]
+        public void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
 
         #endregion Public Methods
