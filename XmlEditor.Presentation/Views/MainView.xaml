@@ -13,7 +13,7 @@
 
     <UserControl.InputBindings>
         <KeyBinding x:Name="newKeyBinding"
-                    Command="{Binding NewCommand}"
+                    Command="{Binding NewDocumentCommand}"
                     Gesture="Ctrl+N" />
         <KeyBinding x:Name="openKeyBinding"
                     Command="{Binding OpenCommand}"
@@ -46,14 +46,17 @@
         <!-- Main menu -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static Properties:Resources.FileMenu}">
-                <!--<MenuItem Command="{Binding NewCommand}" Header="{x:Static Properties:Resources.NewMenu}" Icon="{StaticResource NewImage}" InputGestureText="{x:Static Properties:Resources.ControlN}"/>-->
+                <MenuItem Command="{Binding NewDocumentCommand}"
+                          Header="{x:Static Properties:Resources.NewMenu}"
+                          Icon="{StaticResource NewImage}"
+                          InputGestureText="{x:Static Properties:Resources.ControlN}" />
                 <MenuItem Header="New..."
                           ItemsSource="{Binding DocumentTypes}"
                           ItemTemplate="{StaticResource DocumentTypeTemplate}">
                     <MenuItem.ItemContainerStyle>
                         <Style>
                             <Setter Property="MenuItem.Command"
-                                    Value="{Binding RelativeSource={RelativeSource AncestorType=Menu}, Path=DataContext.NewCommand}" />
+                                    Value="{Binding RelativeSource={RelativeSource AncestorType=Menu}, Path=DataContext.NewXsdCacheBasedDocumentCommand}" />
                             <Setter Property="MenuItem.CommandParameter"
                                     Value="{Binding}" />
                         </Style>
@@ -137,7 +140,9 @@
         <ToolBarTray DockPanel.Dock="Top"
                      FocusManager.IsFocusScope="True">
             <ToolBar>
-                <!--<Button Command="{Binding NewCommand}" Content="{StaticResource NewImage}" ToolTip="{x:Static Properties:Resources.New}"/>-->
+                <Button Command="{Binding NewDocumentCommand}"
+                        Content="{StaticResource NewImage}"
+                        ToolTip="{x:Static Properties:Resources.New}" />
                 <Button Command="{Binding OpenCommand}"
                         Content="{StaticResource OpenImage}"
                         ToolTip="{x:Static Properties:Resources.Open}" />

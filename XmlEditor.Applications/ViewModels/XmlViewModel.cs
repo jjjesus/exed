@@ -3,7 +3,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition.Hosting;
 using System.Waf.Applications;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using TreeListControl;
@@ -20,8 +19,11 @@ namespace XmlEditor.Applications.ViewModels
 {
     public class XmlViewModel : ViewModel<IXmlView>, ISearch
     {
+        /// <summary>
+        /// Hard-coded coupling between the tab index and the particular view
+        /// </summary>
         private const int ErrorViewIndex = 0;
-        private const int XsltViewIndex = 0;
+        private const int XsltViewIndex = 1;
         private const int SearchViewIndex = 2;
         private readonly MyXmlDocument document;
         private readonly XsltViewModel xsltViewModel;

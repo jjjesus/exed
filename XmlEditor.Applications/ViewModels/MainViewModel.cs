@@ -20,14 +20,17 @@ namespace XmlEditor.Applications.ViewModels
     [Export]
     public class MainViewModel : ViewModel<IMainView>
     {
-        private readonly DelegateCommand aboutCommand;
-        private readonly DelegateCommand closeCommand;
+        private readonly IMessageService messageService;
+        private readonly IFileDialogService fileDialogService;
         private readonly IDocumentManager documentManager;
         private readonly ObservableCollection<object> documentViews;
+
+        private readonly DelegateCommand aboutCommand;
+        private readonly DelegateCommand closeCommand;
         private readonly DelegateCommand englishCommand;
         private readonly DelegateCommand germanCommand;
-        private readonly IMessageService messageService;
-        private readonly DelegateCommand newCommand;
+        private readonly DelegateCommand newDocumentCommand;
+        private readonly DelegateCommand newXsdCacheBasedDocumentCommand;
         private readonly DelegateCommand nextDocumentCommand;
         private readonly DelegateCommand openCommand;
         private readonly DelegateCommand saveAsCommand;
@@ -39,12 +42,14 @@ namespace XmlEditor.Applications.ViewModels
         private ICommand exitCommand;
 
         [ImportingConstructor]
-        public MainViewModel(IMainView view, IDocumentManager documentManager, IMessageService messageService)
+        public MainViewModel(IMainView view, IDocumentManager documentManager, IMessageService messageService, IFileDialogService fileDialogService)
             : base(view) {
             this.documentManager = documentManager;
             this.messageService = messageService;
+            this.fileDialogService = fileDialogService;
             documentViews = new ObservableCollection<object>();
-            newCommand = new DelegateCommand(NewDocument);
+            newDocumentCommand = new DelegateCommand(NewDocument);
+            newXsdCacheBasedDocumentCommand = new DelegateCommand(NewXsdCacheBasedDocument);
             openCommand = new DelegateCommand(OpenDocument);
             closeCommand = new DelegateCommand(CloseDocument, CanCloseDocument);
             saveCommand = new DelegateCommand(SaveDocument, CanSaveDocument);
@@ -94,8 +99,12 @@ namespace XmlEditor.Applications.ViewModels
 
         //public ICommand UndoCommand { get { return undoCommand; } }
 
-        public ICommand NewCommand {
-            get { return newCommand; }
+        public ICommand NewDocumentCommand {
+            get { return newDocumentCommand; }
+        }
+
+        public ICommand NewXsdCacheBasedDocumentCommand {
+            get { return newXsdCacheBasedDocumentCommand; }
         }
 
         public ICommand OpenCommand {
@@ -161,12 +170,19 @@ namespace XmlEditor.Applications.ViewModels
             get { return nextDocumentCommand; }
         }
 
-        private void NewDocument(object docSubType) {
+        public void NewDocument() {
+            documentManager.Open(string.Empty);
+            //var result = fileDialogService.ShowOpenFileDialog(new FileType("XSD files", ".xsd"));
+            //if (!result.IsValid) return;
+            //var dst = new DocumentSubType { Tag = result.FileName, Type = documentManager.DocumentTypes };
+            //NewXsdCacheBasedDocument(dst);
+        }
+
+        private void NewXsdCacheBasedDocument(object docSubType) {
             var dst = (DocumentSubType) docSubType;
             if (dst == null || !documentManager.DocumentTypes.Contains(dst.Type)) return;
             documentManager.New(dst.Type, dst.Tag);
             UpdateCommands();
-            //documentManager.New(documentManager.DocumentTypes.First());
         }
 
         private void OpenDocument(object fileName) {
