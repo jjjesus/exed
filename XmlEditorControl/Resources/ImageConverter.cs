@@ -2,6 +2,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 using System.Xml;
 using TreeListControl.Tree;
@@ -30,7 +31,7 @@ namespace TreeListControl.Resources
                 if (item.Node.HasChildren) return OpenElementImage;
                 var el = (XmlElement) xmlNode;
                 if (el.HasAttributes) return ClosedElementImage;
-                if (el.HasChildNodes) foreach (XmlNode child in el.ChildNodes) if (!child.LocalName.StartsWith("#")) return ClosedElementImage;
+                if (el.HasChildNodes) if (el.ChildNodes.Cast<XmlNode>().Any(child => !child.LocalName.StartsWith("#"))) return ClosedElementImage;
                 return ElementImage;
             }
             if (xmlNode is XmlAttribute) return AttributeImage;

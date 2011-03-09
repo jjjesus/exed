@@ -1,7 +1,10 @@
 ToDo
-- Reload (when changed externally, either the file or the XSD)
-- Refactor MVVM setup
 - How to add a CDATA section? Based on the use of tags
+- Highlight line to make it easier to read the node-value pair
+- Reload (when changed externally, either the file or the XSD)
+- Search using XPath
+- Replace text
+- Drag and drop support
 - How can make navigation with the keyboard easier: arrows, enter, insert, delete?
 
 Bugs

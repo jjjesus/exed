@@ -76,6 +76,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WatermarkService.cs" />
+    <Compile Include="UserControls\GlassBall.xaml.cs">
+      <DependentUpon>GlassBall.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -106,6 +109,10 @@
     <Page Include="Resources\ImageResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\GlassBall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>

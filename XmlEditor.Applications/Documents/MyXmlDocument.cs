@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.IO;
 using TreeListControl;
 
 #endregion
@@ -10,7 +11,7 @@ namespace XmlEditor.Applications.Documents
     public class MyXmlDocument : Document
     {
         private readonly XmlModel content;
-
+        //private readonly FileSystemWatcher watcher;
         public MyXmlDocument(XmlDocumentType documentType) : this(documentType, new XmlModel()) { }
 
         public MyXmlDocument(XmlDocumentType documentType, string subType) : this(documentType, new XmlModel(subType)) {
@@ -18,15 +19,32 @@ namespace XmlEditor.Applications.Documents
             SubType = subType;
         }
 
-        public string SubType { get; set; }
-
         public MyXmlDocument(XmlDocumentType documentType, XmlModel content)
             : base(documentType) {
             this.content = content;
             if (content.SchemaLocation != null) SubType = content.SchemaLocation.AbsolutePath;
+            //var path = Path.GetDirectoryName(FileName);
+            //if (path == null) return;
+            //watcher = new FileSystemWatcher(path, "*.x*") { IncludeSubdirectories = false, NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.DirectoryName };
+            //watcher.Changed += FileChanged;
+            //watcher.Renamed += FileChanged;
+            //watcher.Deleted += FileDeleted;
         }
 
-        public XmlModel Content {
+        private void FileDeleted(object sender, FileSystemEventArgs e)
+        {
+            
+        }
+
+        private void FileChanged(object sender, FileSystemEventArgs e)
+        {
+            
+        }
+
+        public string SubType { get; set; }
+
+        public XmlModel Content
+        {
             get { return content; }
         }
 
