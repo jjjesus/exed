@@ -5,8 +5,7 @@
              xmlns:Resources="clr-namespace:TreeListControl.Resources;assembly=TreeListControl"
              xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl"
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
-             xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications"
-             xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers"
+             xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications" 
              xmlns:UserControls="clr-namespace:XmlEditor.Presentation.UserControls">
     <UserControl.Resources>
         <c:CommandReference x:Key="UndoCommandReference"
@@ -587,19 +586,23 @@
                               Command="{Binding InsertCommentCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <MenuItem Header="Delete"
+                              InputGestureText="Ctrl+Del"
                               Command="{Binding DeleteNodeCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <Separator />
                     <MenuItem Header="Cut"
                               x:Name="cut"
+                              InputGestureText="Ctrl+X"
                               Command="{Binding CutNodeCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <MenuItem Header="Copy"
                               x:Name="copy"
+                              InputGestureText="Ctrl+C"
                               Command="{Binding CopyNodeCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <MenuItem Header="Paste"
                               x:Name="paste"
+                              InputGestureText="Ctrl+V"
                               Command="{Binding PasteNodeCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                     <Separator />

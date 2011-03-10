@@ -643,7 +643,7 @@ namespace TreeListControl
                 error.IsXmlElement = source is XmlElement;
                 error.Name = GetNodeName(source);
                 error.Value = source.Value;
-                error.Tag = source;
+                error.Tag = (source is XmlAttribute) ? (source as XmlAttribute).OwnerElement : source;
             }
             switch (e.Severity) {
                 case XmlSeverityType.Error:
@@ -667,13 +667,8 @@ namespace TreeListControl
                 string.Format("{0} {1}", node.Name, friendlyName));
         }
 
-        private static string GetNodeName(XmlAttribute attribute)
-        {
-            if (attribute.OwnerElement == null) return attribute.Name;
-            var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
-            return (string.IsNullOrEmpty(friendlyName) ?
-                string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) :
-                string.Format("{0} {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
+        private static string GetNodeName(XmlAttribute attribute) {
+            return attribute.OwnerElement == null ? attribute.Name : attribute.OwnerElement.Name;
         }
 
         #endregion Private Methods
