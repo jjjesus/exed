@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Waf.Foundation;
 
 #endregion
@@ -17,7 +18,6 @@ namespace XmlEditor.Applications.Documents
 
             Description = description; 
             FileExtension = fileExtension;
-            //SubTypes = new List<DocumentSubType>();
         }
 
         #region IDocumentType Members
@@ -70,10 +70,10 @@ namespace XmlEditor.Applications.Documents
 
             SaveCore(document, fileName);
 
-            if (CanOpen()) {
-                document.FileName = fileName;
-                document.Modified = false;
-            }
+            if (!CanOpen()) return;
+            document.FileName = fileName;
+            document.Modified = false;
+            document.ModifiedOn = File.GetLastWriteTime(fileName);
         }
 
         public void Print(IDocument document) { PrintCore(document); }

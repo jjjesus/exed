@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.ComponentModel;
 
 #endregion
@@ -13,5 +14,7 @@ namespace XmlEditor.Applications.Documents
         string FileName { get; set; }
 
         bool Modified { get; set; }
+        
+        DateTime ModifiedOn { get; set; }
     }
 }
