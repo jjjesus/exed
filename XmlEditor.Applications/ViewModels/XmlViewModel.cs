@@ -225,8 +225,8 @@ namespace XmlEditor.Applications.ViewModels
             pasteNodeCommand.RaiseCanExecuteChanged();
             deleteNodeCommand.RaiseCanExecuteChanged();
             copyNodeCommand.RaiseCanExecuteChanged();
-            insertNodeCommand.RaiseCanExecuteChanged();
-            insertCommentCommand.RaiseCanExecuteChanged();
+            if (insertNodeCommand != null) insertNodeCommand.RaiseCanExecuteChanged();
+            if (insertNodeCommand != null) insertCommentCommand.RaiseCanExecuteChanged();
         }
     }
 }

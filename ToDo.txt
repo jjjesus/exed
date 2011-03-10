@@ -6,10 +6,13 @@ ToDo
 - Replace text
 - Drag and drop support
 - How can make navigation with the keyboard easier: arrows, enter, insert, delete?
+- Delete a node by pressing Delete
+- Provide feedback when the search doesn't return a value
 
 Bugs
 - Check undo functionality, e.g. when deleting an attribute, I need to undo twice before it reappears
-- When displaying the search window, and adding a new zone, an exception is raised (cannot reproduce this!)
+- When displaying the search window, and adding a new zone, an exception is raised (cannot reproduce this!).
+When opening a new UPInit, and performing a search, an exception is raised in XmlViewModel.UpdateCommands (one of the commands hasn't been initialised).
 - What to do with empty elements (that have a value).
 - How can I delete a node that shouldn't be there, i.e. an element that should have no value?
 

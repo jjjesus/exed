@@ -101,7 +101,7 @@ namespace XmlEditor.Applications.Documents
             using (var writer = XmlWriter.Create(tempFile, settings))
             {
                 document.Content.Document.WriteTo(writer);
-                writer.Close();
+                if (writer != null) writer.Close();
             }
 
             var doc = new FlowDocument{
