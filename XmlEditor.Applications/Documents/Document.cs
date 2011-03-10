@@ -12,6 +12,7 @@ namespace XmlEditor.Applications.Documents
         private readonly IDocumentType documentType;
         private string fileName;
         private bool modified;
+        private DateTime modifiedOn;
 
         protected Document(IDocumentType documentType) {
             if (documentType == null) throw new ArgumentNullException("documentType");
@@ -27,20 +28,27 @@ namespace XmlEditor.Applications.Documents
         public string FileName {
             get { return fileName; }
             set {
-                if (fileName != value) {
-                    fileName = value;
-                    RaisePropertyChanged("FileName");
-                }
+                if (fileName == value) return;
+                fileName = value;
+                RaisePropertyChanged("FileName");
             }
         }
 
         public bool Modified {
             get { return modified; }
             set {
-                if (modified != value) {
-                    modified = value;
-                    RaisePropertyChanged("Modified");
-                }
+                if (modified == value) return;
+                modified = value;
+                RaisePropertyChanged("Modified");
+            }
+        }
+
+        public DateTime ModifiedOn {
+            get { return modifiedOn; }
+            set {
+                if (modifiedOn == value) return;
+                modifiedOn = value;
+                RaisePropertyChanged("ModifiedOn");
             }
         }
 

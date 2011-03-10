@@ -668,6 +668,7 @@
                       Grid.ColumnSpan="1"
                       Height="10"
                       Width="Auto"
+                      IsTabStop="False"
                       ResizeBehavior="BasedOnAlignment"
                       ResizeDirection="Rows"
                       HorizontalAlignment="Stretch"
@@ -678,6 +679,7 @@
                    Grid.Row="2"
                    x:Name="alternativeViews">
             <TabControl DockPanel.Dock="Bottom"
+                        IsTabStop="False"
                         TabStripPlacement="Left">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
@@ -704,6 +706,7 @@
             </TabControl>
             <TabControl DockPanel.Dock="Top"
                         SelectedIndex="{Binding SelectedViewIndex}"
+                        IsTabStop="False"
                         TabStripPlacement="Left">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">

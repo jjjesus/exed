@@ -57,7 +57,10 @@ namespace XmlEditor.Applications.ViewModels
             };
             bw.RunWorkerCompleted += (s, e) => {
                                          var found = (List<FoundNode>) e.Result;
-                                         if (found == null) return;
+                                         if (found == null || found.Count == 0) {
+                                             foundNodes.Add(new FoundNode{Name = "No results found."});
+                                             return;
+                                         }
                                          foreach (var foundNode in found) foundNodes.Add(foundNode);
                                          if (foundNodes.Count <= 0) return;
                                          if (selectNextFoundNode)

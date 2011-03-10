@@ -29,7 +29,7 @@ namespace XmlEditor.Presentation.Views
                 if (uie == null) return;
                 uie.MoveFocus(e.KeyboardDevice.Modifiers == ModifierKeys.Shift
                                   ? new TraversalRequest(FocusNavigationDirection.Up)
-                                  : new TraversalRequest(FocusNavigationDirection.Down));
+                                  : new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
 
