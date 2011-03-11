@@ -79,31 +79,51 @@ namespace TreeListControl
 
         #endregion Constructors
 
+        /// <summary>
+        /// Retains a local copy of the clipboard that represents the cutPasteNode. 
+        /// When the clipboard text has changed, the cutPasteNode is recreated.
+        /// </summary>
         private string clipboard;
 
-        private XmlNode CutPasteNode {
-            get {
-                if (!Clipboard.ContainsText(TextDataFormat.Html)) return null;
-                if (!string.IsNullOrEmpty(clipboard) && clipboard.Equals(Clipboard.GetText(TextDataFormat.Html)) &&
-                    cutPasteNode != null) return cutPasteNode;
-                var fragment = document.CreateDocumentFragment();
-                try {
-                    fragment.InnerXml = clipboard = Clipboard.GetText(TextDataFormat.Html);
-                }
-                catch (XmlException e) {
-                    return null;
-                }
-                AddValueToNodes(fragment);
-                RemoveNamespaces(fragment);
-                return cutPasteNode = fragment.FirstChild;
+        /// <summary>
+        /// Sets the XML node from clipboard.
+        /// </summary>
+        private void SetXmlNodeFromClipboard() {
+            if (!Clipboard.ContainsText(TextDataFormat.Html)) {
+                cutPasteNode = null;
+                return;
             }
-            set { Clipboard.SetText(value.OuterXml, TextDataFormat.Html); }
+            if (!string.IsNullOrEmpty(clipboard) && clipboard.Equals(Clipboard.GetText(TextDataFormat.Html)) && cutPasteNode != null) return;
+            // Create new XmlNode from clipboard text
+            var fragment = document.CreateDocumentFragment();
+            try {
+                fragment.InnerXml = clipboard = Clipboard.GetText(TextDataFormat.Html);
+            }
+            catch (XmlException) {
+                cutPasteNode = null;
+                return;
+            }
+            AddValueToNodes(fragment);
+            RemoveNamespaces(fragment);
+            cutPasteNode = fragment.FirstChild;
+        }
+
+        /// <summary>
+        /// Copies the XML node to clipboard.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        private void CopyXmlNodeToClipboard(XmlNode node) {
+            cutPasteNode = node;
+            Clipboard.SetText(node.OuterXml, TextDataFormat.Html);
+            clipboard = Clipboard.GetText(TextDataFormat.Html);
         }
 
         #region ITreeModel Members
 
         public bool CanPaste(XmlElement node) {
-            if (node == null || CutPasteNode == null) return false;
+            if (node == null) return false;
+            SetXmlNodeFromClipboard();
+            if (cutPasteNode == null) return false;
             if (cutPasteNode is XmlComment) return true;
             var name = cutPasteNode.Name;
             if (string.IsNullOrEmpty(name)) return false;
@@ -113,7 +133,7 @@ namespace TreeListControl
             if (isAttribute) {
                 if (possibleChildren.OfType<XmlSchemaAttribute>().Any(child => name.Equals((child).Name))) return true;
             }
-            else if (isElement) if (possibleChildren.OfType<XmlSchemaElement>().Any(child => name.Equals((child).Name))) return true;
+            else if (isElement) if (possibleChildren.OfType<XmlSchemaElement>().Any(child => name.Equals(child.Name) || name.Equals(child.QualifiedName.Name))) return true;
             return false;
         }
 
@@ -136,17 +156,21 @@ namespace TreeListControl
         /// </summary>
         /// <param name="fragment">The fragment.</param>
         private static void RemoveNamespaces(XmlNode fragment) {
-            foreach (XmlNode child in fragment.ChildNodes)
-                if (child is XmlElement) {
-                    if ((child as XmlElement).HasAttributes)
-                        for (var i = child.Attributes.Count - 1; i >= 0; --i) {
-                            var att = child.Attributes[i];
-                            if (!string.IsNullOrEmpty(att.Value) && att.Name.Equals("xmlns")) child.Attributes.Remove(att);
-                        }
-                    RemoveNamespaces(child);
+            foreach (var child in fragment.ChildNodes.OfType<XmlElement>()) {
+                if (child.HasAttributes) {
+                    for (var i = child.Attributes.Count - 1; i >= 0; --i) {
+                        var att = child.Attributes[i];
+                        if (!string.IsNullOrEmpty(att.Value) && att.Name.Equals("xmlns")) child.Attributes.Remove(att);
+                    }
                 }
+                RemoveNamespaces(child);
+            }
         }
 
+        /// <summary>
+        /// Creates the XML document.
+        /// </summary>
+        /// <param name="xsdFile">The XSD file.</param>
         private void CreateXmlDocument(string xsdFile) {
             ErrorMessages.Clear();
             if (!File.Exists(xsdFile)) {
@@ -769,7 +793,8 @@ namespace TreeListControl
                     }
                     break;
                 case XmlNodeChangedAction.Insert:
-                    if (nce.Node is XmlAttribute) nce.NewParent.Attributes.Remove((XmlAttribute) nce.Node);
+                    if (nce.NewParent == null) break;
+                    if (nce.Node is XmlAttribute && nce.NewParent.Attributes != null) nce.NewParent.Attributes.Remove((XmlAttribute) nce.Node);
                     else nce.NewParent.RemoveChild(nce.Node);
                     break;
                 case XmlNodeChangedAction.Remove:
@@ -783,12 +808,13 @@ namespace TreeListControl
 
         public void CopyNode(XmlNode node) {
             if (node == null || (node is XmlElement && node.ParentNode == null)) return;
-            CutPasteNode = node.Clone();
+            CopyXmlNodeToClipboard(node);
+            //CopyXmlNodeToClipboard(node.Clone());
         }
 
         public void CutNode(XmlNode node, XmlNode parent) {
             if (node == null || (node is XmlElement && node.ParentNode == null)) return;
-            CutPasteNode = node;
+            CopyXmlNodeToClipboard(node);
             RemoveNode(node, parent);
         }
 

@@ -174,7 +174,7 @@ namespace XmlEditor.Applications.ViewModels
                        (pasteNodeCommand =
                         new RelayCommand<TreeNode>(node => XmlModel.PasteNode(node.Tag as XmlNode),
                                                    node =>
-                                                   cutPasteNode != null && node != null && node.Index != 0 &&
+                                                   cutPasteNode != null && node != null && //node.Index != 0 &&
                                                    node.Tag is XmlElement && XmlModel.CanPaste((XmlElement) node.Tag)));
             }
         }

@@ -23,8 +23,7 @@ namespace TreeListControl.Resources
         }
 
         // apply this extension to any generic IEnumerable object.
-        public static string ToString<T>(this IEnumerable<T> source, string separator)
-        {
+        public static string ToString<T>(this IEnumerable<T> source, string separator) where T : class {
             if (source == null) throw new ArgumentException("source can not be null.");
 
             if (string.IsNullOrEmpty(separator)) throw new ArgumentException("separator can not be null or empty.");
@@ -95,13 +94,13 @@ namespace TreeListControl.Resources
         public static string GetAnnotation(XmlSchemaObject elem) {
             try {
                 var annot = elem is XmlSchemaElement ?
-                    ((XmlSchemaElement) (elem)).ElementSchemaType as XmlSchemaAnnotated :
+                    ((XmlSchemaElement) (elem)).ElementSchemaType :
                     ((XmlSchemaAttribute) (elem)).AttributeSchemaType as XmlSchemaAnnotated;
                 if (annot != null && annot.Annotation != null && annot.Annotation.Items != null &&
                     annot.Annotation.Items.Count > 0) foreach (XmlSchemaDocumentation item in annot.Annotation.Items) if (item.Markup.Length > 0) return item.Markup[0].InnerText;
                 return string.Empty;
             }
-            catch(SystemException e) {
+            catch(SystemException) {
                 return string.Empty;
             }
         }
@@ -137,9 +136,9 @@ namespace TreeListControl.Resources
             var complex = (XmlSchemaComplexType)node.SchemaInfo.SchemaType;
             if (complex.ContentTypeParticle is XmlSchemaSequence)
                 GetChildElementsInXmlSchemaSequence(children, complex.ContentTypeParticle as XmlSchemaSequence);
-            if (complex.ContentTypeParticle is XmlSchemaAll)
-                foreach (XmlSchemaElement element in ((XmlSchemaAll)complex.ContentTypeParticle).Items)
-                    children.Add(element);
+            if (complex.ContentTypeParticle is XmlSchemaAll) children.AddRange(((XmlSchemaAll) complex.ContentTypeParticle).Items.Cast<XmlSchemaElement>());
+            //foreach (XmlSchemaElement element in ((XmlSchemaAll)complex.ContentTypeParticle).Items)
+                //    children.Add(element);
             return children;
         }
 
@@ -200,7 +199,7 @@ namespace TreeListControl.Resources
                 if (complex.ContentTypeParticle is XmlSchemaAll)
                     GetChildrenInXmlSchemaAll(node, (XmlSchemaAll)complex.ContentTypeParticle, children);
                 if (listSchemaChoices && complex.ContentTypeParticle is XmlSchemaChoice && (node.ChildNodes.Count == 0 ||
-                    (node.ChildNodes.Count == 1 && !(node.ChildNodes[0] is XmlElement)))) children.AddRange(((XmlSchemaChoice)complex.ContentTypeParticle).Items.Cast<XmlSchemaElement>().Cast<XmlSchemaObject>());
+                    (node.ChildNodes.Count == 1 && !(node.ChildNodes[0] is XmlElement)))) children.AddRange(((XmlSchemaChoice)complex.ContentTypeParticle).Items.Cast<XmlSchemaElement>());
             }
             return children;
         }
@@ -226,14 +225,14 @@ namespace TreeListControl.Resources
         {
             foreach (var element in xmlSchemaSequence.Items)
             {
-                if (element is XmlSchemaElement)
-                {
-                    var max = Math.Max((element as XmlSchemaElement).MaxOccurs, xmlSchemaSequence.MaxOccurs);
+                if (element is XmlSchemaElement) {
+                    var xmlSchemaElement = (element as XmlSchemaElement);
+                    var max = Math.Max(xmlSchemaElement.MaxOccurs, xmlSchemaSequence.MaxOccurs);
                     foreach (var child in node.ChildNodes)
                     {
                         if (!(child is XmlElement)) continue;
                         var existingElement = child as XmlElement;
-                        if (!existingElement.Name.Equals((element as XmlSchemaElement).QualifiedName.Name)) continue;
+                        if (!existingElement.Name.Equals(xmlSchemaElement.QualifiedName.Name)) continue;
                         if (--max > 0) continue;
                         break;
                     }
@@ -262,6 +261,7 @@ namespace TreeListControl.Resources
             var simple = (XmlSchemaSimpleType)node.SchemaInfo.SchemaType;
             // we are dealing with a special case, i.e. a reference to something else
             if (string.IsNullOrEmpty(simple.Name) || !simple.Name.ToLower().Contains("ref")) return null;
+            if (node.OwnerDocument == null) return null;
             var references = GetXmlNodesOfType(node.OwnerDocument.DocumentElement, GetReferencedName(simple));
             var referredNode = GetReferredNode(node);
             references.Remove(referredNode);
@@ -284,7 +284,7 @@ namespace TreeListControl.Resources
             {
                 foreach (XmlNode child in node.ChildNodes)
                 {
-                    if (child.SchemaInfo != null && child.SchemaInfo.SchemaType != null && child.SchemaInfo.SchemaType.Name != null &&
+                    if (child.SchemaInfo.SchemaType != null && child.SchemaInfo.SchemaType.Name != null &&
                         child.SchemaInfo.SchemaType.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase)) nodes.Add(child);
                     if (child.HasChildNodes) nodes.AddRange(GetXmlNodesOfType(child, typeName));
                 }
@@ -305,7 +305,7 @@ namespace TreeListControl.Resources
             {
                 foreach (XmlNode child in node.ChildNodes)
                 {
-                    if (child.SchemaInfo != null && child.SchemaInfo.SchemaType != null && child.SchemaInfo.SchemaType.Name != null &&
+                    if (child.SchemaInfo.SchemaType != null && child.SchemaInfo.SchemaType.Name != null &&
                         child.SchemaInfo.SchemaType.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase))
                         if (child.FirstChild != null && child.FirstChild.Value != null && child.FirstChild.Value.Equals(value))
                             return child;
@@ -317,37 +317,39 @@ namespace TreeListControl.Resources
             return null;
         }
 
-        /// <summary>
-        /// Find the XmlNode with a certain value
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="value"></param>
-        /// <returns>Returns the first node that contains the value. Should probably build a list using yield</returns>
-        private static XmlNode FindXmlNodesWithValue(XmlNode node, string value)
-        {
-            if (node != null)
-            {
-                value = value.ToLower();
-                if (node.Attributes != null) foreach (XmlAttribute attribute in node.Attributes) if (attribute.Value.ToLower().Contains(value)) return node;
-                foreach (XmlNode child in node.ChildNodes)
-                {
-                    if (child.FirstChild != null && child.FirstChild.Value != null && child.FirstChild.Value.ToLower().Contains(value)) return child;
-                    if (!child.HasChildNodes) continue;
-                    var found = FindXmlNodesWithValue(child, value);
-                    if (found != null) return found;
-                }
-            }
-            return null;
-        }
+        ///// <summary>
+        ///// Find the XmlNode with a certain value
+        ///// </summary>
+        ///// <param name="node"></param>
+        ///// <param name="value"></param>
+        ///// <returns>Returns the first node that contains the value. Should probably build a list using yield</returns>
+        //private static XmlNode FindXmlNodesWithValue(XmlNode node, string value)
+        //{
+        //    if (node != null)
+        //    {
+        //        value = value.ToLower();
+        //        if (node.Attributes != null) if (node.Attributes.Cast<XmlAttribute>().Any(attribute => attribute.Value.ToLower().Contains(value))) return node;
+        //        foreach (XmlNode child in node.ChildNodes)
+        //        {
+        //            if (child.FirstChild != null && child.FirstChild.Value != null && child.FirstChild.Value.ToLower().Contains(value)) return child;
+        //            if (!child.HasChildNodes) continue;
+        //            var found = FindXmlNodesWithValue(child, value);
+        //            if (found != null) return found;
+        //        }
+        //    }
+        //    return null;
+        //}
 
         /// <summary>
         /// Returns true when the node contains a name
         /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
+        /// <param name="node">The node.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified node has name; otherwise, <c>false</c>.
+        /// </returns>
         public static bool HasName(XmlNode node)
         {
-            return node.Name != null && node.Name.ToLower().Contains("name");
+            return node.Name.ToLower().Contains("name");
         }
 
         /// <summary>
@@ -737,6 +739,7 @@ namespace TreeListControl.Resources
 
         public static XmlNode GetElementFromValue(XmlNode node)
         {
+            if (node.OwnerDocument == null) return null;
             return node.OwnerDocument.DocumentElement == null ? null : GetElementFromValue(node.OwnerDocument.DocumentElement, node.FirstChild.Value);
         }
 
@@ -760,7 +763,7 @@ namespace TreeListControl.Resources
         /// <returns>node that contains this ID</returns>
         public static XmlNode GetReferredNode(XmlNode node)
         {
-            if (node == null || node.SchemaInfo == null || node.SchemaInfo.SchemaType == null) return null;
+            if (node == null || node.SchemaInfo.SchemaType == null || node.OwnerDocument == null) return null;
             return GetXmlNodeOfTypeWithValue(node.OwnerDocument.DocumentElement, GetReferencedName(node.SchemaInfo.SchemaType), node.FirstChild.Value);
         }
     }
