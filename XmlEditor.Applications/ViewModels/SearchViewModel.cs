@@ -135,7 +135,8 @@ namespace XmlEditor.Applications.ViewModels
                                    select new FoundNode { Name = GetNodeName(attribute), Value = attribute.Value, Tag = attribute });
                 }
                 // Check element or comment
-                if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm))) found.Add(new FoundNode { Name = GetNodeName(node), Value = node.Value, Tag = node });
+                if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm))) 
+                    found.Add(new FoundNode { Name = GetNodeName(node), Value = node.Value, Tag = node });
                 // Check children
                 if (node.HasChildNodes) found.AddRange(SearchNodes(node, worker, e));
                 // Check if we've already passed the selected node (used when finding the next or previous search hit)
@@ -145,6 +146,7 @@ namespace XmlEditor.Applications.ViewModels
         }
 
         private static string GetNodeName(XmlNode node) {
+            if ((node is XmlText || node is XmlComment || node is XmlCDataSection) && node.ParentNode != null) return string.Format("{0}\\{1}", node.ParentNode.Name, node.Name);
             if (!(node is XmlElement)) return node.Name;
             var friendlyName = Utils.GetXmlNodeName(node);
             return (string.IsNullOrEmpty(friendlyName) ?

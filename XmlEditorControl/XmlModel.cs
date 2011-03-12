@@ -211,8 +211,7 @@ namespace TreeListControl
             xmlnsXsi.Value = XmlSchema.InstanceNamespace;
             root.SetAttributeNode(xmlnsXsi);
             // Set XSD file
-            var xmlnsXsd = document.CreateAttribute("xsi", "noNamespaceSchemaLocation",
-                                                    "http://www.w3.org/2001/XMLSchema-instance");
+            var xmlnsXsd = document.CreateAttribute("xsi", "noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
             xmlnsXsd.Value = Path.GetFileName(xsdFile);
             root.SetAttributeNode(xmlnsXsd);
             RecursivelyInsertNodes(root);
@@ -452,6 +451,7 @@ namespace TreeListControl
                 var elem = child as XmlSchemaElement;
                 if (elem.MinOccurs > 0) InsertNodeRecursively(elem, newNode as XmlElement);
             }
+            Validate();
         }
 
         /*
@@ -578,14 +578,16 @@ namespace TreeListControl
         /// <param name="element">The element.</param>
         private static void AssignValuesToEmptyElements(XmlElement element) {
             //return;
-            //foreach (XmlAttribute child in element.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
-            //foreach (var child in element.ChildNodes) {
-            //    if (child is XmlElement) {
-            //        var el = child as XmlElement;
-            //        if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyElements(el);
-            //        else if (el.FirstChild == null) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
-            //    }
-            //}
+            foreach (XmlAttribute child in element.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
+            foreach (var child in element.ChildNodes)
+            {
+                if (child is XmlElement)
+                {
+                    var el = child as XmlElement;
+                    if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyElements(el);
+                    else if (el.FirstChild == null && el.OwnerDocument != null) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
+                }
+            }
         }
 
 
@@ -607,8 +609,8 @@ namespace TreeListControl
         }
 
         private static void RemoveNode(XmlNode node, XmlNode parent) {
-            if (node is XmlAttribute) parent.Attributes.Remove(node as XmlAttribute);
-            else node.ParentNode.RemoveChild(node);
+            if (node is XmlAttribute && parent.Attributes != null) parent.Attributes.Remove(node as XmlAttribute);
+            else if (node.ParentNode != null) node.ParentNode.RemoveChild(node);
         }
 
         /*
@@ -667,7 +669,9 @@ namespace TreeListControl
                 error.IsXmlElement = source is XmlElement;
                 error.Name = GetNodeName(source);
                 error.Value = source.Value;
-                error.Tag = (source is XmlAttribute) ? (source as XmlAttribute).OwnerElement : source;
+                error.Tag = source is XmlAttribute
+                                ? e.Message.Contains("http") ? source : (source as XmlAttribute).OwnerElement
+                                : source;
             }
             switch (e.Severity) {
                 case XmlSeverityType.Error:
@@ -764,7 +768,7 @@ namespace TreeListControl
                     else InsertElement(nce.Node, nce.NewParent);
                     break;
                 case XmlNodeChangedAction.Remove:
-                    if (nce.Node is XmlAttribute) nce.OldParent.Attributes.Remove((XmlAttribute) nce.Node);
+                    if (nce.Node is XmlAttribute && nce.OldParent.Attributes != null) nce.OldParent.Attributes.Remove((XmlAttribute)nce.Node);
                     else nce.OldParent.RemoveChild(nce.Node);
                     break;
             }

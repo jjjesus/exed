@@ -165,6 +165,11 @@ namespace TreeListControl.Resources
             else if (node is XmlSchemaAttribute)
             {
                 var attr = node as XmlSchemaAttribute;
+                //if (attr.AttributeType == Dat)
+                schemaType = attr.AttributeSchemaType;
+                if (schemaType.Datatype != null && 
+                    schemaType.Datatype.ValueType.FullName != null && 
+                    schemaType.Datatype.ValueType.FullName.Equals("System.DateTime")) return DateTime.Now.ToString("yyyy-MM-dd");
                 schemaType = attr.AttributeSchemaType.BaseXmlSchemaType;
             }
             if (schemaType is XmlSchemaSimpleType)

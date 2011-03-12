@@ -1,13 +1,13 @@
 ToDo
 - How can make navigation with the keyboard easier: arrows, enter, insert, delete?
-- Expand (*)/collapse all children
-- How to add a CDATA section? Based on the use of tags
+- How to add a CDATA section? Based on the use of tags?
 - Search using XPath
 - Replace text
 - Drag and drop support
 - Show a summary of errors and search results
 - Provide installer + documentation
 - Provide translator set
+- Expand (*)/collapse all children
 
 Bugs
 - Check undo functionality, e.g. when deleting an attribute, I need to undo twice before it reappears
