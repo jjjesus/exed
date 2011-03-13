@@ -65,5 +65,6 @@ namespace XmlEditor.Presentation.Views
         private void DeleteExecuted(object sender, ExecutedRoutedEventArgs e) { viewModel.Value.DeleteNodeCommand.Execute(xmlTree.SelectedItem); }
 
         private void DeleteCanExecute(object sender, CanExecuteRoutedEventArgs e) { e.CanExecute = viewModel.Value.DeleteNodeCommand.CanExecute(xmlTree.SelectedItem); }
+
     }
 }

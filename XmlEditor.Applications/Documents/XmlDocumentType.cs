@@ -155,7 +155,7 @@ namespace XmlEditor.Applications.Documents
                 if (string.IsNullOrEmpty(xsltPath)) xslt.Load("PrettyPrint.xslt", XsltSettings.TrustedXslt, new EmbeddedResourceResolver());
                 else xslt.Load(xsltPath, XsltSettings.TrustedXslt, new XmlUrlResolver());
             }
-            catch (SystemException e)
+            catch (SystemException)
             {
                 xsltPath = string.Empty;
                 LoadXsl();
@@ -178,7 +178,7 @@ namespace XmlEditor.Applications.Documents
                 xslt.Transform(document.Content.Document, null, stream);
                 webBrowser.NavigateToStream(stream);
             }
-            catch (SystemException e)
+            catch (SystemException)
             {
                 xslt = null;
                 xsltPath = string.Empty;

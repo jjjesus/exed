@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition.Hosting;
 using System.Waf.Applications;
@@ -54,13 +55,13 @@ namespace XmlEditor.Applications.ViewModels
             searchViewModel.Document = document;
             searchViewModel.FoundNodeSelected += SearchViewModelFoundNodeSelected;
 
-            document.Content.NodeChanged += DocumentChanged;
+            document.Content.NodeChanged += NodeChanged;
 
             if (XmlModel.ErrorMessages != null) AddWeakEventListener(XmlModel.ErrorMessages, ErrorMessagesCollectionChanged);
         }
 
         ~XmlViewModel() {
-            XmlModel.Document.NodeChanged -= DocumentChanged;
+            XmlModel.Document.NodeChanged -= NodeChanged;
             searchViewModel.FoundNodeSelected -= SearchViewModelFoundNodeSelected;
         }
 
@@ -73,11 +74,11 @@ namespace XmlEditor.Applications.ViewModels
             if (e.FoundNode != null) SelectedNode = e.FoundNode;
         }
 
-        private void DocumentChanged(object sender, XmlNodeChangedEventArgs e)
+        private void NodeChanged(object sender, XmlNodeChangedEventArgs e)
         {
             document.Modified = true;
             // When the XSLTView is loaded, transform when the document is changed.
-            if (SelectedViewIndex == XsltViewIndex) xsltViewModel.TransformDocument();           
+            if (SelectedViewIndex == XsltViewIndex) xsltViewModel.TransformDocument();
         }
 
         public XmlModel XmlModel { get { return document.Content; } }

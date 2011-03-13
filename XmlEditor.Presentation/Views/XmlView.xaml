@@ -410,7 +410,6 @@
                          Width="{Binding ElementName=dataColumn, Path=Width}"
                          Style="{StaticResource asd}"
                          IsVisibleChanged="EditableIsVisibleChanged">
-                    <!--Resources:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" doesn't work yet - creates new Visual Elements??? -->
                     <Binding Path="Data">
                         <Binding.ValidationRules>
                             <ExceptionValidationRule />
