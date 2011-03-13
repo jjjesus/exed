@@ -216,7 +216,7 @@ namespace XmlEditor.Applications.ViewModels
         {
             if (Document == null || Document.Content == null || Document.Content.Document == null || string.IsNullOrEmpty(searchTerm)) return;
             SelectedViewIndex = SearchViewIndex;
-            searchViewModel.Search(searchTerm.ToLower(), selectedNode as XmlNode, nextTerm);
+            searchViewModel.Search(searchTerm, selectedNode as XmlNode, nextTerm);
         }
 
         private void UpdateCommands() {

@@ -96,17 +96,34 @@ namespace XmlEditor.Applications.ViewModels
         public void Search(string searchTerm, XmlNode selectedNode, bool nextTerm)
         {
             if (Document == null || Document.Content == null || Document.Content.Document == null) return;
+            FoundNodes.Clear();
+            var xmlDocument = Document.Content.Document;
+            if (searchTerm.Contains("/"))
+            {
+                // Use XPath query
+                var mgr = new XmlNamespaceManager(xmlDocument.NameTable);
+                var namespaces = Utils.GetNamespaces(xmlDocument);
+                foreach (var ns in namespaces) mgr.AddNamespace(ns.Key, ns.Value);
+                //var searchUsingNamespace = searchTerm.Replace("/", "/p:");
+                var nodes = Document.Content.Document.SelectNodes(searchTerm, mgr);
+                if (nodes == null || nodes.Count == 0) {
+                    foundNodes.Add(new FoundNode { Name = "No results found." });
+                    return;
+                }
+                foreach (XmlNode node in nodes) FoundNodes.Add(new FoundNode { Name = GetNodeName(node), Value = GetNodeValue(node), Tag = node });
+                return;
+            }
+            // Use regular, plain text search
             mySelectedNode = selectedNode;
             selectNextFoundNode = nextTerm;
             if (bw.IsBusy) bw.CancelAsync();
-            mySearchTerm = searchTerm;
+            mySearchTerm = searchTerm.ToLower();
             indexOfSelectedNodeInFoundNodes = -1;
-            FoundNodes.Clear();
             while (bw.IsBusy) {
                 Thread.Sleep(50);
                 continue;
             }
-            bw.RunWorkerAsync(Document.Content.Document.DocumentElement);
+            bw.RunWorkerAsync(xmlDocument.DocumentElement);
         }
 
         /// <summary>
@@ -136,7 +153,7 @@ namespace XmlEditor.Applications.ViewModels
                 }
                 // Check element or comment
                 if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm))) 
-                    found.Add(new FoundNode { Name = GetNodeName(node), Value = node.Value, Tag = node });
+                    found.Add(new FoundNode { Name = GetNodeName(node), Value = GetNodeValue(node), Tag = node });
                 // Check children
                 if (node.HasChildNodes) found.AddRange(SearchNodes(node, worker, e));
                 // Check if we've already passed the selected node (used when finding the next or previous search hit)
@@ -145,13 +162,19 @@ namespace XmlEditor.Applications.ViewModels
             return found;
         }
 
+        private static string GetNodeValue(XmlNode node) {
+            if (!string.IsNullOrEmpty(node.Value)) return node.Value;
+            if (!string.IsNullOrEmpty(node.FirstChild.Value)) return node.FirstChild.Value;
+            return string.Empty;
+        }
+
         private static string GetNodeName(XmlNode node) {
             if ((node is XmlText || node is XmlComment || node is XmlCDataSection) && node.ParentNode != null) return string.Format("{0}\\{1}", node.ParentNode.Name, node.Name);
             if (!(node is XmlElement)) return node.Name;
             var friendlyName = Utils.GetXmlNodeName(node);
             return (string.IsNullOrEmpty(friendlyName) ?
                 node.Name :
-                string.Format("{0} {1}", node.Name, friendlyName));
+                string.Format("{0}: {1}", node.Name, friendlyName));
         }
 
         private static string GetNodeName(XmlAttribute attribute) {
@@ -159,7 +182,7 @@ namespace XmlEditor.Applications.ViewModels
             var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
             return (string.IsNullOrEmpty(friendlyName) ?  
                 string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) : 
-                string.Format("{0} {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
+                string.Format("{0}: {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
         }
 
         /// <summary>

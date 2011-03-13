@@ -771,5 +771,32 @@ namespace TreeListControl.Resources
             if (node == null || node.SchemaInfo.SchemaType == null || node.OwnerDocument == null) return null;
             return GetXmlNodeOfTypeWithValue(node.OwnerDocument.DocumentElement, GetReferencedName(node.SchemaInfo.SchemaType), node.FirstChild.Value);
         }
+
+        /// <summary>
+        /// Gets the namespaces, returned as a key value pair, where the key is the namespace prefix, and the value the namespace value.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetNamespaces(XmlDocument document) {
+            var namespaces = new Dictionary<string, string>();
+            var root = document.DocumentElement;
+            if (root == null || !root.HasAttributes) return namespaces;
+            var defaultNamespace = string.Empty;
+            foreach (XmlAttribute attribute in root.Attributes) {
+                if (attribute.Name.Equals("xmlns")) {
+                    defaultNamespace = attribute.Value;
+                    continue;
+                }
+                if (!attribute.Name.StartsWith("xmlns")) continue;
+                var key = attribute.Name.Remove(0, 6).Trim(); // remove the xmlns: bit of the namespace prefix
+                if (!namespaces.ContainsKey(key)) namespaces.Add(key, attribute.Value);
+            }
+            if (string.IsNullOrEmpty(defaultNamespace)) return namespaces;
+            if (!namespaces.ContainsKey("d")) namespaces.Add("d", defaultNamespace);
+            else if (!namespaces.ContainsKey("p")) namespaces.Add("p", defaultNamespace);
+            else if (!namespaces.ContainsKey("e")) namespaces.Add("e", defaultNamespace);
+            else if (!namespaces.ContainsKey("z")) namespaces.Add("z", defaultNamespace);
+            return namespaces;
+        }
     }
 }

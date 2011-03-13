@@ -550,7 +550,7 @@ namespace TreeListControl
                     reader = XmlReader.Create(filename, settings);
                     document = new XmlDocument();
                     document.Load(reader);
-                    AssignValuesToEmptyElements(document.DocumentElement);
+                    AssignValuesToEmptyNodes(document.DocumentElement);
                     Validate();
                     document.NodeChanged += DocumentNodeChanged;
                     document.NodeInserted += DocumentNodeChanged;
@@ -576,17 +576,20 @@ namespace TreeListControl
         /// so binding to FirstChild.Value raises an exception in XAML (so the application doesn't crash, but we still cannot set a value).
         /// </summary>
         /// <param name="element">The element.</param>
-        private static void AssignValuesToEmptyElements(XmlElement element) {
+        /// <remarks>
+        /// This is not so trivial: on the one hand, if an element is empty, I cannot bind to it.
+        /// On the other hand, if I set elements that (can) have children to a value, I get a validation error.
+        /// Therefore, only set those elements that are empty, and do not or cannot have children.
+        /// </remarks>
+        private static void AssignValuesToEmptyNodes(XmlElement element) {
             //return;
             foreach (XmlAttribute child in element.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
             foreach (var child in element.ChildNodes)
             {
-                if (child is XmlElement)
-                {
-                    var el = child as XmlElement;
-                    if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyElements(el);
-                    else if (el.FirstChild == null && el.OwnerDocument != null) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
-                }
+                if (!(child is XmlElement)) continue;
+                var el = child as XmlElement;
+                if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyNodes(el);
+                else if (el.FirstChild == null && el.OwnerDocument != null && Utils.GetChildElements(el).Count == 0) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
             }
         }
 
