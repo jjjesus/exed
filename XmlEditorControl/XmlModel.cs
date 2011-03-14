@@ -670,8 +670,8 @@ namespace TreeListControl
             var source = (XmlNode) (((XmlSchemaValidationException) e.Exception).SourceObject);
             if (source != null) {
                 error.IsXmlElement = source is XmlElement;
-                error.Name = GetNodeName(source);
-                error.Value = source.Value;
+                error.Name = Utils.GetNodeName(source);
+                error.Value = Utils.GetNodeValue(source);
                 error.Tag = source is XmlAttribute
                                 ? e.Message.Contains("http") ? source : (source as XmlAttribute).OwnerElement
                                 : source;
@@ -685,21 +685,6 @@ namespace TreeListControl
                     break;
             }
             ErrorMessages.Add(error);
-        }
-
-        private static string GetNodeName(XmlNode node)
-        {
-            if (node.Name.Equals("#text") && node.ParentNode != null) return node.ParentNode.Name + "\\" + node.Name;
-            if (node is XmlAttribute) return GetNodeName(node as XmlAttribute);
-            if (!(node is XmlElement)) return node.Name;
-            var friendlyName = Utils.GetXmlNodeName(node);
-            return (string.IsNullOrEmpty(friendlyName) ?
-                node.Name :
-                string.Format("{0} {1}", node.Name, friendlyName));
-        }
-
-        private static string GetNodeName(XmlAttribute attribute) {
-            return attribute.OwnerElement == null ? attribute.Name : attribute.OwnerElement.Name;
         }
 
         #endregion Private Methods

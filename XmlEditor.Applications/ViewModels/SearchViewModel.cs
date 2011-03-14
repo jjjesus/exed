@@ -98,19 +98,8 @@ namespace XmlEditor.Applications.ViewModels
             if (Document == null || Document.Content == null || Document.Content.Document == null) return;
             FoundNodes.Clear();
             var xmlDocument = Document.Content.Document;
-            if (searchTerm.Contains("/"))
-            {
-                // Use XPath query
-                var mgr = new XmlNamespaceManager(xmlDocument.NameTable);
-                var namespaces = Utils.GetNamespaces(xmlDocument);
-                foreach (var ns in namespaces) mgr.AddNamespace(ns.Key, ns.Value);
-                //var searchUsingNamespace = searchTerm.Replace("/", "/p:");
-                var nodes = Document.Content.Document.SelectNodes(searchTerm, mgr);
-                if (nodes == null || nodes.Count == 0) {
-                    foundNodes.Add(new FoundNode { Name = "No results found." });
-                    return;
-                }
-                foreach (XmlNode node in nodes) FoundNodes.Add(new FoundNode { Name = GetNodeName(node), Value = GetNodeValue(node), Tag = node });
+            if (searchTerm.Contains("/")) {
+                XPathQuery(searchTerm, xmlDocument);
                 return;
             }
             // Use regular, plain text search
@@ -124,6 +113,35 @@ namespace XmlEditor.Applications.ViewModels
                 continue;
             }
             bw.RunWorkerAsync(xmlDocument.DocumentElement);
+        }
+
+        /// <summary>
+        /// Search using an XPath query.
+        /// </summary>
+        /// <param name="searchTerm">The search term.</param>
+        /// <param name="xmlDocument">The XML document.</param>
+        private void XPathQuery(string searchTerm, XmlDocument xmlDocument) {
+            var mgr = new XmlNamespaceManager(xmlDocument.NameTable);
+            var namespaces = Utils.GetNamespaces(xmlDocument);
+            foreach (var ns in namespaces) mgr.AddNamespace(ns.Key, ns.Value);
+            //var searchUsingNamespace = searchTerm.Replace("/", "/p:");
+            var nodes = Document.Content.Document.SelectNodes(searchTerm, mgr);
+            if (nodes == null || nodes.Count == 0) {
+                var noResults = new FoundNode {Name = "No results found."};
+                foundNodes.Add(noResults);
+                if (namespaces.Count > 0) {
+                    noResults.Value = "When performing an XPath query, please use a namespace prefix.";
+                    if (xmlDocument.DocumentElement != null) 
+                        foundNodes.Add(new FoundNode { Name = "For example", Value = string.Format("/{0}:{1}", namespaces.Last().Key, xmlDocument.DocumentElement.Name) });
+                    foundNodes.Add(new FoundNode());
+                    foundNodes.Add(new FoundNode { Name = "Prefix", Value = "Namespace" });
+                    foreach (var ns in namespaces) foundNodes.Add(new FoundNode {Name = ns.Key, Value = ns.Value});
+                    foundNodes.Last().Name += " (default)";
+                }
+                return;
+            }
+            foreach (XmlNode node in nodes)
+                FoundNodes.Add(new FoundNode { Name = Utils.GetNodeName(node), Value = Utils.GetNodeValue(node), Tag = node });
         }
 
         /// <summary>
@@ -149,40 +167,17 @@ namespace XmlEditor.Applications.ViewModels
                     var node1 = node;
                     found.AddRange(from XmlAttribute attribute in node.Attributes
                                    where attribute.Name.ToLower().Contains(mySearchTerm) || (node1.Value != null && node1.Value.ToLower().Contains(mySearchTerm))
-                                   select new FoundNode { Name = GetNodeName(attribute), Value = attribute.Value, Tag = attribute });
+                                   select new FoundNode { Name = Utils.GetNodeName(attribute), Value = attribute.Value, Tag = attribute });
                 }
                 // Check element or comment
-                if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm))) 
-                    found.Add(new FoundNode { Name = GetNodeName(node), Value = GetNodeValue(node), Tag = node });
+                if (node.Name.ToLower().Contains(mySearchTerm) || (node.Value != null && node.Value.ToLower().Contains(mySearchTerm)))
+                    found.Add(new FoundNode { Name = Utils.GetNodeName(node), Value = Utils.GetNodeValue(node), Tag = node });
                 // Check children
                 if (node.HasChildNodes) found.AddRange(SearchNodes(node, worker, e));
                 // Check if we've already passed the selected node (used when finding the next or previous search hit)
                 if (node == mySelectedNode) indexOfSelectedNodeInFoundNodes = found.Count;
             }
             return found;
-        }
-
-        private static string GetNodeValue(XmlNode node) {
-            if (!string.IsNullOrEmpty(node.Value)) return node.Value;
-            if (!string.IsNullOrEmpty(node.FirstChild.Value)) return node.FirstChild.Value;
-            return string.Empty;
-        }
-
-        private static string GetNodeName(XmlNode node) {
-            if ((node is XmlText || node is XmlComment || node is XmlCDataSection) && node.ParentNode != null) return string.Format("{0}\\{1}", node.ParentNode.Name, node.Name);
-            if (!(node is XmlElement)) return node.Name;
-            var friendlyName = Utils.GetXmlNodeName(node);
-            return (string.IsNullOrEmpty(friendlyName) ?
-                node.Name :
-                string.Format("{0}: {1}", node.Name, friendlyName));
-        }
-
-        private static string GetNodeName(XmlAttribute attribute) {
-            if (attribute.OwnerElement == null) return attribute.Name;
-            var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
-            return (string.IsNullOrEmpty(friendlyName) ?  
-                string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) : 
-                string.Format("{0}: {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
         }
 
         /// <summary>

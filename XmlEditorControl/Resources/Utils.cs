@@ -762,6 +762,49 @@ namespace TreeListControl.Resources
         }
 
         /// <summary>
+        /// Gets the node value.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
+        public static string GetNodeValue(XmlNode node)
+        {
+            if (node == null) return string.Empty;
+            if (!string.IsNullOrEmpty(node.Value)) return node.Value;
+            if (node.FirstChild != null && !string.IsNullOrEmpty(node.FirstChild.Value)) return node.FirstChild.Value;
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the name of the node.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <returns></returns>
+        public static string GetNodeName(XmlAttribute attribute)
+        {
+            if (attribute.OwnerElement == null) return attribute.Name;
+            var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
+            return (string.IsNullOrEmpty(friendlyName) ?
+                string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) :
+                string.Format("{0}: {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
+        }
+
+        /// <summary>
+        /// Gets the name of the node.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
+        public static string GetNodeName(XmlNode node)
+        {
+            if ((node is XmlText || node is XmlComment || node is XmlCDataSection) && node.ParentNode != null) return string.Format("{0}\\{1}", node.ParentNode.Name, node.Name);
+            if (node is XmlAttribute) return Utils.GetNodeName(node as XmlAttribute);
+            if (!(node is XmlElement)) return node.Name;
+            var friendlyName = Utils.GetXmlNodeName(node);
+            return (string.IsNullOrEmpty(friendlyName) ?
+                node.Name :
+                string.Format("{0} {1}", node.Name, friendlyName));
+        }
+
+        /// <summary>
         /// Based on a unique user ID, find the node that owns this ID
         /// </summary>
         /// <param name="node">Current node</param>
