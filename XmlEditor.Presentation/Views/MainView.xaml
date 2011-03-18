@@ -40,6 +40,14 @@
         <KeyBinding x:Name="nextDocumentKeyBinding"
                     Command="{Binding NextDocumentCommand}"
                     Gesture="Ctrl+Tab" />
+
+        <KeyBinding Gesture="F3"
+                    Command="Search"
+                    CommandTarget="{Binding ElementName=Documents, Path=SelectedItem}"/>
+        <KeyBinding Gesture="Shift+F3"
+                    Command="BrowseBack"
+                    CommandTarget="{Binding ElementName=Documents, Path=SelectedItem}"/>
+
     </UserControl.InputBindings>
 
     <DockPanel FocusManager.IsFocusScope="True">

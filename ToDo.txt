@@ -1,18 +1,18 @@
 ToDo
-- How can make navigation with the keyboard easier: arrows, enter, insert, delete?
-- Search using XPath
 - Replace text
 - Drag and drop support
 - Show a summary of errors and search results
 - Provide installer + documentation
 - Provide translator set
 - Expand (*)/collapse all children
+- Manual reload
+- CodeWindow with auto generated C# or VB code, and, using regex, replacing arrays with generic List, ObservableCollection or BindableCollection.
+- How can make navigation with the keyboard easier: arrows, enter, insert, delete?
 
 Bugs
 - Check undo functionality, e.g. when deleting an attribute, I need to undo twice before it reappears
-- What to do with empty elements (that have a value).
-- How can I delete a node that shouldn't be there, i.e. an element that should have no value?
-- When searching for WikiText (CData), no value is returned.
+- What to do with empty elements (that have a value). --> Delete them? 
+- When using XPath search, no node is selected
 
 For later
 - XsltView doesn't scale

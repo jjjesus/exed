@@ -20,6 +20,10 @@
                             Command="{Binding CopyNodeCommand}" />
         <c:CommandReference x:Key="DeleteNodeCommandReference"
                             Command="{Binding DeleteNodeCommand}" />
+        <c:CommandReference x:Key="SearchNextCommandReference"
+                            Command="{Binding SearchNextNodeCommand}" />
+        <c:CommandReference x:Key="SearchPreviousCommandReference"
+                            Command="{Binding SearchPreviousNodeCommand}" />
         <!--Round tab-->
         <ControlTemplate x:Key="RoundTab"
                          TargetType="{x:Type TabItem}">
@@ -521,6 +525,14 @@
                     Modifiers="Ctrl"
                     CommandParameter="{Binding ElementName=xmlTree, Path=SelectedItem}"
                     Command="{StaticResource DeleteNodeCommandReference}" />
+
+        <KeyBinding Gesture="F3"
+                    Command="Search"
+                    CommandTarget="{Binding ElementName=SearchResults, Path=Content}" />
+        <KeyBinding Gesture="Shift+F3"
+                    Command="BrowseBack"
+                    CommandTarget="{Binding ElementName=SearchResults, Path=Content}" />
+
     </UserControl.InputBindings>
 
     <!-- The XML view and custom panels -->

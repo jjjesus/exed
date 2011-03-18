@@ -7,6 +7,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Threading;
 using System.Waf.Applications;
+using System.Windows.Input;
 using System.Xml;
 using TreeListControl.Resources;
 using TreeListControl.Tree;
@@ -28,6 +29,9 @@ namespace XmlEditor.Applications.ViewModels
     public class SearchViewModel : ViewModel<ISearchView>
     {
         public event ChangedEventHandler FoundNodeSelected;
+
+        private readonly CommandBindingCollection commandBindings = new CommandBindingCollection();
+        public CommandBindingCollection CommandBindings { get { return commandBindings; } }
 
         /// <summary>
         /// Invokes the found node selected.
@@ -73,6 +77,13 @@ namespace XmlEditor.Applications.ViewModels
                                                                      : foundNodes.Last();
                                      };
 
+            var searchCommandBinding = new CommandBinding(NavigationCommands.Search, SearchExecuted, SearchCanExecuted);
+            CommandManager.RegisterClassCommandBinding(typeof(SearchViewModel), searchCommandBinding);
+            CommandBindings.Add(searchCommandBinding);
+
+            var searchPreviousCommandBinding = new CommandBinding(NavigationCommands.BrowseBack, SearchPreviousExecuted, SearchCanExecuted);
+            CommandManager.RegisterClassCommandBinding(typeof(SearchViewModel), searchPreviousCommandBinding);
+            CommandBindings.Add(searchPreviousCommandBinding);
         }
 
         /// <summary>
@@ -194,6 +205,33 @@ namespace XmlEditor.Applications.ViewModels
                 if (selectedFoundNode == null) return;
                 InvokeFoundNodeSelected(new FoundNodeEventArgs(selectedFoundNode.Tag as XmlNode));
             }
+        }
+
+        /// <summary>
+        /// Go to next instance.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.ExecutedRoutedEventArgs"/> instance containing the event data.</param>
+        public void SearchExecuted(object sender, ExecutedRoutedEventArgs e) {
+            var index = foundNodes.IndexOf(selectedFoundNode) + 1;
+            if (index >= foundNodes.Count) index = 0;
+            SelectedFoundNode = foundNodes[index];
+            e.Handled = true;
+        }
+        
+        public void SearchCanExecuted(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = (foundNodes != null && foundNodes.Count > 1);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Go to previouses instance.
+        /// </summary>
+        public void SearchPreviousExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = foundNodes.IndexOf(selectedFoundNode) - 1;
+            if (index < 0) index = foundNodes.Count - 1;
+            SelectedFoundNode = foundNodes[index];
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition.Hosting;
 using System.Waf.Applications;

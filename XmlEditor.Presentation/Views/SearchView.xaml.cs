@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
+using System.Windows.Controls;
 using XmlEditor.Applications.Views;
 
 namespace XmlEditor.Presentation.Views
@@ -12,6 +14,10 @@ namespace XmlEditor.Presentation.Views
         public SearchView()
         {
             InitializeComponent();
+        }
+
+        private void ListViewSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (FoundNodes.SelectedItem != null) FoundNodes.ScrollIntoView(FoundNodes.SelectedItem);
         }
     }
 }

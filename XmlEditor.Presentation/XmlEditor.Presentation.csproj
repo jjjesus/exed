@@ -68,6 +68,7 @@
     <Compile Include="Converters\ConvertNothing.cs" />
     <Compile Include="Converters\FileNameConverter.cs" />
     <None Include="Helpers\CommandAction.cs" />
+    <Compile Include="Helpers\AttachedProperties.cs" />
     <Compile Include="Helpers\InputBindingsManager.cs" />
     <Compile Include="Helpers\WindowsSettings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
