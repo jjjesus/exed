@@ -6,7 +6,7 @@
              xmlns:Tree="clr-namespace:TreeListControl.Tree;assembly=TreeListControl"
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
              xmlns:c="clr-namespace:XmlEditor.Applications.Helpers;assembly=XmlEditor.Applications" 
-             xmlns:UserControls="clr-namespace:XmlEditor.Presentation.UserControls">
+             xmlns:UserControls="clr-namespace:XmlEditor.Presentation.UserControls" xmlns:ViewModels="clr-namespace:XmlEditor.Applications.ViewModels;assembly=XmlEditor.Applications">
     <UserControl.Resources>
         <c:CommandReference x:Key="UndoCommandReference"
                             Command="{Binding UndoCommand}" />
@@ -532,7 +532,6 @@
         <KeyBinding Gesture="Shift+F3"
                     Command="BrowseBack"
                     CommandTarget="{Binding ElementName=SearchResults, Path=Content}" />
-
     </UserControl.InputBindings>
 
     <!-- The XML view and custom panels -->

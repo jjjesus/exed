@@ -77,9 +77,14 @@ namespace XmlEditor.Applications.ViewModels
                                                                      : foundNodes.Last();
                                      };
 
+
             var searchCommandBinding = new CommandBinding(NavigationCommands.Search, SearchExecuted, SearchCanExecuted);
             CommandManager.RegisterClassCommandBinding(typeof(SearchViewModel), searchCommandBinding);
             CommandBindings.Add(searchCommandBinding);
+
+            var searchCommandBinding2 = new CommandBinding(MySearchCommand, SearchExecuted, SearchCanExecuted);
+            CommandManager.RegisterClassCommandBinding(typeof(SearchViewModel), searchCommandBinding2);
+            CommandBindings.Add(searchCommandBinding2);
 
             var searchPreviousCommandBinding = new CommandBinding(NavigationCommands.BrowseBack, SearchPreviousExecuted, SearchCanExecuted);
             CommandManager.RegisterClassCommandBinding(typeof(SearchViewModel), searchPreviousCommandBinding);
