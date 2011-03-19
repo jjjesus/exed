@@ -41,7 +41,6 @@ namespace XmlEditor.Applications
             myXmlDocumentController = container.GetExportedValue<XmlDocumentController>();
             shellViewModel = container.GetExportedValue<ShellViewModel>();
             mainViewModel = container.GetExportedValue<MainViewModel>();
-
             shellViewModel.Closing += ShellViewModelClosing;
             exitCommand = new DelegateCommand(Close);
         }
@@ -51,12 +50,16 @@ namespace XmlEditor.Applications
 
             xmlDocumentType = new XmlDocumentType();
             documentManager.Register(xmlDocumentType);
-            //documentManager.Register(new XpsExportDocumentType());
         }
 
-        public void Run() {
+        /// <summary>
+        /// Runs the specified args.
+        /// </summary>
+        /// <param name="args">The command line arguments, if any.</param>
+        public void Run(string[] args) {
             shellViewModel.ContentView = mainViewModel.View;
             shellViewModel.Show();
+            if (args != null) mainViewModel.Open(args);
         }
 
         public void Shutdown() {

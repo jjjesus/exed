@@ -57,7 +57,7 @@ namespace XmlEditor.Presentation
 
             controller = container.GetExportedValue<ApplicationController>();
             controller.Initialize();
-            controller.Run();
+            controller.Run(e.Args);
         }
 
         protected override void OnExit(ExitEventArgs e) {

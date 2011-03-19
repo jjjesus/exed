@@ -94,6 +94,11 @@ namespace XmlEditor.Applications.Documents
             return document;
         }
 
+        /// <summary>
+        /// Opens the specified file name.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
         public IDocument Open(string fileName) {
             FileType fileType;
             if (string.IsNullOrEmpty(fileName)) {

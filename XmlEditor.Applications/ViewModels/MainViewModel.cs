@@ -1,10 +1,12 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
@@ -272,6 +274,15 @@ namespace XmlEditor.Applications.ViewModels
             saveAsCommand.RaiseCanExecuteChanged();
             printCommand.RaiseCanExecuteChanged();
             printPreviewCommand.RaiseCanExecuteChanged();
+        }
+
+        /// <summary>
+        /// Opens the specified arguments, which are supposed to be files.
+        /// </summary>
+        /// <param name="args">The args.</param>
+        public void Open(string[] args) {
+            if (args == null) throw new ArgumentNullException("args");
+            foreach (var file in args) documentManager.Open(file);
         }
     }
 
