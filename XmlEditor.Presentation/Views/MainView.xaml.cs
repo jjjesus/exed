@@ -20,5 +20,6 @@ namespace XmlEditor.Presentation.Views
         {
             Keyboard.Focus(Documents);
         }
+
     }
 }

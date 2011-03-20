@@ -6,13 +6,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using System.Windows;
 using System.Windows.Input;
 using XmlEditor.Applications.Documents;
+using XmlEditor.Applications.Helpers;
 using XmlEditor.Applications.Interfaces;
 using XmlEditor.Applications.Views;
 
@@ -40,6 +40,8 @@ namespace XmlEditor.Applications.ViewModels
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand printCommand;
         private readonly DelegateCommand printPreviewCommand;
+
+        private readonly RelayCommand<IDataObject> dropCommand;
         private IDocument activeDocument;
         private object activeDocumentView;
         private ICommand exitCommand;
@@ -64,8 +66,23 @@ namespace XmlEditor.Applications.ViewModels
             printCommand = new DelegateCommand(PrintDocument, CanPrintDocument);
             printPreviewCommand = new DelegateCommand(PrintPreviewDocument, CanPrintDocument);
 
+            dropCommand = new RelayCommand<IDataObject>(DropExecuted, DropCanExecute);
+
             AddWeakEventListener(documentManager, DocumentManagerPropertyChanged);
         }
+
+        public void DropExecuted(IDataObject obj) {
+            var files = (string[])obj.GetData(DataFormats.FileDrop);
+            foreach (var file in files.Where(file => documentManager.CanOpen(file))) documentManager.Open(file);
+        }
+
+        public bool DropCanExecute(IDataObject obj) {
+            if (!obj.GetDataPresent(DataFormats.FileDrop, false)) return false;
+            var files = (string[])obj.GetData(DataFormats.FileDrop);
+            return files.Any(file => documentManager.CanOpen(file));
+        }
+
+        public ICommand DropCommand { get { return dropCommand; } }
 
         public ObservableCollection<object> DocumentViews {
             get { return documentViews; }

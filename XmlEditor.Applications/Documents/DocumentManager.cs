@@ -181,6 +181,17 @@ namespace XmlEditor.Applications.Documents
             document.DocumentType.PrintPreview(document);            
         }
 
+        /// <summary>
+        /// Determines whether this instance can open the specified file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        /// 	<c>true</c> if this instance can open the specified file; otherwise, <c>false</c>.
+        /// </returns>
+        public bool CanOpen(string file) {
+            return (from d in documentTypes where d.FileExtension == Path.GetExtension(file) select d).Any();
+        }
+
         public bool Close(IDocument document) {
             if (document == null) throw new ArgumentNullException("document");
             if (!documents.Contains(document)) throw new ArgumentException("document is not an item of the Documents collection.");

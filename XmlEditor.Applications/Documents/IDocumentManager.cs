@@ -41,5 +41,14 @@ namespace XmlEditor.Applications.Documents
         void Print(IDocument activeDocument);
 
         void PrintPreview(IDocument activeDocument);
+
+        /// <summary>
+        /// Determines whether this instance can open the specified file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        /// 	<c>true</c> if this instance can open the specified file; otherwise, <c>false</c>.
+        /// </returns>
+        bool CanOpen(string file);
     }
 }

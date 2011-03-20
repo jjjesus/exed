@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Converters="clr-namespace:XmlEditor.Presentation.Converters"
              xmlns:Helpers="clr-namespace:XmlEditor.Presentation.Helpers"
-             xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties">
+             xmlns:Properties="clr-namespace:XmlEditor.Presentation.Properties"
+             AllowDrop="True" Helpers:AttachedProperties.DropCommand="{Binding DropCommand}" >
 
     <UserControl.Resources>
         <DataTemplate x:Key="DocumentTypeTemplate">
