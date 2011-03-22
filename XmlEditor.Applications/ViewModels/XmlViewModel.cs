@@ -66,6 +66,7 @@ namespace XmlEditor.Applications.ViewModels
 
         private void ErrorMessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             SelectedViewIndex = ErrorViewIndex;
+            EventAggregationProvider.Instance.Publish(new StatusMessage(string.Format("{0} errors found", ErrorMessages.Count)));
         }
 
         private void SearchViewModelFoundNodeSelected(object sender, FoundNodeEventArgs e)

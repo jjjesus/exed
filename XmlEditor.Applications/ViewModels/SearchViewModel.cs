@@ -12,6 +12,7 @@ using System.Xml;
 using TreeListControl.Resources;
 using TreeListControl.Tree;
 using XmlEditor.Applications.Documents;
+using XmlEditor.Applications.Helpers;
 using XmlEditor.Applications.Views;
 
 namespace XmlEditor.Applications.ViewModels
@@ -24,7 +25,7 @@ namespace XmlEditor.Applications.ViewModels
 
     // A delegate type for hooking up change notifications.
     public delegate void ChangedEventHandler(object sender, FoundNodeEventArgs e);
-    
+
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class SearchViewModel : ViewModel<ISearchView>
     {
@@ -37,7 +38,8 @@ namespace XmlEditor.Applications.ViewModels
         /// Invokes the found node selected.
         /// </summary>
         /// <param name="e">The <see cref="XmlEditor.Applications.ViewModels.FoundNodeEventArgs"/> instance containing the event data.</param>
-        public void InvokeFoundNodeSelected(FoundNodeEventArgs e) {
+        public void InvokeFoundNodeSelected(FoundNodeEventArgs e)
+        {
             var handler = FoundNodeSelected;
             if (handler != null) handler(this, e);
         }
@@ -51,7 +53,8 @@ namespace XmlEditor.Applications.ViewModels
         private bool selectNextFoundNode;
 
         [ImportingConstructor]
-        public SearchViewModel(CompositionContainer container, ISearchView view) : base(view) {
+        public SearchViewModel(CompositionContainer container, ISearchView view) : base(view)
+        {
             bw.WorkerSupportsCancellation = true;
             bw.DoWork += (s, e) =>
             {
@@ -59,23 +62,25 @@ namespace XmlEditor.Applications.ViewModels
                 var worker = (BackgroundWorker)s;
                 e.Result = SearchNodes((XmlNode)e.Argument, worker, e);
             };
-            bw.RunWorkerCompleted += (s, e) => {
-                                         var found = (List<FoundNode>) e.Result;
-                                         if (found == null || found.Count == 0) {
-                                             foundNodes.Add(new FoundNode{Name = "No results found."});
-                                             return;
-                                         }
-                                         foreach (var foundNode in found) foundNodes.Add(foundNode);
-                                         if (foundNodes.Count <= 0) return;
-                                         if (selectNextFoundNode)
-                                             SelectedFoundNode = indexOfSelectedNodeInFoundNodes + 1 < foundNodes.Count
-                                                                     ? foundNodes[++indexOfSelectedNodeInFoundNodes]
-                                                                     : foundNodes[0];
-                                         else
-                                             SelectedFoundNode = indexOfSelectedNodeInFoundNodes >= 0
-                                                                     ? foundNodes[indexOfSelectedNodeInFoundNodes]
-                                                                     : foundNodes.Last();
-                                     };
+            bw.RunWorkerCompleted += (s, e) =>
+            {
+                var found = (List<FoundNode>)e.Result;
+                if (found == null || found.Count == 0)
+                {
+                    foundNodes.Add(new FoundNode { Name = "No results found." });
+                    return;
+                }
+                foreach (var foundNode in found) foundNodes.Add(foundNode);
+                if (foundNodes.Count <= 0) return;
+                if (selectNextFoundNode)
+                    SelectedFoundNode = indexOfSelectedNodeInFoundNodes + 1 < foundNodes.Count
+                                            ? foundNodes[++indexOfSelectedNodeInFoundNodes]
+                                            : foundNodes[0];
+                else
+                    SelectedFoundNode = indexOfSelectedNodeInFoundNodes >= 0
+                                            ? foundNodes[indexOfSelectedNodeInFoundNodes]
+                                            : foundNodes.Last();
+            };
 
 
             var searchCommandBinding = new CommandBinding(NavigationCommands.Search, SearchExecuted, SearchCanExecuted);
@@ -85,6 +90,12 @@ namespace XmlEditor.Applications.ViewModels
             var searchPreviousCommandBinding = new CommandBinding(NavigationCommands.BrowseBack, SearchPreviousExecuted, SearchCanExecuted);
             CommandManager.RegisterClassCommandBinding(typeof(SearchViewModel), searchPreviousCommandBinding);
             CommandBindings.Add(searchPreviousCommandBinding);
+
+            AddWeakEventListener(foundNodes, FoundNodesCollectionChanged);
+        }
+
+        private void FoundNodesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            if (foundNodes.Count > 0) PublishStatusMessage(string.Format("{0} results found.", foundNodes.Count));            
         }
 
         /// <summary>
@@ -110,7 +121,8 @@ namespace XmlEditor.Applications.ViewModels
             if (Document == null || Document.Content == null || Document.Content.Document == null) return;
             FoundNodes.Clear();
             var xmlDocument = Document.Content.Document;
-            if (searchTerm.Contains("/")) {
+            if (searchTerm.Contains("/"))
+            {
                 XPathQuery(searchTerm, xmlDocument);
                 return;
             }
@@ -120,7 +132,8 @@ namespace XmlEditor.Applications.ViewModels
             if (bw.IsBusy) bw.CancelAsync();
             mySearchTerm = searchTerm.ToLower();
             indexOfSelectedNodeInFoundNodes = -1;
-            while (bw.IsBusy) {
+            while (bw.IsBusy)
+            {
                 Thread.Sleep(50);
                 continue;
             }
@@ -132,22 +145,25 @@ namespace XmlEditor.Applications.ViewModels
         /// </summary>
         /// <param name="searchTerm">The search term.</param>
         /// <param name="xmlDocument">The XML document.</param>
-        private void XPathQuery(string searchTerm, XmlDocument xmlDocument) {
+        private void XPathQuery(string searchTerm, XmlDocument xmlDocument)
+        {
             var mgr = new XmlNamespaceManager(xmlDocument.NameTable);
             var namespaces = Utils.GetNamespaces(xmlDocument);
             foreach (var ns in namespaces) mgr.AddNamespace(ns.Key, ns.Value);
             //var searchUsingNamespace = searchTerm.Replace("/", "/p:");
             var nodes = Document.Content.Document.SelectNodes(searchTerm, mgr);
-            if (nodes == null || nodes.Count == 0) {
-                var noResults = new FoundNode {Name = "No results found."};
+            if (nodes == null || nodes.Count == 0)
+            {
+                var noResults = new FoundNode { Name = "No results found." };
                 foundNodes.Add(noResults);
-                if (namespaces.Count > 0) {
+                if (namespaces.Count > 0)
+                {
                     noResults.Value = "When performing an XPath query, please use a namespace prefix.";
-                    if (xmlDocument.DocumentElement != null) 
+                    if (xmlDocument.DocumentElement != null)
                         foundNodes.Add(new FoundNode { Name = "For example", Value = string.Format("/{0}:{1}", namespaces.Last().Key, xmlDocument.DocumentElement.Name) });
                     foundNodes.Add(new FoundNode());
                     foundNodes.Add(new FoundNode { Name = "Prefix", Value = "Namespace" });
-                    foreach (var ns in namespaces) foundNodes.Add(new FoundNode {Name = ns.Key, Value = ns.Value});
+                    foreach (var ns in namespaces) foundNodes.Add(new FoundNode { Name = ns.Key, Value = ns.Value });
                     foundNodes.Last().Name += " (default)";
                 }
                 return;
@@ -213,14 +229,16 @@ namespace XmlEditor.Applications.ViewModels
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Input.ExecutedRoutedEventArgs"/> instance containing the event data.</param>
-        public void SearchExecuted(object sender, ExecutedRoutedEventArgs e) {
+        public void SearchExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
             var index = foundNodes.IndexOf(selectedFoundNode) + 1;
             if (index >= foundNodes.Count) index = 0;
             SelectedFoundNode = foundNodes[index];
             e.Handled = true;
         }
-        
-        public void SearchCanExecuted(object sender, CanExecuteRoutedEventArgs e) {
+
+        public void SearchCanExecuted(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = (foundNodes != null && foundNodes.Count > 1);
             e.Handled = true;
         }
@@ -233,6 +251,11 @@ namespace XmlEditor.Applications.ViewModels
             var index = foundNodes.IndexOf(selectedFoundNode) - 1;
             if (index < 0) index = foundNodes.Count - 1;
             SelectedFoundNode = foundNodes[index];
+        }
+
+        private static void PublishStatusMessage(string message)
+        {
+            EventAggregationProvider.Instance.Publish(new StatusMessage(message));
         }
     }
 }

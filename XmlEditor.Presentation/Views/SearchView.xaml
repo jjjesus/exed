@@ -10,12 +10,9 @@
              d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Command="Search"
-                Content="Next" />
-        <ListView Grid.Row="1"
+        <ListView Grid.Row="0"
                   x:Name="FoundNodes"
                   ItemsSource="{Binding FoundNodes}"
                   SelectedItem="{Binding SelectedFoundNode}"

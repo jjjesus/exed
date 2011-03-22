@@ -12,7 +12,7 @@
         </DockPanel.LayoutTransform>
 
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem Content="Ready"/>
+            <StatusBarItem Content="{Binding Status}" Margin="5 0"/>
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <Label x:Name="label" Content="{x:Static Properties:Resources.ZoomMenu}" Target="{Binding ElementName=zoomBox}" VerticalAlignment="Center" Padding="0" Margin="0"/>

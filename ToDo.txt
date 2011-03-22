@@ -1,6 +1,5 @@
 ToDo
 - Replace text
-- Show a summary of errors and search results
 - Provide installer + documentation
 - Provide translator set
 - Expand (*)/collapse all children
