@@ -6,7 +6,6 @@ ToDo
 - Manual reload
 - CodeWindow with auto generated C# or VB code, and, using regex, replacing arrays with generic List, ObservableCollection or BindableCollection.
 - How can make navigation with the keyboard easier: arrows, enter, insert, delete?
-- Add breadcrump to show where you are in the tree
 - Use shortcut key to step through validation errors
 
 Bugs

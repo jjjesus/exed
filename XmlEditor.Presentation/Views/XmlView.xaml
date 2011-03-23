@@ -546,7 +546,7 @@
                        x:Name="xmlTree"
                        AlternationCount="2"
                        Model="{Binding XmlModel}"
-                       SelectedNode="{Binding SelectedNode}">
+                       SelectedNode="{Binding SelectedNode, Mode=TwoWay}">
             <Tree:TreeList.ItemContainerStyle>
                 <Style>
                     <Style.Triggers>

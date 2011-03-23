@@ -33,12 +33,10 @@ namespace TreeListControl.Tree
 			ItemContainerGenerator.StatusChanged += ItemContainerGeneratorStatusChanged;
 
 		    SelectionMode = SelectionMode.Single;
-            //SelectionChanged += TreeListSelectionChanged;
+		    SelectionChanged += (s, e) => {
+		                            if (e.AddedItems.Count > 0 && e.AddedItems[0] is TreeNode) SelectedNode = ((TreeNode)e.AddedItems[0]).Tag;
+		                        };
 		}
-
-        //void TreeListSelectionChanged(object sender, SelectionChangedEventArgs e) {
-        //    SelectedNode = SelectedItem;
-        //}
 
 		internal TreeNode PendingFocusNode
 		{

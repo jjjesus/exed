@@ -2,6 +2,7 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition.Hosting;
+using System.Text;
 using System.Waf.Applications;
 using System.Windows.Input;
 using System.Xml;
@@ -41,7 +42,7 @@ namespace XmlEditor.Applications.ViewModels
 
         private TreeNode cutPasteNode;
         private ErrorMessage selectedError;
-        private object selectedNode;
+        private XmlNode selectedNode;
         private int selectedViewIndex;
 
         public XmlViewModel(CompositionContainer container, IXmlView view, MyXmlDocument document) : base(view) {
@@ -190,11 +191,11 @@ namespace XmlEditor.Applications.ViewModels
                 selectedError = value;
                 RaisePropertyChanged("SelectedError");
                 if (selectedError == null) return;
-                SelectedNode = selectedError.Tag;
+                SelectedNode = (XmlNode)selectedError.Tag;
             }
         }
 
-        public object SelectedNode {
+        public XmlNode SelectedNode {
             get { return selectedNode; }
             set {
                 selectedNode = value;
@@ -216,7 +217,7 @@ namespace XmlEditor.Applications.ViewModels
         {
             if (Document == null || Document.Content == null || Document.Content.Document == null || string.IsNullOrEmpty(searchTerm)) return;
             SelectedViewIndex = SearchViewIndex;
-            searchViewModel.Search(searchTerm, selectedNode as XmlNode, nextTerm);
+            searchViewModel.Search(searchTerm, selectedNode, nextTerm);
         }
 
         private void UpdateCommands() {
@@ -228,6 +229,21 @@ namespace XmlEditor.Applications.ViewModels
             copyNodeCommand.RaiseCanExecuteChanged();
             if (insertNodeCommand != null) insertNodeCommand.RaiseCanExecuteChanged();
             if (insertNodeCommand != null) insertCommentCommand.RaiseCanExecuteChanged();
+            UpdateBreadcrump();
+        }
+
+        private void UpdateBreadcrump() {
+            var breadcrump = new StringBuilder(selectedNode.Name);
+            var node = selectedNode is XmlAttribute ? ((XmlAttribute)selectedNode).OwnerElement : selectedNode.ParentNode;
+            if (node == null) return;
+            breadcrump.Insert(0, node.Name + @"\");
+            while (node.ParentNode != null)
+            {
+                node = node.ParentNode;
+                if (node is XmlDocument) break;
+                breadcrump.Insert(0, node.Name + @"\");
+            }
+            EventAggregationProvider.Instance.Publish(new StatusMessage(breadcrump.ToString()));
         }
     }
 }
