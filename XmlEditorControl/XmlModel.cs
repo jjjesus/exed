@@ -144,10 +144,8 @@ namespace TreeListControl
         /// </summary>
         /// <param name="fragment">The fragment.</param>
         private static void AddValueToNodes(XmlNode fragment) {
-            foreach (XmlNode child in fragment.ChildNodes)
-                if (child is XmlElement)
-                    if (!child.HasChildNodes && string.IsNullOrEmpty(child.InnerText)) child.InnerText = string.Empty;
-                    else AddValueToNodes(child);
+            foreach (XmlNode child in fragment.ChildNodes) 
+                if (child is XmlElement) AssignValuesToEmptyNodes(child as XmlElement);
                 else if (child is XmlAttribute && string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
         }
 
@@ -283,7 +281,8 @@ namespace TreeListControl
         private XmlNode AddElement(XmlSchemaObject node, XmlNode parent) {
             var el = (XmlSchemaElement) node;
             var newNode = document.CreateElement(el.QualifiedName.Name, el.QualifiedName.Namespace);
-            newNode.InnerText = Utils.GetDefaultValue(node);
+            var defaultValue = Utils.GetDefaultValue(node);
+            if (!string.IsNullOrEmpty(defaultValue)) newNode.InnerText = defaultValue;
             return InsertElement(newNode, parent);
         }
 
@@ -575,22 +574,16 @@ namespace TreeListControl
         /// Assigns a value to empty elements, so we can bind to them in the editor (e.g. if we don't do this, the FirstChild is null, 
         /// so binding to FirstChild.Value raises an exception in XAML (so the application doesn't crash, but we still cannot set a value).
         /// </summary>
-        /// <param name="element">The element.</param>
+        /// <param name="el">The element.</param>
         /// <remarks>
         /// This is not so trivial: on the one hand, if an element is empty, I cannot bind to it.
         /// On the other hand, if I set elements that (can) have children to a value, I get a validation error.
         /// Therefore, only set those elements that are empty, and do not or cannot have children.
         /// </remarks>
-        private static void AssignValuesToEmptyNodes(XmlElement element) {
-            //return;
-            foreach (XmlAttribute child in element.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
-            foreach (var child in element.ChildNodes)
-            {
-                if (!(child is XmlElement)) continue;
-                var el = child as XmlElement;
-                if (el.HasChildNodes && el.ChildNodes.Count > 0) AssignValuesToEmptyNodes(el);
-                else if (el.FirstChild == null && el.OwnerDocument != null && Utils.GetChildElements(el).Count == 0) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
-            }
+        private static void AssignValuesToEmptyNodes(XmlElement el) {
+            foreach (XmlAttribute child in el.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
+            if (el.HasChildNodes) foreach (XmlElement child in el.ChildNodes.OfType<XmlElement>()) AssignValuesToEmptyNodes(child);
+            else if ((((el).SchemaInfo).SchemaElement.ElementSchemaType is XmlSchemaSimpleType || ((XmlSchemaComplexType)(((el).SchemaInfo).SchemaElement.ElementSchemaType)).ContentType != XmlSchemaContentType.Empty)) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
         }
 
 

@@ -151,6 +151,14 @@ namespace TreeListControl.Resources
             }
         }
 
+        /// <summary>
+        /// Gets the default value.
+        /// Note: this function may return null when no default value is found. However, 
+        /// when assigning an XmlElement's InnerText with null, the #text node is created (and ChildNodes.Count changes from 0 to 1). 
+        /// This often leads to invalid content!
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
         public static string GetDefaultValue(XmlSchemaObject node)
         {
             string defaultValue = null;
@@ -367,6 +375,7 @@ namespace TreeListControl.Resources
             if (node.Attributes != null) foreach (XmlAttribute attribute in node.Attributes) if (attribute.Name.ToLower().Contains("name")) return attribute.Value.Replace(Environment.NewLine, " - ");
             foreach (XmlNode child in node.ChildNodes) if (child.Name.Equals("name", StringComparison.OrdinalIgnoreCase) && child.FirstChild != null) return child.FirstChild.Value.Replace(Environment.NewLine, " - ");
             foreach (XmlNode child in node.ChildNodes) if (child.Name.ToLower().Contains("name") && child.FirstChild != null) return child.FirstChild.Value.Replace(Environment.NewLine, " - ");
+            foreach (XmlNode child in node.ChildNodes) if (child.Name.Equals("title", StringComparison.OrdinalIgnoreCase) && child.FirstChild != null) return child.FirstChild.Value.Replace(Environment.NewLine, " - ");
             //foreach (XmlAttribute child in node.Attributes)
             //    if (child.Name.ToLower().Contains("name"))
             //        return child.Value;
@@ -782,7 +791,7 @@ namespace TreeListControl.Resources
         public static string GetNodeName(XmlAttribute attribute)
         {
             if (attribute.OwnerElement == null) return attribute.Name;
-            var friendlyName = Utils.GetXmlNodeName(attribute.OwnerElement);
+            var friendlyName = GetXmlNodeName(attribute.OwnerElement);
             return (string.IsNullOrEmpty(friendlyName) ?
                 string.Format("{0}\\{1}", attribute.OwnerElement.Name, attribute.Name) :
                 string.Format("{0}: {1}\\{2}", attribute.OwnerElement.Name, friendlyName, attribute.Name));
@@ -796,9 +805,9 @@ namespace TreeListControl.Resources
         public static string GetNodeName(XmlNode node)
         {
             if ((node is XmlText || node is XmlComment || node is XmlCDataSection) && node.ParentNode != null) return string.Format("{0}\\{1}", node.ParentNode.Name, node.Name);
-            if (node is XmlAttribute) return Utils.GetNodeName(node as XmlAttribute);
+            if (node is XmlAttribute) return GetNodeName(node as XmlAttribute);
             if (!(node is XmlElement)) return node.Name;
-            var friendlyName = Utils.GetXmlNodeName(node);
+            var friendlyName = GetXmlNodeName(node);
             return (string.IsNullOrEmpty(friendlyName) ?
                 node.Name :
                 string.Format("{0} {1}", node.Name, friendlyName));

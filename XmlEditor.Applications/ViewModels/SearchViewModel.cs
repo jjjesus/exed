@@ -9,6 +9,7 @@ using System.Threading;
 using System.Waf.Applications;
 using System.Windows.Input;
 using System.Xml;
+using System.Xml.XPath;
 using TreeListControl.Resources;
 using TreeListControl.Tree;
 using XmlEditor.Applications.Documents;
@@ -151,25 +152,35 @@ namespace XmlEditor.Applications.ViewModels
             var namespaces = Utils.GetNamespaces(xmlDocument);
             foreach (var ns in namespaces) mgr.AddNamespace(ns.Key, ns.Value);
             //var searchUsingNamespace = searchTerm.Replace("/", "/p:");
-            var nodes = Document.Content.Document.SelectNodes(searchTerm, mgr);
-            if (nodes == null || nodes.Count == 0)
-            {
-                var noResults = new FoundNode { Name = "No results found." };
-                foundNodes.Add(noResults);
-                if (namespaces.Count > 0)
-                {
-                    noResults.Value = "When performing an XPath query, please use a namespace prefix.";
-                    if (xmlDocument.DocumentElement != null)
-                        foundNodes.Add(new FoundNode { Name = "For example", Value = string.Format("/{0}:{1}", namespaces.Last().Key, xmlDocument.DocumentElement.Name) });
-                    foundNodes.Add(new FoundNode());
-                    foundNodes.Add(new FoundNode { Name = "Prefix", Value = "Namespace" });
-                    foreach (var ns in namespaces) foundNodes.Add(new FoundNode { Name = ns.Key, Value = ns.Value });
-                    foundNodes.Last().Name += " (default)";
+            try {
+                var nodes = Document.Content.Document.SelectNodes(searchTerm, mgr);
+
+                if (nodes == null || nodes.Count == 0) {
+                    var noResults = new FoundNode {Name = "No results found."};
+                    foundNodes.Add(noResults);
+                    if (namespaces.Count > 0) {
+                        noResults.Value = "When performing an XPath query, please use a namespace prefix.";
+                        if (xmlDocument.DocumentElement != null)
+                            foundNodes.Add(new FoundNode {
+                                                             Name = "For example",
+                                                             Value =
+                                                                 string.Format("/{0}:{1}", namespaces.Last().Key,
+                                                                               xmlDocument.DocumentElement.Name)
+                                                         });
+                        foundNodes.Add(new FoundNode());
+                        foundNodes.Add(new FoundNode {Name = "Prefix", Value = "Namespace"});
+                        foreach (var ns in namespaces) foundNodes.Add(new FoundNode {Name = ns.Key, Value = ns.Value});
+                        foundNodes.Last().Name += " (default)";
+                    }
+                    return;
                 }
-                return;
+                foreach (XmlNode node in nodes)
+                    FoundNodes.Add(new FoundNode
+                                   {Name = Utils.GetNodeName(node), Value = Utils.GetNodeValue(node), Tag = node});
             }
-            foreach (XmlNode node in nodes)
-                FoundNodes.Add(new FoundNode { Name = Utils.GetNodeName(node), Value = Utils.GetNodeValue(node), Tag = node });
+            catch (XPathException e) {
+                PublishStatusMessage(e.Message);
+            }
         }
 
         /// <summary>
