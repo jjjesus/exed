@@ -125,6 +125,7 @@ namespace XmlEditor.Applications.ViewModels
             if (searchTerm.Contains("/"))
             {
                 XPathQuery(searchTerm, xmlDocument);
+                if (foundNodes.Count > 0) SelectedFoundNode = foundNodes[0];
                 return;
             }
             // Use regular, plain text search
@@ -158,20 +159,23 @@ namespace XmlEditor.Applications.ViewModels
                 if (nodes == null || nodes.Count == 0) {
                     var noResults = new FoundNode {Name = "No results found."};
                     foundNodes.Add(noResults);
-                    if (namespaces.Count > 0) {
+                    if (namespaces.Count > 2) {
                         noResults.Value = "When performing an XPath query, please use a namespace prefix.";
                         if (xmlDocument.DocumentElement != null)
                             foundNodes.Add(new FoundNode {
                                                              Name = "For example",
-                                                             Value =
-                                                                 string.Format("/{0}:{1}", namespaces.Last().Key,
-                                                                               xmlDocument.DocumentElement.Name)
+                                                             Value = string.Format("/{0}:{1}", namespaces.Last().Key, xmlDocument.DocumentElement.Name)
                                                          });
                         foundNodes.Add(new FoundNode());
                         foundNodes.Add(new FoundNode {Name = "Prefix", Value = "Namespace"});
                         foreach (var ns in namespaces) foundNodes.Add(new FoundNode {Name = ns.Key, Value = ns.Value});
                         foundNodes.Last().Name += " (default)";
                     }
+                    else if (xmlDocument.DocumentElement != null)
+                            foundNodes.Add(new FoundNode {
+                                                             Name = string.Format("For XPath queries, please try"),
+                                                             Value = string.Format("/{0}", xmlDocument.DocumentElement.Name)
+                                                         });
                     return;
                 }
                 foreach (XmlNode node in nodes)

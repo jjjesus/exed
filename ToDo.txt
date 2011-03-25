@@ -11,7 +11,6 @@ ToDo
 Bugs
 - Check undo functionality, e.g. when deleting an attribute, I need to undo twice before it reappears
 - What to do with empty elements (that have a value). --> Delete them? 
-- When using XPath search, no node is selected
 
 For later
 - XsltView doesn't scale
