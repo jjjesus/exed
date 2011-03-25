@@ -282,7 +282,7 @@ namespace TreeListControl
             var el = (XmlSchemaElement) node;
             var newNode = document.CreateElement(el.QualifiedName.Name, el.QualifiedName.Namespace);
             var defaultValue = Utils.GetDefaultValue(node);
-            if (!string.IsNullOrEmpty(defaultValue)) newNode.InnerText = defaultValue;
+            if (defaultValue != null) newNode.InnerText = defaultValue;
             return InsertElement(newNode, parent);
         }
 

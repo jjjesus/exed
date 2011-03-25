@@ -183,7 +183,7 @@ namespace TreeListControl.Resources
             if (schemaType is XmlSchemaSimpleType)
             {
                 var possibleValues = GetPossibleValues((XmlSchemaSimpleType)schemaType);
-                if (possibleValues.Count > 0) return possibleValues[0];
+                return possibleValues.Count > 0 ? possibleValues[0] : string.Empty;
             }
             return defaultValue;
         }
