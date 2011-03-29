@@ -583,7 +583,10 @@ namespace TreeListControl
         private static void AssignValuesToEmptyNodes(XmlElement el) {
             foreach (XmlAttribute child in el.Attributes) if (string.IsNullOrEmpty(child.Value)) child.Value = string.Empty;
             if (el.HasChildNodes) foreach (XmlElement child in el.ChildNodes.OfType<XmlElement>()) AssignValuesToEmptyNodes(child);
-            else if ((((el).SchemaInfo).SchemaElement.ElementSchemaType is XmlSchemaSimpleType || ((XmlSchemaComplexType)(((el).SchemaInfo).SchemaElement.ElementSchemaType)).ContentType != XmlSchemaContentType.Empty)) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
+            else {
+                var schemaInfo = el.SchemaInfo;
+                if (schemaInfo.SchemaElement != null && (schemaInfo.SchemaElement.ElementSchemaType is XmlSchemaSimpleType || ((XmlSchemaComplexType)(schemaInfo.SchemaElement.ElementSchemaType)).ContentType != XmlSchemaContentType.Empty)) el.AppendChild(el.OwnerDocument.CreateTextNode(string.Empty));
+            }
         }
 
 
